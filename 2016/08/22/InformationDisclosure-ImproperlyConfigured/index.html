@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="信息泄露之配置不当 一、配置不当的分类，危害，以及现有的较好检查工具和模块方法； 二、配置不当的防范措施。  一、配置不当的分类、危害及检查工具：1、版本过低问题1）反序列化漏洞：WebLogic、WebSphere、JBoss、Jenkins、OpenNMS危害：getshell工具：http://www.freebuf.com/vuls/86566.html 2）解析漏洞：nginx、apac">
+<meta name="keywords" content="信息泄露,svn">
+<meta property="og:type" content="article">
+<meta property="og:title" content="信息泄露之配置不当">
+<meta property="og:url" content="http://yoursite.com/2016/08/22/InformationDisclosure-ImproperlyConfigured/index.html">
+<meta property="og:site_name" content="Windy&#39;s blog">
+<meta property="og:description" content="信息泄露之配置不当 一、配置不当的分类，危害，以及现有的较好检查工具和模块方法； 二、配置不当的防范措施。  一、配置不当的分类、危害及检查工具：1、版本过低问题1）反序列化漏洞：WebLogic、WebSphere、JBoss、Jenkins、OpenNMS危害：getshell工具：http://www.freebuf.com/vuls/86566.html 2）解析漏洞：nginx、apac">
+<meta property="og:updated_time" content="2017-01-19T02:13:06.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="信息泄露之配置不当">
+<meta name="twitter:description" content="信息泄露之配置不当 一、配置不当的分类，危害，以及现有的较好检查工具和模块方法； 二、配置不当的防范措施。  一、配置不当的分类、危害及检查工具：1、版本过低问题1）反序列化漏洞：WebLogic、WebSphere、JBoss、Jenkins、OpenNMS危害：getshell工具：http://www.freebuf.com/vuls/86566.html 2）解析漏洞：nginx、apac">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>信息泄露之配置不当</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/atom.xml" title="Windy&#39;s blog" type="application/atom+xml" />
+    
+</head>
+
+<body>
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/links/">Links</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2016/11/12/RedisUnauthorizedUse/"><i class="fa fa-chevron-left" aria-hidden="true" onmouseover='$("#i-prev").toggle();' onmouseout='$("#i-prev").toggle();'></i></a></li>
+        
+        
+        <li><a class="icon" href="/2016/07/22/PythonPractice/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover='$("#i-next").toggle();' onmouseout='$("#i-next").toggle();'></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover='$("#i-top").toggle();' onmouseout='$("#i-top").toggle();'></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover='$("#i-share").toggle();' onmouseout='$("#i-share").toggle();' onclick='$("#share").toggle();return false;'></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2016/08/22/InformationDisclosure-ImproperlyConfigured/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2016/08/22/InformationDisclosure-ImproperlyConfigured/&text=信息泄露之配置不当"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2016/08/22/InformationDisclosure-ImproperlyConfigured/&title=信息泄露之配置不当"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2016/08/22/InformationDisclosure-ImproperlyConfigured/&is_video=false&description=信息泄露之配置不当"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=信息泄露之配置不当&body=Check out this article: http://yoursite.com/2016/08/22/InformationDisclosure-ImproperlyConfigured/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2016/08/22/InformationDisclosure-ImproperlyConfigured/&title=信息泄露之配置不当"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2016/08/22/InformationDisclosure-ImproperlyConfigured/&title=信息泄露之配置不当"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2016/08/22/InformationDisclosure-ImproperlyConfigured/&title=信息泄露之配置不当"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2016/08/22/InformationDisclosure-ImproperlyConfigured/&title=信息泄露之配置不当"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2016/08/22/InformationDisclosure-ImproperlyConfigured/&name=信息泄露之配置不当&description=&lt;h1 id=&#34;信息泄露之配置不当&#34;&gt;&lt;a href=&#34;#信息泄露之配置不当&#34; class=&#34;headerlink&#34; title=&#34;信息泄露之配置不当&#34;&gt;&lt;/a&gt;信息泄露之配置不当&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;一、配置不当的分类，危害，以及现有的较好检查工具和模块方法；&lt;/li&gt;
+&lt;li&gt;二、配置不当的防范措施。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;一、配置不当的分类、危害及检查工具：&#34;&gt;&lt;a href=&#34;#一、配置不当的分类、危害及检查工具：&#34; class=&#34;headerlink&#34; title=&#34;一、配置不当的分类、危害及检查工具：&#34;&gt;&lt;/a&gt;一、配置不当的分类、危害及检查工具：&lt;/h2&gt;&lt;h3 id=&#34;1、版本过低问题&#34;&gt;&lt;a href=&#34;#1、版本过低问题&#34; class=&#34;headerlink&#34; title=&#34;1、版本过低问题&#34;&gt;&lt;/a&gt;1、版本过低问题&lt;/h3&gt;&lt;h4 id=&#34;1）反序列化漏洞：WebLogic、WebSphere、JBoss、Jenkins、OpenNMS&#34;&gt;&lt;a href=&#34;#1）反序列化漏洞：WebLogic、WebSphere、JBoss、Jenkins、OpenNMS&#34; class=&#34;headerlink&#34; title=&#34;1）反序列化漏洞：WebLogic、WebSphere、JBoss、Jenkins、OpenNMS&#34;&gt;&lt;/a&gt;1）反序列化漏洞：WebLogic、WebSphere、JBoss、Jenkins、OpenNMS&lt;/h4&gt;&lt;p&gt;危害：getshell&lt;br&gt;工具：&lt;a href=&#34;http://www.freebuf.com/vuls/86566.html&#34; target=&#34;_blank&#34; rel=&#34;external&#34;&gt;http://www.freebuf.com/vuls/86566.html&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id=&#34;2）解析漏洞：nginx、apache、IIS&#34;&gt;&lt;a href=&#34;#2）解析漏洞：nginx、apache、IIS&#34; class=&#34;headerlink&#34; title=&#34;2）解析漏洞：nginx、apache、IIS&#34;&gt;&lt;/a&gt;2）解析漏洞：nginx、apache、IIS&lt;/h4&gt;&lt;p&gt;危害：潜在getshell&lt;br&gt;工具：&lt;a href=&#34;http://drops.wooyun.org/papers/539&#34; target=&#34;_blank&#34; rel=&#34;external&#34;&gt;http://drops.wooyun.org/papers/539&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id=&#34;3）其他各种已知漏洞：&#34;&gt;&lt;a href=&#34;#3）其他各种已知漏洞：&#34; class=&#34;headerlink&#34; title=&#34;3）其他各种已知漏洞：&#34;&gt;&lt;/a&gt;3）其他各种已知漏洞：&lt;/h4&gt;&lt;p&gt;比如说jboss的各种geshell漏洞、Redis任意文件读取…&lt;br&gt;工具：&lt;a href=&#34;https://github.com/ywolf/F-MiddlewareScan&#34; target=&#34;_blank&#34; rel=&#34;external&#34;&gt;https://github.com/ywolf/F-MiddlewareScan&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;2、弱口令问题：（webserver、NFS、Redis、Rsync、Memcache、mangodb…）&#34;&gt;&lt;a href=&#34;#2、弱口令问题：（webserver、NFS、Redis、Rsync、Memcache、mangodb…）&#34; class=&#34;headerlink&#34; title=&#34;2、弱口令问题：（webserver、NFS、Redis、Rsync、Memcache、mangodb…）&#34;&gt;&lt;/a&gt;2、弱口令问题：（webserver、NFS、Redis、Rsync、Memcache、mangodb…）&lt;/h3&gt;&lt;p&gt;危害：数据泄露或者getshell&lt;br&gt;工具：&lt;a href=&#34;https://github.com/ywolf/F-MiddlewareScan、hydra&#34; target=&#34;_blank&#34; rel=&#34;external&#34;&gt;https://github.com/ywolf/F-MiddlewareScan、hydra&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;3、Nginx-Apache配置不当&#34;&gt;&lt;a href=&#34;#3、Nginx-Apache配置不当&#34; class=&#34;headerlink&#34; title=&#34;3、Nginx+Apache配置不当&#34;&gt;&lt;/a&gt;3、Nginx+Apache配置不当&lt;/h3&gt;&lt;p&gt;危害：导致敏感信息泄露包括web.xml、*.class文件&lt;br&gt;工具：访问对应文件&lt;/p&gt;
+&lt;h3 id=&#34;4、NFS配置不当&#34;&gt;&lt;a href=&#34;#4、NFS配置不当&#34; class=&#34;headerlink&#34; title=&#34;4、NFS配置不当&#34;&gt;&lt;/a&gt;4、NFS配置不当&lt;/h3&gt;&lt;p&gt;危害：读写文件&lt;br&gt;工具：showmount、mount&lt;/p&gt;"><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#信息泄露之配置不当"><span class="toc-number">1.</span> <span class="toc-text">信息泄露之配置不当</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、配置不当的分类、危害及检查工具："><span class="toc-number">1.1.</span> <span class="toc-text">一、配置不当的分类、危害及检查工具：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、版本过低问题"><span class="toc-number">1.1.1.</span> <span class="toc-text">1、版本过低问题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1）反序列化漏洞：WebLogic、WebSphere、JBoss、Jenkins、OpenNMS"><span class="toc-number">1.1.1.1.</span> <span class="toc-text">1）反序列化漏洞：WebLogic、WebSphere、JBoss、Jenkins、OpenNMS</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2）解析漏洞：nginx、apache、IIS"><span class="toc-number">1.1.1.2.</span> <span class="toc-text">2）解析漏洞：nginx、apache、IIS</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3）其他各种已知漏洞："><span class="toc-number">1.1.1.3.</span> <span class="toc-text">3）其他各种已知漏洞：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、弱口令问题：（webserver、NFS、Redis、Rsync、Memcache、mangodb…）"><span class="toc-number">1.1.2.</span> <span class="toc-text">2、弱口令问题：（webserver、NFS、Redis、Rsync、Memcache、mangodb…）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3、Nginx-Apache配置不当"><span class="toc-number">1.1.3.</span> <span class="toc-text">3、Nginx+Apache配置不当</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4、NFS配置不当"><span class="toc-number">1.1.4.</span> <span class="toc-text">4、NFS配置不当</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5、OpenSSL心脏滴血"><span class="toc-number">1.1.5.</span> <span class="toc-text">5、OpenSSL心脏滴血</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6、server-status信息泄露"><span class="toc-number">1.1.6.</span> <span class="toc-text">6、server-status信息泄露</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7、备份文件下载"><span class="toc-number">1.1.7.</span> <span class="toc-text">7、备份文件下载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8、编辑器生成的临时文件（-bak、-vim、-）"><span class="toc-number">1.1.8.</span> <span class="toc-text">8、编辑器生成的临时文件（.bak、.vim、~）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9、列目录导致可看到敏感数据并查看"><span class="toc-number">1.1.9.</span> <span class="toc-text">9、列目录导致可看到敏感数据并查看</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10、snmp信息泄露："><span class="toc-number">1.1.10.</span> <span class="toc-text">10、snmp信息泄露：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11、代码管理工具信息泄露：（SVN-GIT-Mercurial-hg-bzr-…）"><span class="toc-number">1.1.11.</span> <span class="toc-text">11、代码管理工具信息泄露：（SVN, GIT, Mercurial/hg, bzr, …）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#12、DNS域传送、拒绝服务"><span class="toc-number">1.1.12.</span> <span class="toc-text">12、DNS域传送、拒绝服务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#13、各种系统或者管理工具对外：（hadoop、zabbix、cacti、phpmyadmin、nagios…）"><span class="toc-number">1.1.13.</span> <span class="toc-text">13、各种系统或者管理工具对外：（hadoop、zabbix、cacti、phpmyadmin、nagios…）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、防范措施："><span class="toc-number">1.2.</span> <span class="toc-text">二、防范措施：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、业务上线前进行安全基线检查，杜绝以上的问题。"><span class="toc-number">1.2.1.</span> <span class="toc-text">1、业务上线前进行安全基线检查，杜绝以上的问题。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、对线上业务进行定时检查。"><span class="toc-number">1.2.2.</span> <span class="toc-text">2、对线上业务进行定时检查。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3、对攻击行为进行监控。"><span class="toc-number">1.2.3.</span> <span class="toc-text">3、对攻击行为进行监控。</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index width mx-auto px2 my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        信息泄露之配置不当
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Windy's blog</span>
+      </span>
+      
+    <div class="postdate">
+        <i class="fa fa-calendar-o"></i>
+        <time datetime="2016-08-22T02:02:02.000Z" itemprop="datePublished">2016-08-22</time>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <span id="/" class="leancloud_visitors" data-flag-title="信息泄露之配置不当">                    
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+            </span>
+            
+            <span class="post-meta-item-text">阅读次数</span>
+            <span class="leancloud-visitors-count"></span>
+        </span>
+    </div>
+
+      
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/svn/">svn</a>, <a class="tag-link" href="/tags/信息泄露/">信息泄露</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="信息泄露之配置不当"><a href="#信息泄露之配置不当" class="headerlink" title="信息泄露之配置不当"></a>信息泄露之配置不当</h1><ul>
+<li>一、配置不当的分类，危害，以及现有的较好检查工具和模块方法；</li>
+<li>二、配置不当的防范措施。</li>
+</ul>
+<h2 id="一、配置不当的分类、危害及检查工具："><a href="#一、配置不当的分类、危害及检查工具：" class="headerlink" title="一、配置不当的分类、危害及检查工具："></a>一、配置不当的分类、危害及检查工具：</h2><h3 id="1、版本过低问题"><a href="#1、版本过低问题" class="headerlink" title="1、版本过低问题"></a>1、版本过低问题</h3><h4 id="1）反序列化漏洞：WebLogic、WebSphere、JBoss、Jenkins、OpenNMS"><a href="#1）反序列化漏洞：WebLogic、WebSphere、JBoss、Jenkins、OpenNMS" class="headerlink" title="1）反序列化漏洞：WebLogic、WebSphere、JBoss、Jenkins、OpenNMS"></a>1）反序列化漏洞：WebLogic、WebSphere、JBoss、Jenkins、OpenNMS</h4><p>危害：getshell<br>工具：<a href="http://www.freebuf.com/vuls/86566.html" target="_blank" rel="external">http://www.freebuf.com/vuls/86566.html</a></p>
+<h4 id="2）解析漏洞：nginx、apache、IIS"><a href="#2）解析漏洞：nginx、apache、IIS" class="headerlink" title="2）解析漏洞：nginx、apache、IIS"></a>2）解析漏洞：nginx、apache、IIS</h4><p>危害：潜在getshell<br>工具：<a href="http://drops.wooyun.org/papers/539" target="_blank" rel="external">http://drops.wooyun.org/papers/539</a></p>
+<h4 id="3）其他各种已知漏洞："><a href="#3）其他各种已知漏洞：" class="headerlink" title="3）其他各种已知漏洞："></a>3）其他各种已知漏洞：</h4><p>比如说jboss的各种geshell漏洞、Redis任意文件读取…<br>工具：<a href="https://github.com/ywolf/F-MiddlewareScan" target="_blank" rel="external">https://github.com/ywolf/F-MiddlewareScan</a></p>
+<h3 id="2、弱口令问题：（webserver、NFS、Redis、Rsync、Memcache、mangodb…）"><a href="#2、弱口令问题：（webserver、NFS、Redis、Rsync、Memcache、mangodb…）" class="headerlink" title="2、弱口令问题：（webserver、NFS、Redis、Rsync、Memcache、mangodb…）"></a>2、弱口令问题：（webserver、NFS、Redis、Rsync、Memcache、mangodb…）</h3><p>危害：数据泄露或者getshell<br>工具：<a href="https://github.com/ywolf/F-MiddlewareScan、hydra" target="_blank" rel="external">https://github.com/ywolf/F-MiddlewareScan、hydra</a></p>
+<h3 id="3、Nginx-Apache配置不当"><a href="#3、Nginx-Apache配置不当" class="headerlink" title="3、Nginx+Apache配置不当"></a>3、Nginx+Apache配置不当</h3><p>危害：导致敏感信息泄露包括web.xml、*.class文件<br>工具：访问对应文件</p>
+<h3 id="4、NFS配置不当"><a href="#4、NFS配置不当" class="headerlink" title="4、NFS配置不当"></a>4、NFS配置不当</h3><p>危害：读写文件<br>工具：showmount、mount</p>
+<a id="more"></a>
+<h3 id="5、OpenSSL心脏滴血"><a href="#5、OpenSSL心脏滴血" class="headerlink" title="5、OpenSSL心脏滴血"></a>5、OpenSSL心脏滴血</h3><p>危害：敏感信息泄露，用户身份信息等<br>工具：<a href="http://wangzhan.360.cn/heartbleed/" target="_blank" rel="external">http://wangzhan.360.cn/heartbleed/</a></p>
+<h3 id="6、server-status信息泄露"><a href="#6、server-status信息泄露" class="headerlink" title="6、server-status信息泄露"></a>6、server-status信息泄露</h3><p>危害：例如任何人口可以看到谁在访问网站，甚至包括一些本来隐藏的管理页面。<br>工具：访问/server-status</p>
+<h3 id="7、备份文件下载"><a href="#7、备份文件下载" class="headerlink" title="7、备份文件下载"></a>7、备份文件下载</h3><p>危害：泄露网站源代码、用户资料等敏感信息。<br>工具：组合各种常见备份文件名并访问</p>
+<h3 id="8、编辑器生成的临时文件（-bak、-vim、-）"><a href="#8、编辑器生成的临时文件（-bak、-vim、-）" class="headerlink" title="8、编辑器生成的临时文件（.bak、.vim、~）"></a>8、编辑器生成的临时文件（.bak、.vim、~）</h3><p>危害：信息泄露，甚至getshell<br>工具：构造相应的文件并访问</p>
+<h3 id="9、列目录导致可看到敏感数据并查看"><a href="#9、列目录导致可看到敏感数据并查看" class="headerlink" title="9、列目录导致可看到敏感数据并查看"></a>9、列目录导致可看到敏感数据并查看</h3><p>危害：轻则可以查看目录结构，重则下载关键敏感信息<br>工具：组合各种常见目录地址并访问</p>
+<h3 id="10、snmp信息泄露："><a href="#10、snmp信息泄露：" class="headerlink" title="10、snmp信息泄露："></a>10、snmp信息泄露：</h3><p>危害：泄露认证信息，导致被入侵<br>工具：snmpwalk（集成于kali）</p>
+<h3 id="11、代码管理工具信息泄露：（SVN-GIT-Mercurial-hg-bzr-…）"><a href="#11、代码管理工具信息泄露：（SVN-GIT-Mercurial-hg-bzr-…）" class="headerlink" title="11、代码管理工具信息泄露：（SVN, GIT, Mercurial/hg, bzr, …）"></a>11、代码管理工具信息泄露：（SVN, GIT, Mercurial/hg, bzr, …）</h3><p>危害：泄露源代码，甚至导致被入侵<br>工具：<a href="https://github.com/kost/dvcs-ripper" target="_blank" rel="external">https://github.com/kost/dvcs-ripper</a></p>
+<h3 id="12、DNS域传送、拒绝服务"><a href="#12、DNS域传送、拒绝服务" class="headerlink" title="12、DNS域传送、拒绝服务"></a>12、DNS域传送、拒绝服务</h3><p>危害：泄露公司的网络架构信息，导致域名无法解析<br>工具：nslookup、CVE-2015-5477</p>
+<h3 id="13、各种系统或者管理工具对外：（hadoop、zabbix、cacti、phpmyadmin、nagios…）"><a href="#13、各种系统或者管理工具对外：（hadoop、zabbix、cacti、phpmyadmin、nagios…）" class="headerlink" title="13、各种系统或者管理工具对外：（hadoop、zabbix、cacti、phpmyadmin、nagios…）"></a>13、各种系统或者管理工具对外：（hadoop、zabbix、cacti、phpmyadmin、nagios…）</h3><p>危害：信息泄露、getshell<br>工具：nmap + 目录文件爆破 + 弱口令爆破</p>
+<h2 id="二、防范措施："><a href="#二、防范措施：" class="headerlink" title="二、防范措施："></a>二、防范措施：</h2><h3 id="1、业务上线前进行安全基线检查，杜绝以上的问题。"><a href="#1、业务上线前进行安全基线检查，杜绝以上的问题。" class="headerlink" title="1、业务上线前进行安全基线检查，杜绝以上的问题。"></a>1、业务上线前进行安全基线检查，杜绝以上的问题。</h3><h3 id="2、对线上业务进行定时检查。"><a href="#2、对线上业务进行定时检查。" class="headerlink" title="2、对线上业务进行定时检查。"></a>2、对线上业务进行定时检查。</h3><h3 id="3、对攻击行为进行监控。"><a href="#3、对攻击行为进行监控。" class="headerlink" title="3、对攻击行为进行监控。"></a>3、对攻击行为进行监控。</h3>
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/links/">Links</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#信息泄露之配置不当"><span class="toc-number">1.</span> <span class="toc-text">信息泄露之配置不当</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、配置不当的分类、危害及检查工具："><span class="toc-number">1.1.</span> <span class="toc-text">一、配置不当的分类、危害及检查工具：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、版本过低问题"><span class="toc-number">1.1.1.</span> <span class="toc-text">1、版本过低问题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1）反序列化漏洞：WebLogic、WebSphere、JBoss、Jenkins、OpenNMS"><span class="toc-number">1.1.1.1.</span> <span class="toc-text">1）反序列化漏洞：WebLogic、WebSphere、JBoss、Jenkins、OpenNMS</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2）解析漏洞：nginx、apache、IIS"><span class="toc-number">1.1.1.2.</span> <span class="toc-text">2）解析漏洞：nginx、apache、IIS</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3）其他各种已知漏洞："><span class="toc-number">1.1.1.3.</span> <span class="toc-text">3）其他各种已知漏洞：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、弱口令问题：（webserver、NFS、Redis、Rsync、Memcache、mangodb…）"><span class="toc-number">1.1.2.</span> <span class="toc-text">2、弱口令问题：（webserver、NFS、Redis、Rsync、Memcache、mangodb…）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3、Nginx-Apache配置不当"><span class="toc-number">1.1.3.</span> <span class="toc-text">3、Nginx+Apache配置不当</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4、NFS配置不当"><span class="toc-number">1.1.4.</span> <span class="toc-text">4、NFS配置不当</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5、OpenSSL心脏滴血"><span class="toc-number">1.1.5.</span> <span class="toc-text">5、OpenSSL心脏滴血</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6、server-status信息泄露"><span class="toc-number">1.1.6.</span> <span class="toc-text">6、server-status信息泄露</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7、备份文件下载"><span class="toc-number">1.1.7.</span> <span class="toc-text">7、备份文件下载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8、编辑器生成的临时文件（-bak、-vim、-）"><span class="toc-number">1.1.8.</span> <span class="toc-text">8、编辑器生成的临时文件（.bak、.vim、~）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9、列目录导致可看到敏感数据并查看"><span class="toc-number">1.1.9.</span> <span class="toc-text">9、列目录导致可看到敏感数据并查看</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10、snmp信息泄露："><span class="toc-number">1.1.10.</span> <span class="toc-text">10、snmp信息泄露：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11、代码管理工具信息泄露：（SVN-GIT-Mercurial-hg-bzr-…）"><span class="toc-number">1.1.11.</span> <span class="toc-text">11、代码管理工具信息泄露：（SVN, GIT, Mercurial/hg, bzr, …）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#12、DNS域传送、拒绝服务"><span class="toc-number">1.1.12.</span> <span class="toc-text">12、DNS域传送、拒绝服务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#13、各种系统或者管理工具对外：（hadoop、zabbix、cacti、phpmyadmin、nagios…）"><span class="toc-number">1.1.13.</span> <span class="toc-text">13、各种系统或者管理工具对外：（hadoop、zabbix、cacti、phpmyadmin、nagios…）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、防范措施："><span class="toc-number">1.2.</span> <span class="toc-text">二、防范措施：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、业务上线前进行安全基线检查，杜绝以上的问题。"><span class="toc-number">1.2.1.</span> <span class="toc-text">1、业务上线前进行安全基线检查，杜绝以上的问题。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、对线上业务进行定时检查。"><span class="toc-number">1.2.2.</span> <span class="toc-text">2、对线上业务进行定时检查。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3、对攻击行为进行监控。"><span class="toc-number">1.2.3.</span> <span class="toc-text">3、对攻击行为进行监控。</span></a></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2016/08/22/InformationDisclosure-ImproperlyConfigured/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2016/08/22/InformationDisclosure-ImproperlyConfigured/&text=信息泄露之配置不当"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2016/08/22/InformationDisclosure-ImproperlyConfigured/&title=信息泄露之配置不当"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2016/08/22/InformationDisclosure-ImproperlyConfigured/&is_video=false&description=信息泄露之配置不当"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=信息泄露之配置不当&body=Check out this article: http://yoursite.com/2016/08/22/InformationDisclosure-ImproperlyConfigured/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2016/08/22/InformationDisclosure-ImproperlyConfigured/&title=信息泄露之配置不当"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2016/08/22/InformationDisclosure-ImproperlyConfigured/&title=信息泄露之配置不当"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2016/08/22/InformationDisclosure-ImproperlyConfigured/&title=信息泄露之配置不当"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2016/08/22/InformationDisclosure-ImproperlyConfigured/&title=信息泄露之配置不当"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2016/08/22/InformationDisclosure-ImproperlyConfigured/&name=信息泄露之配置不当&description=&lt;h1 id=&#34;信息泄露之配置不当&#34;&gt;&lt;a href=&#34;#信息泄露之配置不当&#34; class=&#34;headerlink&#34; title=&#34;信息泄露之配置不当&#34;&gt;&lt;/a&gt;信息泄露之配置不当&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;一、配置不当的分类，危害，以及现有的较好检查工具和模块方法；&lt;/li&gt;
+&lt;li&gt;二、配置不当的防范措施。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;一、配置不当的分类、危害及检查工具：&#34;&gt;&lt;a href=&#34;#一、配置不当的分类、危害及检查工具：&#34; class=&#34;headerlink&#34; title=&#34;一、配置不当的分类、危害及检查工具：&#34;&gt;&lt;/a&gt;一、配置不当的分类、危害及检查工具：&lt;/h2&gt;&lt;h3 id=&#34;1、版本过低问题&#34;&gt;&lt;a href=&#34;#1、版本过低问题&#34; class=&#34;headerlink&#34; title=&#34;1、版本过低问题&#34;&gt;&lt;/a&gt;1、版本过低问题&lt;/h3&gt;&lt;h4 id=&#34;1）反序列化漏洞：WebLogic、WebSphere、JBoss、Jenkins、OpenNMS&#34;&gt;&lt;a href=&#34;#1）反序列化漏洞：WebLogic、WebSphere、JBoss、Jenkins、OpenNMS&#34; class=&#34;headerlink&#34; title=&#34;1）反序列化漏洞：WebLogic、WebSphere、JBoss、Jenkins、OpenNMS&#34;&gt;&lt;/a&gt;1）反序列化漏洞：WebLogic、WebSphere、JBoss、Jenkins、OpenNMS&lt;/h4&gt;&lt;p&gt;危害：getshell&lt;br&gt;工具：&lt;a href=&#34;http://www.freebuf.com/vuls/86566.html&#34; target=&#34;_blank&#34; rel=&#34;external&#34;&gt;http://www.freebuf.com/vuls/86566.html&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id=&#34;2）解析漏洞：nginx、apache、IIS&#34;&gt;&lt;a href=&#34;#2）解析漏洞：nginx、apache、IIS&#34; class=&#34;headerlink&#34; title=&#34;2）解析漏洞：nginx、apache、IIS&#34;&gt;&lt;/a&gt;2）解析漏洞：nginx、apache、IIS&lt;/h4&gt;&lt;p&gt;危害：潜在getshell&lt;br&gt;工具：&lt;a href=&#34;http://drops.wooyun.org/papers/539&#34; target=&#34;_blank&#34; rel=&#34;external&#34;&gt;http://drops.wooyun.org/papers/539&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id=&#34;3）其他各种已知漏洞：&#34;&gt;&lt;a href=&#34;#3）其他各种已知漏洞：&#34; class=&#34;headerlink&#34; title=&#34;3）其他各种已知漏洞：&#34;&gt;&lt;/a&gt;3）其他各种已知漏洞：&lt;/h4&gt;&lt;p&gt;比如说jboss的各种geshell漏洞、Redis任意文件读取…&lt;br&gt;工具：&lt;a href=&#34;https://github.com/ywolf/F-MiddlewareScan&#34; target=&#34;_blank&#34; rel=&#34;external&#34;&gt;https://github.com/ywolf/F-MiddlewareScan&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;2、弱口令问题：（webserver、NFS、Redis、Rsync、Memcache、mangodb…）&#34;&gt;&lt;a href=&#34;#2、弱口令问题：（webserver、NFS、Redis、Rsync、Memcache、mangodb…）&#34; class=&#34;headerlink&#34; title=&#34;2、弱口令问题：（webserver、NFS、Redis、Rsync、Memcache、mangodb…）&#34;&gt;&lt;/a&gt;2、弱口令问题：（webserver、NFS、Redis、Rsync、Memcache、mangodb…）&lt;/h3&gt;&lt;p&gt;危害：数据泄露或者getshell&lt;br&gt;工具：&lt;a href=&#34;https://github.com/ywolf/F-MiddlewareScan、hydra&#34; target=&#34;_blank&#34; rel=&#34;external&#34;&gt;https://github.com/ywolf/F-MiddlewareScan、hydra&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;3、Nginx-Apache配置不当&#34;&gt;&lt;a href=&#34;#3、Nginx-Apache配置不当&#34; class=&#34;headerlink&#34; title=&#34;3、Nginx+Apache配置不当&#34;&gt;&lt;/a&gt;3、Nginx+Apache配置不当&lt;/h3&gt;&lt;p&gt;危害：导致敏感信息泄露包括web.xml、*.class文件&lt;br&gt;工具：访问对应文件&lt;/p&gt;
+&lt;h3 id=&#34;4、NFS配置不当&#34;&gt;&lt;a href=&#34;#4、NFS配置不当&#34; class=&#34;headerlink&#34; title=&#34;4、NFS配置不当&#34;&gt;&lt;/a&gt;4、NFS配置不当&lt;/h3&gt;&lt;p&gt;危害：读写文件&lt;br&gt;工具：showmount、mount&lt;/p&gt;"><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick='$("#toc-footer").toggle();return false;'><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick='$("#share-footer").toggle();return false;'><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick='$("#nav-footer").toggle();return false;'><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2015 - 2017 Jack Yang
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/links/">Links</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="/lib/meslo-LG/styles.css">
+<link rel="stylesheet" href="/lib/justified-gallery/justifiedGallery.min.css">
+
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-86660611-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'windysec';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+
+
+    <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+    <script>AV.initialize("gXbogVvt7GkTh0IXllnbL00P-gzGzoHsz", "BUk2vE0XC6Uv6mlT4ToIRbGY");</script>
+    <script>
+      function showTime(Counter) {
+        var query = new AV.Query(Counter);
+        var entries = [];
+        var $visitors = $(".leancloud_visitors");
+  
+        $visitors.each(function () {
+          entries.push( $(this).attr("id").trim() );
+        });
+  
+        query.containedIn('url', entries);
+        query.find()
+          .done(function (results) {
+            var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+  
+            if (results.length === 0) {
+              $visitors.find(COUNT_CONTAINER_REF).text(0);
+              return;
+            }
+  
+            for (var i = 0; i < results.length; i++) {
+              var item = results[i];
+              var url = item.get('url');
+              var time = item.get('time');
+              var element = document.getElementById(url);
+  
+              $(element).find(COUNT_CONTAINER_REF).text(time);
+            }
+            for(var i = 0; i < entries.length; i++) {
+              var url = entries[i];
+              var element = document.getElementById(url);
+              var countSpan = $(element).find(COUNT_CONTAINER_REF);
+              if( countSpan.text() == '') {
+                countSpan.text(0);
+              }
+            }
+          })
+          .fail(function (object, error) {
+            console.log("Error: " + error.code + " " + error.message);
+          });
+      }
+  
+      function addCount(Counter) {
+        var $visitors = $(".leancloud_visitors");
+        var url = $visitors.attr('id').trim();
+        var title = $visitors.attr('data-flag-title').trim();
+        var query = new AV.Query(Counter);
+  
+        query.equalTo("url", url);
+        query.find({
+          success: function(results) {
+            if (results.length > 0) {
+              var counter = results[0];
+              counter.fetchWhenSave(true);
+              counter.increment("time");
+              counter.save(null, {
+                success: function(counter) {
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(counter.get('time'));
+                },
+                error: function(counter, error) {
+                  console.log('Failed to save Visitor num, with error message: ' + error.message);
+                }
+              });
+            } else {
+              var newcounter = new Counter();
+              /* Set ACL */
+              var acl = new AV.ACL();
+              acl.setPublicReadAccess(true);
+              acl.setPublicWriteAccess(true);
+              newcounter.setACL(acl);
+              /* End Set ACL */
+              newcounter.set("title", title);
+              newcounter.set("url", url);
+              newcounter.set("time", 1);
+              newcounter.save(null, {
+                success: function(newcounter) {
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+                },
+                error: function(newcounter, error) {
+                  console.log('Failed to create');
+                }
+              });
+            }
+          },
+          error: function(error) {
+            console.log('Error:' + error.code + " " + error.message);
+          }
+        });
+      }
+  
+      $(function() {
+        var Counter = AV.Object.extend("Counter");
+        if ($('.leancloud_visitors').length == 1) {
+          addCount(Counter);
+        } else if ($('.post-title-link').length > 1) {
+          showTime(Counter);
+        }
+      });
+    </script>
+  
