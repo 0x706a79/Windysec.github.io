@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="发现一个学习Python小程序的指南，该文章会一直更新  Python 练习册，每天一个小程序 Python 练习册0x01 图片添加数字水印将你的 QQ 头像（或者微博头像）右上角加上红色的数字，类似于微信未读信息数量那种提示效果。  12345678910111213141516171819202122#!/usr /bin/env python# -*- coding: utf-8 -*-">
+<meta name="keywords" content="小程序">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python学习之小程序">
+<meta property="og:url" content="http://yoursite.com/2016/07/22/PythonPractice/index.html">
+<meta property="og:site_name" content="Windy&#39;s blog">
+<meta property="og:description" content="发现一个学习Python小程序的指南，该文章会一直更新  Python 练习册，每天一个小程序 Python 练习册0x01 图片添加数字水印将你的 QQ 头像（或者微博头像）右上角加上红色的数字，类似于微信未读信息数量那种提示效果。  12345678910111213141516171819202122#!/usr /bin/env python# -*- coding: utf-8 -*-">
+<meta property="og:image" content="http://yoursite.com/2016/07/22/PythonPractice/PythonPractice/avatar.png">
+<meta property="og:image" content="http://yoursite.com/2016/07/22/PythonPractice/PythonPractice/new_avatar.png">
+<meta property="og:updated_time" content="2017-01-29T14:29:44.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python学习之小程序">
+<meta name="twitter:description" content="发现一个学习Python小程序的指南，该文章会一直更新  Python 练习册，每天一个小程序 Python 练习册0x01 图片添加数字水印将你的 QQ 头像（或者微博头像）右上角加上红色的数字，类似于微信未读信息数量那种提示效果。  12345678910111213141516171819202122#!/usr /bin/env python# -*- coding: utf-8 -*-">
+<meta name="twitter:image" content="http://yoursite.com/2016/07/22/PythonPractice/PythonPractice/avatar.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>Python学习之小程序</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/atom.xml" title="Windy&#39;s blog" type="application/atom+xml" />
+    
+</head>
+
+<body>
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/links/">Links</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2016/08/22/InformationDisclosure-ImproperlyConfigured/"><i class="fa fa-chevron-left" aria-hidden="true" onmouseover='$("#i-prev").toggle();' onmouseout='$("#i-prev").toggle();'></i></a></li>
+        
+        
+        <li><a class="icon" href="/2016/05/18/mysqlburstinjection/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover='$("#i-next").toggle();' onmouseout='$("#i-next").toggle();'></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover='$("#i-top").toggle();' onmouseout='$("#i-top").toggle();'></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover='$("#i-share").toggle();' onmouseout='$("#i-share").toggle();' onclick='$("#share").toggle();return false;'></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2016/07/22/PythonPractice/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2016/07/22/PythonPractice/&text=Python学习之小程序"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2016/07/22/PythonPractice/&title=Python学习之小程序"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2016/07/22/PythonPractice/&is_video=false&description=Python学习之小程序"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Python学习之小程序&body=Check out this article: http://yoursite.com/2016/07/22/PythonPractice/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2016/07/22/PythonPractice/&title=Python学习之小程序"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2016/07/22/PythonPractice/&title=Python学习之小程序"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2016/07/22/PythonPractice/&title=Python学习之小程序"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2016/07/22/PythonPractice/&title=Python学习之小程序"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2016/07/22/PythonPractice/&name=Python学习之小程序&description=&lt;ul&gt;
+&lt;li&gt;发现一个学习Python小程序的指南，该文章会一直更新&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/Yixiaohan/show-me-the-code&#34; target=&#34;_blank&#34; rel=&#34;external&#34;&gt;Python 练习册，每天一个小程序&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&#34;Python-练习册&#34;&gt;&lt;a href=&#34;#Python-练习册&#34; class=&#34;headerlink&#34; title=&#34;Python 练习册&#34;&gt;&lt;/a&gt;Python 练习册&lt;/h1&gt;&lt;h2 id=&#34;0x01-图片添加数字水印&#34;&gt;&lt;a href=&#34;#0x01-图片添加数字水印&#34; class=&#34;headerlink&#34; title=&#34;0x01 图片添加数字水印&#34;&gt;&lt;/a&gt;0x01 图片添加数字水印&lt;/h2&gt;&lt;p&gt;将你的 QQ 头像（或者微博头像）右上角加上红色的数字，类似于微信未读信息数量那种提示效果。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;PythonPractice/avatar.png&#34; alt=&#34;avatar&#34;&gt;&lt;/p&gt;
+&lt;figure class=&#34;highlight python&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;div class=&#34;line&#34;&gt;1&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;2&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;3&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;4&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;5&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;6&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;7&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;8&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;9&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;10&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;11&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;12&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;13&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;14&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;15&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;16&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;17&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;18&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;19&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;20&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;21&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;22&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;div class=&#34;line&#34;&gt;&lt;span class=&#34;comment&#34;&gt;#!/usr /bin/env python&lt;/span&gt;&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;&lt;span class=&#34;comment&#34;&gt;# -*- coding: utf-8 -*-&lt;/span&gt;&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;&lt;span class=&#34;comment&#34;&gt;#author：Windy&lt;/span&gt;&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;from&lt;/span&gt; PIL &lt;span class=&#34;keyword&#34;&gt;import&lt;/span&gt; Image,ImageDraw,ImageFont&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;color = (&lt;span class=&#34;number&#34;&gt;255&lt;/span&gt;,&lt;span class=&#34;number&#34;&gt;0&lt;/span&gt;,&lt;span class=&#34;number&#34;&gt;0&lt;/span&gt;)&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;&lt;span class=&#34;function&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;title&#34;&gt;draw_&lt;/span&gt;&lt;span class=&#34;params&#34;&gt;(text,fill_color)&lt;/span&gt;:&lt;/span&gt;&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;	im = Image.open(&lt;span class=&#34;string&#34;&gt;&#39;C:/Users/Windy/Desktop/avatar.png&#39;&lt;/span&gt;) &lt;span class=&#34;comment&#34;&gt;#open方法生成一个实例im&lt;/span&gt;&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;	x,y = im.size &lt;span class=&#34;comment&#34;&gt;#size方法获取大小&lt;/span&gt;&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;	draw = ImageDraw.Draw(im)&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;	font = ImageFont.truetype(&lt;span class=&#34;string&#34;&gt;&#34;C:/windows/fonts/Arial.ttf&#34;&lt;/span&gt;, &lt;span class=&#34;number&#34;&gt;35&lt;/span&gt;)&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;	draw.text((x&lt;span class=&#34;number&#34;&gt;-20&lt;/span&gt;, &lt;span class=&#34;number&#34;&gt;7&lt;/span&gt;), text, fill_color, font)&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;	im.save(&lt;span class=&#34;string&#34;&gt;&#39;C:/Users/Windy/Desktop/new_avatar.png&#39;&lt;/span&gt;)&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;	im.show()&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;if&lt;/span&gt; __name__ == &lt;span class=&#34;string&#34;&gt;&#34;__main__&#34;&lt;/span&gt;:&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;	number = str(&lt;span class=&#34;number&#34;&gt;4&lt;/span&gt;)&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;	draw_(number,color)&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;"><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Python-练习册"><span class="toc-number">1.</span> <span class="toc-text">Python 练习册</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x01-图片添加数字水印"><span class="toc-number">1.1.</span> <span class="toc-text">0x01 图片添加数字水印</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x02-随机生成200个10位的激活码"><span class="toc-number">1.2.</span> <span class="toc-text">0x02 随机生成200个10位的激活码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x03-将-0001-题生成的-200-个激活码（或者优惠券）保存到-MySQL-关系型数据库中。"><span class="toc-number">1.3.</span> <span class="toc-text">0x03 将 0001 题生成的 200 个激活码（或者优惠券）保存到 MySQL 关系型数据库中。</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x04-任一个英文的纯文本文件，统计其中的单词出现的个数。"><span class="toc-number">1.4.</span> <span class="toc-text">0x04 任一个英文的纯文本文件，统计其中的单词出现的个数。</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x05-随机生成4位验证码"><span class="toc-number">1.5.</span> <span class="toc-text">0x05 随机生成4位验证码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x06-纯文本文件-student-txt转化为students-xls"><span class="toc-number">1.6.</span> <span class="toc-text">0x06 纯文本文件 student.txt转化为students.xls</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index width mx-auto px2 my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Python学习之小程序
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Windy's blog</span>
+      </span>
+      
+    <div class="postdate">
+        <i class="fa fa-calendar-o"></i>
+        <time datetime="2016-07-22T14:20:29.000Z" itemprop="datePublished">2016-07-22</time>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <span id="/2016/07/22/PythonPractice/" class="leancloud_visitors" data-flag-title="Python学习之小程序">                    
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+            </span>
+            
+            <span class="post-meta-item-text">阅读次数</span>
+            <span class="leancloud-visitors-count"></span>
+        </span>
+    </div>
+
+      
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/小程序/">小程序</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <ul>
+<li>发现一个学习Python小程序的指南，该文章会一直更新</li>
+</ul>
+<p><a href="https://github.com/Yixiaohan/show-me-the-code" target="_blank" rel="external">Python 练习册，每天一个小程序</a></p>
+<h1 id="Python-练习册"><a href="#Python-练习册" class="headerlink" title="Python 练习册"></a>Python 练习册</h1><h2 id="0x01-图片添加数字水印"><a href="#0x01-图片添加数字水印" class="headerlink" title="0x01 图片添加数字水印"></a>0x01 图片添加数字水印</h2><p>将你的 QQ 头像（或者微博头像）右上角加上红色的数字，类似于微信未读信息数量那种提示效果。</p>
+<p><img src="PythonPractice/avatar.png" alt="avatar"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr /bin/env python</span></div><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"><span class="comment">#author：Windy</span></div><div class="line"></div><div class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image,ImageDraw,ImageFont</div><div class="line"></div><div class="line">color = (<span class="number">255</span>,<span class="number">0</span>,<span class="number">0</span>)</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">draw_</span><span class="params">(text,fill_color)</span>:</span></div><div class="line">	im = Image.open(<span class="string">'C:/Users/Windy/Desktop/avatar.png'</span>) <span class="comment">#open方法生成一个实例im</span></div><div class="line">	x,y = im.size <span class="comment">#size方法获取大小</span></div><div class="line"></div><div class="line">	draw = ImageDraw.Draw(im)</div><div class="line">	font = ImageFont.truetype(<span class="string">"C:/windows/fonts/Arial.ttf"</span>, <span class="number">35</span>)</div><div class="line">	draw.text((x<span class="number">-20</span>, <span class="number">7</span>), text, fill_color, font)</div><div class="line"></div><div class="line">	im.save(<span class="string">'C:/Users/Windy/Desktop/new_avatar.png'</span>)</div><div class="line">	im.show()</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">	number = str(<span class="number">4</span>)</div><div class="line">	draw_(number,color)</div></pre></td></tr></table></figure>
+<a id="more"></a>
+<p><img src="PythonPractice/new_avatar.png" alt="new_avatar"></p>
+<h2 id="0x02-随机生成200个10位的激活码"><a href="#0x02-随机生成200个10位的激活码" class="headerlink" title="0x02 随机生成200个10位的激活码"></a>0x02 随机生成200个10位的激活码</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr /bin/env python</span></div><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"><span class="comment">#author：Windy</span></div><div class="line"><span class="keyword">import</span> random</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">creat</span><span class="params">(count,length)</span>:</span></div><div class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> range(count):</div><div class="line">		s = <span class="string">"abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&amp;*()?"</span></div><div class="line">		<span class="keyword">print</span> <span class="string">""</span>.join(random.sample(s,length))</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">	length=input(<span class="string">"Enter the length of the random code: "</span>)</div><div class="line">	count=input(<span class="string">"Enter the count of the random code: "</span>)</div><div class="line">	creat(count,length)</div></pre></td></tr></table></figure>
+<h2 id="0x03-将-0001-题生成的-200-个激活码（或者优惠券）保存到-MySQL-关系型数据库中。"><a href="#0x03-将-0001-题生成的-200-个激活码（或者优惠券）保存到-MySQL-关系型数据库中。" class="headerlink" title="0x03 将 0001 题生成的 200 个激活码（或者优惠券）保存到 MySQL 关系型数据库中。"></a>0x03 将 0001 题生成的 200 个激活码（或者优惠券）保存到 MySQL 关系型数据库中。</h2><p>安装mysqldb模块<br><a href="http://pan.baidu.com/s/1jHVhmYE" target="_blank" rel="external">mysqldb32位</a><br><a href="http://pan.baidu.com/s/1pKYuO8j" target="_blank" rel="external">mysqldb64位</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr /bin/env python</span></div><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"><span class="comment">#author：Windy</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> MySQLdb</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">mysql_write</span><span class="params">()</span>:</span></div><div class="line">	key=<span class="string">"testtesttest"</span></div><div class="line">	db = MySQLdb.connect(<span class="string">"127.0.0.1"</span>,<span class="string">"root"</span>,<span class="string">"root"</span>,<span class="string">"test"</span> ) <span class="comment">#数据库名test</span></div><div class="line">	<span class="comment"># 使用cursor()方法获取操作游标</span></div><div class="line">	cursor = db.cursor()</div><div class="line">	<span class="comment"># SQL语句</span></div><div class="line">	<span class="keyword">try</span>:</div><div class="line">		<span class="comment"># 执行sql语句</span></div><div class="line">		cursor.execute(<span class="string">"INSERT INTO `key`(`key`) VALUES (%s)"</span>,key)</div><div class="line">		<span class="comment"># 提交到数据库执行</span></div><div class="line">		db.commit()</div><div class="line">	<span class="keyword">except</span>:</div><div class="line">		<span class="comment"># Rollback in case there is any error</span></div><div class="line">		db.rollback()</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">	mysql_write()</div></pre></td></tr></table></figure>
+<h2 id="0x04-任一个英文的纯文本文件，统计其中的单词出现的个数。"><a href="#0x04-任一个英文的纯文本文件，统计其中的单词出现的个数。" class="headerlink" title="0x04 任一个英文的纯文本文件，统计其中的单词出现的个数。"></a>0x04 任一个英文的纯文本文件，统计其中的单词出现的个数。</h2><h2 id="0x05-随机生成4位验证码"><a href="#0x05-随机生成4位验证码" class="headerlink" title="0x05 随机生成4位验证码"></a>0x05 随机生成4位验证码</h2><p>参考github<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env python</span></div><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"><span class="comment">#author: Windy</span></div><div class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image, ImageDraw, ImageFont, ImageFilter</div><div class="line"><span class="keyword">import</span> string, random</div><div class="line"></div><div class="line"><span class="comment"># 获得随机四个字母</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">getRandomChar</span><span class="params">()</span>:</span></div><div class="line">    <span class="keyword">return</span> [random.choice(string.letters) <span class="keyword">for</span> _ <span class="keyword">in</span> range(<span class="number">4</span>)]</div><div class="line"></div><div class="line"><span class="comment"># 获得颜色</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">getRandomColor</span><span class="params">()</span>:</span></div><div class="line">	<span class="keyword">return</span> (random.randint(<span class="number">30</span>, <span class="number">100</span>), random.randint(<span class="number">30</span>, <span class="number">100</span>), random.randint(<span class="number">30</span>, <span class="number">100</span>))</div><div class="line"></div><div class="line"><span class="comment"># 获得验证码图片</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">getCodePiture</span><span class="params">()</span>:</span></div><div class="line">    width = <span class="number">240</span></div><div class="line">    height = <span class="number">60</span></div><div class="line">    <span class="comment"># 创建画布</span></div><div class="line">    image = Image.new(<span class="string">'RGB'</span>, (width, height), (<span class="number">180</span>,<span class="number">180</span>,<span class="number">180</span>))</div><div class="line">    font = ImageFont.truetype(<span class="string">'C:/windows/fonts/Arial.ttf'</span>, <span class="number">40</span>)</div><div class="line">    draw = ImageDraw.Draw(image)</div><div class="line">    <span class="comment"># 创建验证码对象</span></div><div class="line">    code = getRandomChar()</div><div class="line">    <span class="comment"># 把验证码放到画布上</span></div><div class="line">    <span class="keyword">for</span> t <span class="keyword">in</span> range(<span class="number">4</span>):</div><div class="line">		draw.text((<span class="number">60</span> * t + <span class="number">10</span>, <span class="number">0</span>), code[t], font=font, fill=getRandomColor())</div><div class="line">    <span class="comment"># 填充噪点</span></div><div class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> range(random.randint(<span class="number">1500</span>,<span class="number">3000</span>)):</div><div class="line">        draw.point((random.randint(<span class="number">0</span>,width), random.randint(<span class="number">0</span>,height)), fill=getRandomColor())</div><div class="line">    <span class="comment"># 模糊处理</span></div><div class="line">    image = image.filter(ImageFilter.BLUR)</div><div class="line">    image.show();</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">	getCodePiture()</div></pre></td></tr></table></figure></p>
+<h2 id="0x06-纯文本文件-student-txt转化为students-xls"><a href="#0x06-纯文本文件-student-txt转化为students-xls" class="headerlink" title="0x06 纯文本文件 student.txt转化为students.xls"></a>0x06 纯文本文件 student.txt转化为students.xls</h2><p>学生信息如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    &quot;1&quot;:[&quot;张三&quot;,150,120,100],</div><div class="line">    &quot;2&quot;:[&quot;李四&quot;,90,99,95],</div><div class="line">    &quot;3&quot;:[&quot;王五&quot;,60,66,68]</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><a href="http://www.cnblogs.com/skynet/archive/2013/05/06/3063245.html" target="_blank" rel="external">腾讯游戏开发 XML 和 Excel 内容相互转换</a><br>此处为json转Excel<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr /bin/env python</span></div><div class="line"><span class="comment"># -*- coding:utf-8 -*-</span></div><div class="line"><span class="comment">#author:Windy</span></div><div class="line"><span class="keyword">from</span> xlwt <span class="keyword">import</span> Workbook</div><div class="line"><span class="keyword">import</span> json</div><div class="line"></div><div class="line">file = open(<span class="string">'C:\Users\Windy\Desktop\python练习册\student.txt'</span>,<span class="string">'rb'</span>)</div><div class="line">text = file.read().decode(<span class="string">'gbk'</span>)</div><div class="line">js = json.loads(text)</div><div class="line">book = Workbook()<span class="comment">#生成一个工作对象</span></div><div class="line">sheet = book.add_sheet(<span class="string">'student'</span>)<span class="comment">#增加一个名为student的工作表</span></div><div class="line">rownum = <span class="number">0</span></div><div class="line">js2 = sorted(js)</div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> js2:</div><div class="line">    colnum = <span class="number">0</span></div><div class="line">    <span class="keyword">print</span> i</div><div class="line">    sheet.write(rownum,colnum,unicode(i))</div><div class="line">    <span class="keyword">for</span> item <span class="keyword">in</span> js[i]:</div><div class="line">        <span class="keyword">print</span> item</div><div class="line">        colnum += <span class="number">1</span></div><div class="line">        sheet.write(rownum,colnum,unicode(item))</div><div class="line">    rownum += <span class="number">1</span></div><div class="line">book.save(<span class="string">'C:\Users\Windy\Desktop\python练习册\student.xls'</span>)</div></pre></td></tr></table></figure></p>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/links/">Links</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Python-练习册"><span class="toc-number">1.</span> <span class="toc-text">Python 练习册</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x01-图片添加数字水印"><span class="toc-number">1.1.</span> <span class="toc-text">0x01 图片添加数字水印</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x02-随机生成200个10位的激活码"><span class="toc-number">1.2.</span> <span class="toc-text">0x02 随机生成200个10位的激活码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x03-将-0001-题生成的-200-个激活码（或者优惠券）保存到-MySQL-关系型数据库中。"><span class="toc-number">1.3.</span> <span class="toc-text">0x03 将 0001 题生成的 200 个激活码（或者优惠券）保存到 MySQL 关系型数据库中。</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x04-任一个英文的纯文本文件，统计其中的单词出现的个数。"><span class="toc-number">1.4.</span> <span class="toc-text">0x04 任一个英文的纯文本文件，统计其中的单词出现的个数。</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x05-随机生成4位验证码"><span class="toc-number">1.5.</span> <span class="toc-text">0x05 随机生成4位验证码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x06-纯文本文件-student-txt转化为students-xls"><span class="toc-number">1.6.</span> <span class="toc-text">0x06 纯文本文件 student.txt转化为students.xls</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2016/07/22/PythonPractice/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2016/07/22/PythonPractice/&text=Python学习之小程序"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2016/07/22/PythonPractice/&title=Python学习之小程序"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2016/07/22/PythonPractice/&is_video=false&description=Python学习之小程序"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Python学习之小程序&body=Check out this article: http://yoursite.com/2016/07/22/PythonPractice/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2016/07/22/PythonPractice/&title=Python学习之小程序"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2016/07/22/PythonPractice/&title=Python学习之小程序"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2016/07/22/PythonPractice/&title=Python学习之小程序"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2016/07/22/PythonPractice/&title=Python学习之小程序"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2016/07/22/PythonPractice/&name=Python学习之小程序&description=&lt;ul&gt;
+&lt;li&gt;发现一个学习Python小程序的指南，该文章会一直更新&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/Yixiaohan/show-me-the-code&#34; target=&#34;_blank&#34; rel=&#34;external&#34;&gt;Python 练习册，每天一个小程序&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&#34;Python-练习册&#34;&gt;&lt;a href=&#34;#Python-练习册&#34; class=&#34;headerlink&#34; title=&#34;Python 练习册&#34;&gt;&lt;/a&gt;Python 练习册&lt;/h1&gt;&lt;h2 id=&#34;0x01-图片添加数字水印&#34;&gt;&lt;a href=&#34;#0x01-图片添加数字水印&#34; class=&#34;headerlink&#34; title=&#34;0x01 图片添加数字水印&#34;&gt;&lt;/a&gt;0x01 图片添加数字水印&lt;/h2&gt;&lt;p&gt;将你的 QQ 头像（或者微博头像）右上角加上红色的数字，类似于微信未读信息数量那种提示效果。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;PythonPractice/avatar.png&#34; alt=&#34;avatar&#34;&gt;&lt;/p&gt;
+&lt;figure class=&#34;highlight python&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;div class=&#34;line&#34;&gt;1&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;2&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;3&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;4&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;5&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;6&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;7&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;8&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;9&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;10&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;11&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;12&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;13&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;14&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;15&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;16&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;17&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;18&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;19&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;20&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;21&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;22&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;div class=&#34;line&#34;&gt;&lt;span class=&#34;comment&#34;&gt;#!/usr /bin/env python&lt;/span&gt;&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;&lt;span class=&#34;comment&#34;&gt;# -*- coding: utf-8 -*-&lt;/span&gt;&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;&lt;span class=&#34;comment&#34;&gt;#author：Windy&lt;/span&gt;&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;from&lt;/span&gt; PIL &lt;span class=&#34;keyword&#34;&gt;import&lt;/span&gt; Image,ImageDraw,ImageFont&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;color = (&lt;span class=&#34;number&#34;&gt;255&lt;/span&gt;,&lt;span class=&#34;number&#34;&gt;0&lt;/span&gt;,&lt;span class=&#34;number&#34;&gt;0&lt;/span&gt;)&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;&lt;span class=&#34;function&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;title&#34;&gt;draw_&lt;/span&gt;&lt;span class=&#34;params&#34;&gt;(text,fill_color)&lt;/span&gt;:&lt;/span&gt;&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;	im = Image.open(&lt;span class=&#34;string&#34;&gt;&#39;C:/Users/Windy/Desktop/avatar.png&#39;&lt;/span&gt;) &lt;span class=&#34;comment&#34;&gt;#open方法生成一个实例im&lt;/span&gt;&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;	x,y = im.size &lt;span class=&#34;comment&#34;&gt;#size方法获取大小&lt;/span&gt;&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;	draw = ImageDraw.Draw(im)&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;	font = ImageFont.truetype(&lt;span class=&#34;string&#34;&gt;&#34;C:/windows/fonts/Arial.ttf&#34;&lt;/span&gt;, &lt;span class=&#34;number&#34;&gt;35&lt;/span&gt;)&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;	draw.text((x&lt;span class=&#34;number&#34;&gt;-20&lt;/span&gt;, &lt;span class=&#34;number&#34;&gt;7&lt;/span&gt;), text, fill_color, font)&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;	im.save(&lt;span class=&#34;string&#34;&gt;&#39;C:/Users/Windy/Desktop/new_avatar.png&#39;&lt;/span&gt;)&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;	im.show()&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;if&lt;/span&gt; __name__ == &lt;span class=&#34;string&#34;&gt;&#34;__main__&#34;&lt;/span&gt;:&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;	number = str(&lt;span class=&#34;number&#34;&gt;4&lt;/span&gt;)&lt;/div&gt;&lt;div class=&#34;line&#34;&gt;	draw_(number,color)&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;"><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick='$("#toc-footer").toggle();return false;'><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick='$("#share-footer").toggle();return false;'><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick='$("#nav-footer").toggle();return false;'><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2015 - 2017 Jack Yang
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/links/">Links</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="/lib/meslo-LG/styles.css">
+<link rel="stylesheet" href="/lib/justified-gallery/justifiedGallery.min.css">
+
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-86660611-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'windysec';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+
+
+    <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+    <script>AV.initialize("gXbogVvt7GkTh0IXllnbL00P-gzGzoHsz", "BUk2vE0XC6Uv6mlT4ToIRbGY");</script>
+    <script>
+      function showTime(Counter) {
+        var query = new AV.Query(Counter);
+        var entries = [];
+        var $visitors = $(".leancloud_visitors");
+  
+        $visitors.each(function () {
+          entries.push( $(this).attr("id").trim() );
+        });
+  
+        query.containedIn('url', entries);
+        query.find()
+          .done(function (results) {
+            var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+  
+            if (results.length === 0) {
+              $visitors.find(COUNT_CONTAINER_REF).text(0);
+              return;
+            }
+  
+            for (var i = 0; i < results.length; i++) {
+              var item = results[i];
+              var url = item.get('url');
+              var time = item.get('time');
+              var element = document.getElementById(url);
+  
+              $(element).find(COUNT_CONTAINER_REF).text(time);
+            }
+            for(var i = 0; i < entries.length; i++) {
+              var url = entries[i];
+              var element = document.getElementById(url);
+              var countSpan = $(element).find(COUNT_CONTAINER_REF);
+              if( countSpan.text() == '') {
+                countSpan.text(0);
+              }
+            }
+          })
+          .fail(function (object, error) {
+            console.log("Error: " + error.code + " " + error.message);
+          });
+      }
+  
+      function addCount(Counter) {
+        var $visitors = $(".leancloud_visitors");
+        var url = $visitors.attr('id').trim();
+        var title = $visitors.attr('data-flag-title').trim();
+        var query = new AV.Query(Counter);
+  
+        query.equalTo("url", url);
+        query.find({
+          success: function(results) {
+            if (results.length > 0) {
+              var counter = results[0];
+              counter.fetchWhenSave(true);
+              counter.increment("time");
+              counter.save(null, {
+                success: function(counter) {
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(counter.get('time'));
+                },
+                error: function(counter, error) {
+                  console.log('Failed to save Visitor num, with error message: ' + error.message);
+                }
+              });
+            } else {
+              var newcounter = new Counter();
+              /* Set ACL */
+              var acl = new AV.ACL();
+              acl.setPublicReadAccess(true);
+              acl.setPublicWriteAccess(true);
+              newcounter.setACL(acl);
+              /* End Set ACL */
+              newcounter.set("title", title);
+              newcounter.set("url", url);
+              newcounter.set("time", 1);
+              newcounter.save(null, {
+                success: function(newcounter) {
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+                },
+                error: function(newcounter, error) {
+                  console.log('Failed to create');
+                }
+              });
+            }
+          },
+          error: function(error) {
+            console.log('Error:' + error.code + " " + error.message);
+          }
+        });
+      }
+  
+      $(function() {
+        var Counter = AV.Object.extend("Counter");
+        if ($('.leancloud_visitors').length == 1) {
+          addCount(Counter);
+        } else if ($('.post-title-link').length > 1) {
+          showTime(Counter);
+        }
+      });
+    </script>
+  
