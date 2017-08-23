@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="针对rsa进行的攻击 练习 https://www.jarvisoj.com/challenges 0x00 rsa算法描述省略 0x01 模数分解n的分解rsa最暴力最简单的方式就是分解n，将n分解成功，得到p、q的值，可求n的欧拉函数的值。  φ(n)=(p−1)(q−1)  e，d与n的欧拉函数满足如下关系：  ed=1 mod φ(n)  即在知道e，p，q的情况下，可以解出d： 1234">
+<meta name="keywords" content="rsa,crypto">
+<meta property="og:type" content="article">
+<meta property="og:title" content="针对rsa的攻击总结">
+<meta property="og:url" content="http://yoursite.com/2017/08/23/rsaattack/index.html">
+<meta property="og:site_name" content="Windy&#39;s blog">
+<meta property="og:description" content="针对rsa进行的攻击 练习 https://www.jarvisoj.com/challenges 0x00 rsa算法描述省略 0x01 模数分解n的分解rsa最暴力最简单的方式就是分解n，将n分解成功，得到p、q的值，可求n的欧拉函数的值。  φ(n)=(p−1)(q−1)  e，d与n的欧拉函数满足如下关系：  ed=1 mod φ(n)  即在知道e，p，q的情况下，可以解出d： 1234">
+<meta property="og:image" content="http://oksip9gk9.bkt.clouddn.com/20170731150146279631543.png">
+<meta property="og:updated_time" content="2017-08-23T01:21:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="针对rsa的攻击总结">
+<meta name="twitter:description" content="针对rsa进行的攻击 练习 https://www.jarvisoj.com/challenges 0x00 rsa算法描述省略 0x01 模数分解n的分解rsa最暴力最简单的方式就是分解n，将n分解成功，得到p、q的值，可求n的欧拉函数的值。  φ(n)=(p−1)(q−1)  e，d与n的欧拉函数满足如下关系：  ed=1 mod φ(n)  即在知道e，p，q的情况下，可以解出d： 1234">
+<meta name="twitter:image" content="http://oksip9gk9.bkt.clouddn.com/20170731150146279631543.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>针对rsa的攻击总结</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/atom.xml" title="Windy&#39;s blog" type="application/atom+xml" />
+    
+</head>
+
+<body>
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/links/">Links</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2017/04/17/xatuWriteUp/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover='$("#i-next").toggle();' onmouseout='$("#i-next").toggle();'></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover='$("#i-top").toggle();' onmouseout='$("#i-top").toggle();'></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover='$("#i-share").toggle();' onmouseout='$("#i-share").toggle();' onclick='$("#share").toggle();return false;'></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2017/08/23/rsaattack/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2017/08/23/rsaattack/&text=针对rsa的攻击总结"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2017/08/23/rsaattack/&title=针对rsa的攻击总结"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2017/08/23/rsaattack/&is_video=false&description=针对rsa的攻击总结"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=针对rsa的攻击总结&body=Check out this article: http://yoursite.com/2017/08/23/rsaattack/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2017/08/23/rsaattack/&title=针对rsa的攻击总结"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2017/08/23/rsaattack/&title=针对rsa的攻击总结"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2017/08/23/rsaattack/&title=针对rsa的攻击总结"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2017/08/23/rsaattack/&title=针对rsa的攻击总结"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2017/08/23/rsaattack/&name=针对rsa的攻击总结&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#针对rsa进行的攻击"><span class="toc-number">1.</span> <span class="toc-text">针对rsa进行的攻击</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x00-rsa算法描述"><span class="toc-number">1.1.</span> <span class="toc-text">0x00 rsa算法描述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x01-模数分解"><span class="toc-number">1.2.</span> <span class="toc-text">0x01 模数分解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#n的分解"><span class="toc-number">1.2.1.</span> <span class="toc-text">n的分解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#利用公约数"><span class="toc-number">1.2.2.</span> <span class="toc-text">利用公约数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x02-选择密文"><span class="toc-number">1.3.</span> <span class="toc-text">0x02 选择密文</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x03-加密指数"><span class="toc-number">1.4.</span> <span class="toc-text">0x03 加密指数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#低加密指数攻击"><span class="toc-number">1.4.1.</span> <span class="toc-text">低加密指数攻击</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#低加密指数广播攻击"><span class="toc-number">1.4.2.</span> <span class="toc-text">低加密指数广播攻击</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Coppersmith定理攻击"><span class="toc-number">1.4.3.</span> <span class="toc-text">Coppersmith定理攻击</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#相关信息和短填充"><span class="toc-number">1.4.4.</span> <span class="toc-text">相关信息和短填充</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x04-解密指数"><span class="toc-number">1.5.</span> <span class="toc-text">0x04 解密指数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#泄露"><span class="toc-number">1.5.1.</span> <span class="toc-text">泄露</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#低解密指数攻击"><span class="toc-number">1.5.2.</span> <span class="toc-text">低解密指数攻击</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x05-模"><span class="toc-number">1.6.</span> <span class="toc-text">0x05 模</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#共模攻击"><span class="toc-number">1.6.1.</span> <span class="toc-text">共模攻击</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x06-执行"><span class="toc-number">1.7.</span> <span class="toc-text">0x06 执行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ctf中的数据处理"><span class="toc-number">1.8.</span> <span class="toc-text">ctf中的数据处理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#openssl"><span class="toc-number">1.8.1.</span> <span class="toc-text">openssl</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pcap文件"><span class="toc-number">1.8.2.</span> <span class="toc-text">pcap文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PPC模式"><span class="toc-number">1.8.3.</span> <span class="toc-text">PPC模式</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index width mx-auto px2 my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        针对rsa的攻击总结
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Windy's blog</span>
+      </span>
+      
+    <div class="postdate">
+        <i class="fa fa-calendar-o"></i>
+        <time datetime="2017-08-23T01:08:52.000Z" itemprop="datePublished">2017-08-23</time>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <span id="/2017/08/23/rsaattack/" class="leancloud_visitors" data-flag-title="针对rsa的攻击总结">                    
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+            </span>
+            
+            <span class="post-meta-item-text">阅读次数</span>
+            <span class="leancloud-visitors-count"></span>
+        </span>
+    </div>
+
+      
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/crypto/">crypto</a>, <a class="tag-link" href="/tags/rsa/">rsa</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="针对rsa进行的攻击"><a href="#针对rsa进行的攻击" class="headerlink" title="针对rsa进行的攻击"></a>针对rsa进行的攻击</h1><p><img src="http://oksip9gk9.bkt.clouddn.com/20170731150146279631543.png" alt="20170731150146279631543.png"></p>
+<p>练习 <a href="https://www.jarvisoj.com/challenges" target="_blank" rel="external">https://www.jarvisoj.com/challenges</a></p>
+<h2 id="0x00-rsa算法描述"><a href="#0x00-rsa算法描述" class="headerlink" title="0x00 rsa算法描述"></a>0x00 rsa算法描述</h2><p>省略</p>
+<h2 id="0x01-模数分解"><a href="#0x01-模数分解" class="headerlink" title="0x01 模数分解"></a>0x01 模数分解</h2><h3 id="n的分解"><a href="#n的分解" class="headerlink" title="n的分解"></a>n的分解</h3><p>rsa最暴力最简单的方式就是分解n，将n分解成功，得到p、q的值，可求n的欧拉函数的值。</p>
+<ul>
+<li>φ(n)=(p−1)(q−1)</li>
+</ul>
+<p>e，d与n的欧拉函数满足如下关系：</p>
+<ul>
+<li>ed=1 mod φ(n)</li>
+</ul>
+<p>即在知道e，p，q的情况下，可以解出d：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#coding:utf-8</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">egcd</span><span class="params">(a, b)</span>:</span></div><div class="line">    <span class="keyword">if</span> a == <span class="number">0</span>:</div><div class="line">        <span class="keyword">return</span> (b, <span class="number">0</span>, <span class="number">1</span>)</div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        g, y, x = egcd(b % a, a)</div><div class="line">        <span class="keyword">return</span> (g, x - (b // a) * y, y)</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">modinv</span><span class="params">(a, m)</span>:</span></div><div class="line">    g, x, y = egcd(a, m)</div><div class="line">    <span class="keyword">if</span> g != <span class="number">1</span>:</div><div class="line">        <span class="keyword">raise</span> Exception(<span class="string">'modular inverse does not exist'</span>)</div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        <span class="keyword">return</span> x % m</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    d = modinv(e, (p - <span class="number">1</span>) * (q - <span class="number">1</span>))</div><div class="line">    <span class="keyword">print</span> d</div><div class="line">    m=pow(c,d,n)</div><div class="line">    <span class="keyword">print</span> m</div></pre></td></tr></table></figure>
+<ul>
+<li>c ≡ m^e mod n</li>
+</ul>
+<p>在已知p，q的时候利用modinv函数求出了d，然后就可以利用pow函数求出明文：</p>
+<p>m=pow(c,d,n)</p>
+<blockquote>
+<p>大数分解网站<code>http://factordb.com/index.php</code></p>
+<p>windows平台的RSATool2v17</p>
+</blockquote>
+<h3 id="利用公约数"><a href="#利用公约数" class="headerlink" title="利用公约数"></a>利用公约数</h3><p>两次公钥的加密过程中使用的n1和n2具有相同的素因子，那么可以利用欧几里得算法直接将n1和n2分解。<br>通过欧几里得算法可以直接求出n1和n2的最大公约数p：</p>
+<ul>
+<li>(n1,n2)=p</li>
+</ul>
+<p>可以得出：</p>
+<ul>
+<li>n1=pq1</li>
+<li>n2=pq2</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">gcd</span><span class="params">(a, b)</span>:</span>   <span class="comment">#求最大公约数</span></div><div class="line">   <span class="keyword">if</span> a &lt; b:</div><div class="line">       a, b = b, a</div><div class="line">   <span class="keyword">while</span> b != <span class="number">0</span>:</div><div class="line">       temp = a % b</div><div class="line">       a = b</div><div class="line">       b = temp</div><div class="line">    <span class="keyword">return</span> a</div></pre></td></tr></table></figure>
+<p>得到p，然后可以求得q，然后解得明文。</p>
+<blockquote>
+<p>windows下可以使用yafu尝试分解n</p>
+</blockquote>
+<h2 id="0x02-选择密文"><a href="#0x02-选择密文" class="headerlink" title="0x02 选择密文"></a>0x02 选择密文</h2><h2 id="0x03-加密指数"><a href="#0x03-加密指数" class="headerlink" title="0x03 加密指数"></a>0x03 加密指数</h2><h3 id="低加密指数攻击"><a href="#低加密指数攻击" class="headerlink" title="低加密指数攻击"></a>低加密指数攻击</h3><p>在rsa中e也称为加密指数。由于e是可以随意选取的，选取小一点的e可以缩短加密时间，但是选取不当的话，就会造成安全问题。</p>
+<h3 id="低加密指数广播攻击"><a href="#低加密指数广播攻击" class="headerlink" title="低加密指数广播攻击"></a>低加密指数广播攻击</h3><h3 id="Coppersmith定理攻击"><a href="#Coppersmith定理攻击" class="headerlink" title="Coppersmith定理攻击"></a>Coppersmith定理攻击</h3><p>Coppersmith定理指出在一个e阶的mod n多项式f(x)中，如果有一个根小于n^1/e，就可以运用一个O(log n)的算法求出这些根。</p>
+<p>这个定理可以应用于rsa算法。如果e = 3并且在明文当中只有三分之二的比特是已知的，这种算法可以求出明文中所有的比特。</p>
+<blockquote>
+<p>例题国赛Partial</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">n=<span class="number">0x985CBA74B3AFCF36F82079DE644DE85DD6658A2D3FB2D5C239F2657F921756459E84EE0BBC56943DE04F2A04AACE311574BE1E9391AC5B0F8DBB999524AF8DF2451A84916F6699E54AE0290014AFBF561B0E502CA094ADC3D9582EA22F857529D3DA79737F663A95767FDD87A9C19D8104A736ACBE5F4A25B2A25B4DF981F44DB2EB7F3028B1D1363C3A36F0C1B9921C7C06848984DFE853597C3410FCBF9A1B49C0F5CB0EEDDC06D722A0A7488F893D37996F9A92CD3422465F49F3035FEA6912589EFCFB5A4CF9B69C81B9FCC732D6E6A1FFCE9690F34939B27113527ABB00878806B229EC6570815C32BC2C134B0F56C21A63CA535AB467593246508CA9F9</span></div><div class="line">p=<span class="number">0xBCF6D95C9FFCA2B17FD930C743BCEA314A5F24AE06C12CE62CDB6E8306A545DE468F1A23136321EB82B4B8695ECE58B763ECF8243CBBFADE0603922C130ED143D4D3E88E483529C820F7B53E4346511EB14D4D56CB2B714D3BDC9A2F2AB655993A31E0EB196E8F63028F9B29521E9B3609218BA0000000000000000000000000</span></div><div class="line">p_fake = p+<span class="number">0x10000000000000000000000000</span></div><div class="line">pbits = <span class="number">1024</span></div><div class="line">kbits = pbits<span class="number">-576</span></div><div class="line">pbar = p_fake &amp; (<span class="number">2</span>^pbits<span class="number">-2</span>^kbits)</div><div class="line"><span class="keyword">print</span> <span class="string">"upper %d bits (of %d bits) is given"</span> % (pbits-kbits, pbits)</div><div class="line">PR.&lt;x&gt; = PolynomialRing(Zmod(n))</div><div class="line">f = x + pbar</div><div class="line">x0 = f.small_roots(X=<span class="number">2</span>^kbits, beta=<span class="number">0.4</span>)[<span class="number">0</span>]  <span class="comment"># find root &lt; 2^kbits with factor &gt;= n^0.4</span></div><div class="line"><span class="keyword">print</span> x0 + pbar</div></pre></td></tr></table></figure>
+<blockquote>
+<p><a href="http://sagecell.sagemath.org/" target="_blank" rel="external">http://sagecell.sagemath.org/</a></p>
+<p><a href="https://github.com/mimoo/RSA-and-LLL-attacks/blob/master/coppersmith.sage" target="_blank" rel="external">https://github.com/mimoo/RSA-and-LLL-attacks/blob/master/coppersmith.sage</a></p>
+</blockquote>
+<h3 id="相关信息和短填充"><a href="#相关信息和短填充" class="headerlink" title="相关信息和短填充"></a>相关信息和短填充</h3><h2 id="0x04-解密指数"><a href="#0x04-解密指数" class="headerlink" title="0x04 解密指数"></a>0x04 解密指数</h2><h3 id="泄露"><a href="#泄露" class="headerlink" title="泄露"></a>泄露</h3><h3 id="低解密指数攻击"><a href="#低解密指数攻击" class="headerlink" title="低解密指数攻击"></a>低解密指数攻击</h3><p>非常简单，e看起来很大就行了。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> ContinuedFractions, Arithmetic</div><div class="line"><span class="keyword">import</span> sys</div><div class="line">sys.setrecursionlimit(<span class="number">1000000</span>)</div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">hack_RSA</span><span class="params">(e,n)</span>:</span></div><div class="line">    <span class="string">'''</span></div><div class="line"><span class="string">    Finds d knowing (e,n)</span></div><div class="line"><span class="string">    applying the Wiener continued fraction attack</span></div><div class="line"><span class="string">    '''</span></div><div class="line">    frac = ContinuedFractions.rational_to_contfrac(e, n)</div><div class="line">    convergents = ContinuedFractions.convergents_from_contfrac(frac)</div><div class="line">    </div><div class="line">    <span class="keyword">for</span> (k,d) <span class="keyword">in</span> convergents:</div><div class="line">        </div><div class="line">        <span class="comment">#check if d is actually the key</span></div><div class="line">        <span class="keyword">if</span> k!=<span class="number">0</span> <span class="keyword">and</span> (e*d<span class="number">-1</span>)%k == <span class="number">0</span>:</div><div class="line">            phi = (e*d<span class="number">-1</span>)//k</div><div class="line">            s = n - phi + <span class="number">1</span></div><div class="line">            <span class="comment"># check if the equation x^2 - s*x + n = 0</span></div><div class="line">            <span class="comment"># has integer roots</span></div><div class="line">            discr = s*s - <span class="number">4</span>*n</div><div class="line">            <span class="keyword">if</span>(discr&gt;=<span class="number">0</span>):</div><div class="line">                t = Arithmetic.is_perfect_square(discr)</div><div class="line">                <span class="keyword">if</span> t!=<span class="number">-1</span> <span class="keyword">and</span> (s+t)%<span class="number">2</span>==<span class="number">0</span>:</div><div class="line">                    print(<span class="string">"Hacked!"</span>)</div><div class="line">                    <span class="keyword">return</span> d</div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">     e = <span class="number">0</span>x十六进制数</div><div class="line">     n = <span class="number">0</span>x十六进制数</div><div class="line">     d = hack_RSA(e,n)</div><div class="line">     <span class="keyword">print</span> d</div></pre></td></tr></table></figure>
+<p><a href="https://github.com/pablocelayes/rsa-wiener-attack" target="_blank" rel="external">https://github.com/pablocelayes/rsa-wiener-attack</a></p>
+<h2 id="0x05-模"><a href="#0x05-模" class="headerlink" title="0x05 模"></a>0x05 模</h2><h3 id="共模攻击"><a href="#共模攻击" class="headerlink" title="共模攻击"></a>共模攻击</h3><p>使用相同的模n。<br>当n不变的情况下，知道n,e1,e2,c1,c2 可以在不知道d1,d2情况下，解出m。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line">(e1, n) = (,)</div><div class="line"></div><div class="line">(e2, n) = (,)</div><div class="line"></div><div class="line">c1 = <span class="string">''</span></div><div class="line"></div><div class="line">c2 = <span class="string">''</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">gcd</span><span class="params">(a, b)</span>:</span></div><div class="line">  <span class="keyword">if</span> a == <span class="number">0</span>:</div><div class="line">    x, y = <span class="number">0</span>, <span class="number">1</span>;</div><div class="line">    <span class="keyword">return</span> (b, x, y);</div><div class="line">  tup = gcd(b % a, a)</div><div class="line">  d = tup[<span class="number">0</span>]</div><div class="line">  x1 = tup[<span class="number">1</span>]</div><div class="line">  y1 = tup[<span class="number">2</span>]</div><div class="line">  x = y1 - (b / a) * x1</div><div class="line">  y = x1</div><div class="line">  <span class="keyword">return</span> (d, x, y)</div><div class="line"><span class="comment">#solve the Diophantine equation a*x0 + b*y0 = c</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">find_any_solution</span><span class="params">(a, b, c)</span>:</span></div><div class="line">  tup = gcd(abs(a), abs(b))</div><div class="line">  g = tup[<span class="number">0</span>]</div><div class="line">  x0 = tup[<span class="number">1</span>]</div><div class="line">  y0 = tup[<span class="number">2</span>]</div><div class="line">  <span class="keyword">if</span> c % g != <span class="number">0</span>:</div><div class="line">    <span class="keyword">return</span> (<span class="keyword">False</span>, x0, y0)</div><div class="line">  x0 *= c / g</div><div class="line">  y0 *= c / g</div><div class="line">  <span class="keyword">if</span> a &lt; <span class="number">0</span>:</div><div class="line">    x0 *= <span class="number">-1</span></div><div class="line">  <span class="keyword">if</span> b &lt; <span class="number">0</span>:</div><div class="line">    y0 *= <span class="number">-1</span></div><div class="line">  <span class="keyword">return</span> (<span class="keyword">True</span>, x0, y0)</div><div class="line"><span class="keyword">import</span> sys</div><div class="line">sys.setrecursionlimit(<span class="number">5000</span>)</div><div class="line">(x, a1, a2) = find_any_solution(e1, e2, <span class="number">1</span>)</div><div class="line"><span class="keyword">if</span> a1 &lt; <span class="number">0</span>:</div><div class="line">	(x, c1, y) = find_any_solution(c1, n, <span class="number">1</span>) <span class="comment">#get inverse element</span></div><div class="line">	a1 = -a1</div><div class="line"><span class="keyword">if</span> a2 &lt; <span class="number">0</span>:</div><div class="line">	(x, c2, y) = find_any_solution(c2, n, <span class="number">1</span>)</div><div class="line">	a2 = -a2</div><div class="line">m = (pow(c1, a1, n) * pow(c2, a2, n)) % n</div><div class="line"><span class="keyword">print</span> m</div></pre></td></tr></table></figure>
+<h2 id="0x06-执行"><a href="#0x06-执行" class="headerlink" title="0x06 执行"></a>0x06 执行</h2><p>时序和能力。</p>
+<h2 id="ctf中的数据处理"><a href="#ctf中的数据处理" class="headerlink" title="ctf中的数据处理"></a>ctf中的数据处理</h2><p>rsa问题无非就是围绕c、m、e、d、n、p、q，但是一般题目不会直接给出这些数据。在做题之前，我们需要将给出的题目转换成可以做题的形式。</p>
+<h3 id="openssl"><a href="#openssl" class="headerlink" title="openssl"></a>openssl</h3><p>使用openssl生成密钥</p>
+<ul>
+<li>openssl genrsa -out test.key 1024</li>
+</ul>
+<p>将这个文件中的公钥提取出来</p>
+<ul>
+<li>openssl rsa -in test.key -pubout -out test_pub.key</li>
+</ul>
+<p>生成的公钥加密文件</p>
+<ul>
+<li>openssl rsautl -encrypt -in flag -inkey test_pub.key -pubin -out hello.en</li>
+</ul>
+<p>解密文件</p>
+<ul>
+<li>openssl rsautl -decrypt -in hello.en -inkey test.key -out hello.de2</li>
+</ul>
+<p>对于现成的.pub公钥文件,用openssl来进行分析<br>openssl asn1parse -in publickey.pub 分析格式<br>openssl asn1parse -in publickey.pub -i -strparse xxx 得到信息<br>或者已知是rsa的情况下,直接用<br>openssl rsa -in publickey.pub -pubin -modulus -text 来得到n<br>expoent也是同理的</p>
+<h3 id="pcap文件"><a href="#pcap文件" class="headerlink" title="pcap文件"></a>pcap文件</h3><p>针对此类文件可以使用wireshark follow一下。这种问题一般都是写了一个交互的crypto系统，所以可能产生多轮交互。</p>
+<h3 id="PPC模式"><a href="#PPC模式" class="headerlink" title="PPC模式"></a>PPC模式</h3><p>这种模式是上述pcap文件的交互版，会给一个端口进行一些crypto的交互，参数会在交互中给出。</p>
+<blockquote>
+<p>参考文章</p>
+<p><a href="http://whc.dropsec.xyz/2017/05/10/CTF%E4%B8%ADOpenssl%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" target="_blank" rel="external">CTF中Openssl常用命令</a></p>
+<p><a href="http://www.bystudent.com/?p=236" target="_blank" rel="external">rsa之共模攻击</a></p>
+<p><a href="http://blog.sina.com.cn/s/blog_764db6ac0100swd5.html" target="_blank" rel="external">选择密文攻击</a></p>
+</blockquote>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/links/">Links</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#针对rsa进行的攻击"><span class="toc-number">1.</span> <span class="toc-text">针对rsa进行的攻击</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x00-rsa算法描述"><span class="toc-number">1.1.</span> <span class="toc-text">0x00 rsa算法描述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x01-模数分解"><span class="toc-number">1.2.</span> <span class="toc-text">0x01 模数分解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#n的分解"><span class="toc-number">1.2.1.</span> <span class="toc-text">n的分解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#利用公约数"><span class="toc-number">1.2.2.</span> <span class="toc-text">利用公约数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x02-选择密文"><span class="toc-number">1.3.</span> <span class="toc-text">0x02 选择密文</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x03-加密指数"><span class="toc-number">1.4.</span> <span class="toc-text">0x03 加密指数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#低加密指数攻击"><span class="toc-number">1.4.1.</span> <span class="toc-text">低加密指数攻击</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#低加密指数广播攻击"><span class="toc-number">1.4.2.</span> <span class="toc-text">低加密指数广播攻击</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Coppersmith定理攻击"><span class="toc-number">1.4.3.</span> <span class="toc-text">Coppersmith定理攻击</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#相关信息和短填充"><span class="toc-number">1.4.4.</span> <span class="toc-text">相关信息和短填充</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x04-解密指数"><span class="toc-number">1.5.</span> <span class="toc-text">0x04 解密指数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#泄露"><span class="toc-number">1.5.1.</span> <span class="toc-text">泄露</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#低解密指数攻击"><span class="toc-number">1.5.2.</span> <span class="toc-text">低解密指数攻击</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x05-模"><span class="toc-number">1.6.</span> <span class="toc-text">0x05 模</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#共模攻击"><span class="toc-number">1.6.1.</span> <span class="toc-text">共模攻击</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x06-执行"><span class="toc-number">1.7.</span> <span class="toc-text">0x06 执行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ctf中的数据处理"><span class="toc-number">1.8.</span> <span class="toc-text">ctf中的数据处理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#openssl"><span class="toc-number">1.8.1.</span> <span class="toc-text">openssl</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pcap文件"><span class="toc-number">1.8.2.</span> <span class="toc-text">pcap文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PPC模式"><span class="toc-number">1.8.3.</span> <span class="toc-text">PPC模式</span></a></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2017/08/23/rsaattack/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2017/08/23/rsaattack/&text=针对rsa的攻击总结"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2017/08/23/rsaattack/&title=针对rsa的攻击总结"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2017/08/23/rsaattack/&is_video=false&description=针对rsa的攻击总结"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=针对rsa的攻击总结&body=Check out this article: http://yoursite.com/2017/08/23/rsaattack/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2017/08/23/rsaattack/&title=针对rsa的攻击总结"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2017/08/23/rsaattack/&title=针对rsa的攻击总结"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2017/08/23/rsaattack/&title=针对rsa的攻击总结"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2017/08/23/rsaattack/&title=针对rsa的攻击总结"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2017/08/23/rsaattack/&name=针对rsa的攻击总结&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick='$("#toc-footer").toggle();return false;'><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick='$("#share-footer").toggle();return false;'><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick='$("#nav-footer").toggle();return false;'><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2015 - 2017 Jack Yang
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/links/">Links</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="/lib/meslo-LG/styles.css">
+<link rel="stylesheet" href="/lib/justified-gallery/justifiedGallery.min.css">
+
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-86660611-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'windysec';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+
+
+    <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+    <script>AV.initialize("gXbogVvt7GkTh0IXllnbL00P-gzGzoHsz", "BUk2vE0XC6Uv6mlT4ToIRbGY");</script>
+    <script>
+      function showTime(Counter) {
+        var query = new AV.Query(Counter);
+        var entries = [];
+        var $visitors = $(".leancloud_visitors");
+  
+        $visitors.each(function () {
+          entries.push( $(this).attr("id").trim() );
+        });
+  
+        query.containedIn('url', entries);
+        query.find()
+          .done(function (results) {
+            var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+  
+            if (results.length === 0) {
+              $visitors.find(COUNT_CONTAINER_REF).text(0);
+              return;
+            }
+  
+            for (var i = 0; i < results.length; i++) {
+              var item = results[i];
+              var url = item.get('url');
+              var time = item.get('time');
+              var element = document.getElementById(url);
+  
+              $(element).find(COUNT_CONTAINER_REF).text(time);
+            }
+            for(var i = 0; i < entries.length; i++) {
+              var url = entries[i];
+              var element = document.getElementById(url);
+              var countSpan = $(element).find(COUNT_CONTAINER_REF);
+              if( countSpan.text() == '') {
+                countSpan.text(0);
+              }
+            }
+          })
+          .fail(function (object, error) {
+            console.log("Error: " + error.code + " " + error.message);
+          });
+      }
+  
+      function addCount(Counter) {
+        var $visitors = $(".leancloud_visitors");
+        var url = $visitors.attr('id').trim();
+        var title = $visitors.attr('data-flag-title').trim();
+        var query = new AV.Query(Counter);
+  
+        query.equalTo("url", url);
+        query.find({
+          success: function(results) {
+            if (results.length > 0) {
+              var counter = results[0];
+              counter.fetchWhenSave(true);
+              counter.increment("time");
+              counter.save(null, {
+                success: function(counter) {
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(counter.get('time'));
+                },
+                error: function(counter, error) {
+                  console.log('Failed to save Visitor num, with error message: ' + error.message);
+                }
+              });
+            } else {
+              var newcounter = new Counter();
+              /* Set ACL */
+              var acl = new AV.ACL();
+              acl.setPublicReadAccess(true);
+              acl.setPublicWriteAccess(true);
+              newcounter.setACL(acl);
+              /* End Set ACL */
+              newcounter.set("title", title);
+              newcounter.set("url", url);
+              newcounter.set("time", 1);
+              newcounter.save(null, {
+                success: function(newcounter) {
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+                },
+                error: function(newcounter, error) {
+                  console.log('Failed to create');
+                }
+              });
+            }
+          },
+          error: function(error) {
+            console.log('Error:' + error.code + " " + error.message);
+          }
+        });
+      }
+  
+      $(function() {
+        var Counter = AV.Object.extend("Counter");
+        if ($('.leancloud_visitors').length == 1) {
+          addCount(Counter);
+        } else if ($('.post-title-link').length > 1) {
+          showTime(Counter);
+        }
+      });
+    </script>
+  
