@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="0x01 very easy RSA题目：  p = 3487583947589437589237958723892346254777 q = 8767867843568934765983476584376578389 e = 65537  题目直接给出了p、q、e，可直接解除d 12345678910111213141516171819#coding:utf-8def egcd(a, b):">
+<meta name="keywords" content="rsa,ctf">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RSA相关ctf WriteUp">
+<meta property="og:url" content="http://yoursite.com/2017/08/01/rsa-ctf/index.html">
+<meta property="og:site_name" content="Windy&#39;s blog">
+<meta property="og:description" content="0x01 very easy RSA题目：  p = 3487583947589437589237958723892346254777 q = 8767867843568934765983476584376578389 e = 65537  题目直接给出了p、q、e，可直接解除d 12345678910111213141516171819#coding:utf-8def egcd(a, b):">
+<meta property="og:image" content="http://oksip9gk9.bkt.clouddn.com/20170827150380407780491.png">
+<meta property="og:image" content="http://oksip9gk9.bkt.clouddn.com/2017082715038046284767.png">
+<meta property="og:image" content="http://oksip9gk9.bkt.clouddn.com/20170827150380467733791.png">
+<meta property="og:image" content="http://oksip9gk9.bkt.clouddn.com/2017082715038047349988.png">
+<meta property="og:image" content="http://oksip9gk9.bkt.clouddn.com/20170827150380502130429.png">
+<meta property="og:image" content="http://oksip9gk9.bkt.clouddn.com/201708271503805191334.png">
+<meta property="og:image" content="http://oksip9gk9.bkt.clouddn.com/20170827150380621010848.png">
+<meta property="og:image" content="http://oksip9gk9.bkt.clouddn.com/20170827150380781231652.png">
+<meta property="og:updated_time" content="2017-08-27T04:55:42.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="RSA相关ctf WriteUp">
+<meta name="twitter:description" content="0x01 very easy RSA题目：  p = 3487583947589437589237958723892346254777 q = 8767867843568934765983476584376578389 e = 65537  题目直接给出了p、q、e，可直接解除d 12345678910111213141516171819#coding:utf-8def egcd(a, b):">
+<meta name="twitter:image" content="http://oksip9gk9.bkt.clouddn.com/20170827150380407780491.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>RSA相关ctf WriteUp</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/atom.xml" title="Windy&#39;s blog" type="application/atom+xml" />
+    
+</head>
+
+<body>
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/links/">Links</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2017/08/23/rsaattack/"><i class="fa fa-chevron-left" aria-hidden="true" onmouseover='$("#i-prev").toggle();' onmouseout='$("#i-prev").toggle();'></i></a></li>
+        
+        
+        <li><a class="icon" href="/2017/04/17/xatuWriteUp/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover='$("#i-next").toggle();' onmouseout='$("#i-next").toggle();'></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover='$("#i-top").toggle();' onmouseout='$("#i-top").toggle();'></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover='$("#i-share").toggle();' onmouseout='$("#i-share").toggle();' onclick='$("#share").toggle();return false;'></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2017/08/01/rsa-ctf/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2017/08/01/rsa-ctf/&text=RSA相关ctf WriteUp"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2017/08/01/rsa-ctf/&title=RSA相关ctf WriteUp"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2017/08/01/rsa-ctf/&is_video=false&description=RSA相关ctf WriteUp"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=RSA相关ctf WriteUp&body=Check out this article: http://yoursite.com/2017/08/01/rsa-ctf/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2017/08/01/rsa-ctf/&title=RSA相关ctf WriteUp"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2017/08/01/rsa-ctf/&title=RSA相关ctf WriteUp"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2017/08/01/rsa-ctf/&title=RSA相关ctf WriteUp"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2017/08/01/rsa-ctf/&title=RSA相关ctf WriteUp"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2017/08/01/rsa-ctf/&name=RSA相关ctf WriteUp&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x01-very-easy-RSA"><span class="toc-number">1.</span> <span class="toc-text">0x01 very easy RSA</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x02-Medium-RSA"><span class="toc-number">2.</span> <span class="toc-text">0x02 Medium RSA</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x03-hard-RSA"><span class="toc-number">3.</span> <span class="toc-text">0x03 hard RSA</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x04-very-hard-RSA"><span class="toc-number">4.</span> <span class="toc-text">0x04 very hard RSA</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x05-Extremely-hard-RSA"><span class="toc-number">5.</span> <span class="toc-text">0x05 Extremely hard RSA</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index width mx-auto px2 my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        RSA相关ctf WriteUp
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Windy's blog</span>
+      </span>
+      
+    <div class="postdate">
+        <i class="fa fa-calendar-o"></i>
+        <time datetime="2017-08-01T02:54:14.000Z" itemprop="datePublished">2017-08-01</time>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <span id="/2017/08/01/rsa-ctf/" class="leancloud_visitors" data-flag-title="RSA相关ctf WriteUp">                    
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+            </span>
+            
+            <span class="post-meta-item-text">阅读次数</span>
+            <span class="leancloud-visitors-count"></span>
+        </span>
+    </div>
+
+      
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/ctf/">ctf</a>, <a class="tag-link" href="/tags/rsa/">rsa</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="0x01-very-easy-RSA"><a href="#0x01-very-easy-RSA" class="headerlink" title="0x01 very easy RSA"></a>0x01 very easy RSA</h2><p>题目：</p>
+<ul>
+<li>p = 3487583947589437589237958723892346254777</li>
+<li>q = 8767867843568934765983476584376578389</li>
+<li>e = 65537</li>
+</ul>
+<p>题目直接给出了p、q、e，可直接解除d</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#coding:utf-8</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">egcd</span><span class="params">(a, b)</span>:</span></div><div class="line">    <span class="keyword">if</span> a == <span class="number">0</span>:</div><div class="line">        <span class="keyword">return</span> (b, <span class="number">0</span>, <span class="number">1</span>)</div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        g, y, x = egcd(b % a, a)</div><div class="line">        <span class="keyword">return</span> (g, x - (b // a) * y, y)</div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">modinv</span><span class="params">(a, m)</span>:</span></div><div class="line">    g, x, y = egcd(a, m)</div><div class="line">    <span class="keyword">if</span> g != <span class="number">1</span>:</div><div class="line">        <span class="keyword">raise</span> Exception(<span class="string">'modular inverse does not exist'</span>)</div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        <span class="keyword">return</span> x % m</div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    p = <span class="number">3487583947589437589237958723892346254777</span></div><div class="line">    q = <span class="number">8767867843568934765983476584376578389</span></div><div class="line">    e = <span class="number">65537</span></div><div class="line">    d = modinv(e, (p - <span class="number">1</span>) * (q - <span class="number">1</span>))</div><div class="line">    <span class="keyword">print</span> d</div></pre></td></tr></table></figure>
+<h2 id="0x02-Medium-RSA"><a href="#0x02-Medium-RSA" class="headerlink" title="0x02 Medium RSA"></a>0x02 Medium RSA</h2><p>其中有两个文件<br><img src="http://oksip9gk9.bkt.clouddn.com/20170827150380407780491.png" alt="20170827150380407780491.png"></p>
+<p>首先使用openssl在pybkey.pem中提取n、e</p>
+<p><img src="http://oksip9gk9.bkt.clouddn.com/2017082715038046284767.png" alt="2017082715038046284767.png"></p>
+<p>得到的是十六进制00c2636ae5c3d8e43ffb97ab09028f1aac6c0bf6cd3d70ebca281bffe97fbe30dd</p>
+<p><img src="http://oksip9gk9.bkt.clouddn.com/20170827150380467733791.png" alt="20170827150380467733791.png"></p>
+<p>所以n=87924348264132406875276140514499937145050893665602592992418171647042491658461</p>
+<p><img src="http://oksip9gk9.bkt.clouddn.com/2017082715038047349988.png" alt="2017082715038047349988.png"></p>
+<p>大数分解得到q、p。使用rsatools生成私钥.</p>
+<p><code>python rsatool.py -p 275127860351348928173285174381581152299 -q 319576316814478949870590164193048041239 -o priv.key</code></p>
+<p><img src="http://oksip9gk9.bkt.clouddn.com/20170827150380502130429.png" alt="20170827150380502130429.png"></p>
+<p>使用私钥解密文件</p>
+<p><code>openssl rsautl -decrypt -in flag.enc -inkey priv.key -out flag.txt</code></p>
+<p><img src="http://oksip9gk9.bkt.clouddn.com/201708271503805191334.png" alt="201708271503805191334.png"></p>
+<h2 id="0x03-hard-RSA"><a href="#0x03-hard-RSA" class="headerlink" title="0x03 hard RSA"></a>0x03 hard RSA</h2><p>公钥跟Medium RSA的N是一样的，但是e=2，提示用数学知识来解，所以应该是Rabin密码。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">#!/usr/bin/env python</div><div class="line"># -*- coding: utf-8 -*-</div><div class="line">import libnum</div><div class="line">import gmpy2</div><div class="line">f = open(&apos;flag.enc&apos;,&apos;r&apos;)</div><div class="line">c = f.read()</div><div class="line">c = libnum.s2n(c)</div><div class="line">p = 275127860351348928173285174381581152299</div><div class="line">q = 319576316814478949870590164193048041239</div><div class="line">n = p*q</div><div class="line">r = pow(c,(p+1)/4,p)</div><div class="line">s = pow(c,(q+1)/4,q)</div><div class="line">a = gmpy2.invert(p,q)</div><div class="line">b = gmpy2.invert(q,p)</div><div class="line">x =(a*p*s+b*q*r)%n</div><div class="line">y =(a*p*s-b*q*r)%n</div><div class="line">print libnum.n2s(x%n)</div><div class="line">print libnum.n2s((-x)%n)</div><div class="line">print libnum.n2s(y%n)</div><div class="line">print libnum.n2s((-y)%n)</div></pre></td></tr></table></figure>
+<p><img src="http://oksip9gk9.bkt.clouddn.com/20170827150380621010848.png" alt="20170827150380621010848.png"></p>
+<h2 id="0x04-very-hard-RSA"><a href="#0x04-very-hard-RSA" class="headerlink" title="0x04 very hard RSA"></a>0x04 very hard RSA</h2><p>显然为共模攻击</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> libnum <span class="keyword">import</span> n2s,s2n</div><div class="line">(e1, n) = (<span class="number">17</span>,<span class="number">0x00b0bee5e3e9e5a7e8d00b493355c618fc8c7d7d03b82e409951c182f398dee3104580e7ba70d383ae5311475656e8a964d380cb157f48c951adfa65db0b122ca40e42fa709189b719a4f0d746e2f6069baf11cebd650f14b93c977352fd13b1eea6d6e1da775502abff89d3a8b3615fd0db49b88a976bc20568489284e181f6f11e270891c8ef80017bad238e363039a458470f1749101bc29949d3a4f4038d463938851579c7525a69984f15b5667f34209b70eb261136947fa123e549dfff00601883afd936fe411e006e4e93d1a00b0fea541bbfc8c5186cb6220503a94b2413110d640c77ea54ba3220fc8f4cc6ce77151e29b3e06578c478bd1bebe04589ef9a197f6f806db8b3ecd826cad24f5324ccdec6e8fead2c2150068602c8dcdc59402ccac9424b790048ccdd9327068095efa010b7f196c74ba8c37b128f9e1411751633f78b7b9e56f71f77a1b4daad3fc54b5e7ef935d9a72fb176759765522b4bbc02e314d5c06b64d5054b7b096c601236e6ccf45b5e611c805d335dbab0c35d226cc208d8ce4736ba39a0354426fae006c7fe52d5267dcfb9c3884f51fddfdf4a9794bcfe0e1557113749e6c8ef421dba263aff68739ce00ed80fd0022ef92d3488f76deb62bdef7bea6026f22a1d25aa2a92d124414a8021fe0c174b9803e6bb5fad75e186a946a17280770f1243f4387446ccceb2222a965cc30b3929L</span>)</div><div class="line">(e2, n) = (<span class="number">65537</span>,<span class="number">0x00b0bee5e3e9e5a7e8d00b493355c618fc8c7d7d03b82e409951c182f398dee3104580e7ba70d383ae5311475656e8a964d380cb157f48c951adfa65db0b122ca40e42fa709189b719a4f0d746e2f6069baf11cebd650f14b93c977352fd13b1eea6d6e1da775502abff89d3a8b3615fd0db49b88a976bc20568489284e181f6f11e270891c8ef80017bad238e363039a458470f1749101bc29949d3a4f4038d463938851579c7525a69984f15b5667f34209b70eb261136947fa123e549dfff00601883afd936fe411e006e4e93d1a00b0fea541bbfc8c5186cb6220503a94b2413110d640c77ea54ba3220fc8f4cc6ce77151e29b3e06578c478bd1bebe04589ef9a197f6f806db8b3ecd826cad24f5324ccdec6e8fead2c2150068602c8dcdc59402ccac9424b790048ccdd9327068095efa010b7f196c74ba8c37b128f9e1411751633f78b7b9e56f71f77a1b4daad3fc54b5e7ef935d9a72fb176759765522b4bbc02e314d5c06b64d5054b7b096c601236e6ccf45b5e611c805d335dbab0c35d226cc208d8ce4736ba39a0354426fae006c7fe52d5267dcfb9c3884f51fddfdf4a9794bcfe0e1557113749e6c8ef421dba263aff68739ce00ed80fd0022ef92d3488f76deb62bdef7bea6026f22a1d25aa2a92d124414a8021fe0c174b9803e6bb5fad75e186a946a17280770f1243f4387446ccceb2222a965cc30b3929L</span>)</div><div class="line"><span class="comment">#c1 = ''</span></div><div class="line"><span class="comment">#c2 = ''</span></div><div class="line">c1 = s2n(open(<span class="string">'flag.enc1'</span>, <span class="string">'rb'</span>).read())</div><div class="line">c2 = s2n(open(<span class="string">'flag.enc2'</span>, <span class="string">'rb'</span>).read())</div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">gcd</span><span class="params">(a, b)</span>:</span></div><div class="line">    <span class="keyword">if</span> a == <span class="number">0</span>:</div><div class="line">        x, y = <span class="number">0</span>, <span class="number">1</span></div><div class="line">        <span class="keyword">return</span> (b, x, y)</div><div class="line">    tup = gcd(b % a, a)</div><div class="line">    d = tup[<span class="number">0</span>]</div><div class="line">    x1 = tup[<span class="number">1</span>]</div><div class="line">    y1 = tup[<span class="number">2</span>]</div><div class="line">    x = y1 - (b / a) * x1</div><div class="line">    y = x1</div><div class="line">    <span class="keyword">return</span> (d, x, y)</div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">find_any_solution</span><span class="params">(a, b, c)</span>:</span></div><div class="line">    tup = gcd(abs(a), abs(b))</div><div class="line">    g = tup[<span class="number">0</span>]</div><div class="line">    x0 = tup[<span class="number">1</span>]</div><div class="line">    y0 = tup[<span class="number">2</span>]</div><div class="line">    <span class="keyword">if</span> c % g != <span class="number">0</span>:</div><div class="line">        <span class="keyword">return</span> (<span class="keyword">False</span>, x0, y0)</div><div class="line">    x0 *= c / g</div><div class="line">    y0 *= c / g</div><div class="line">    <span class="keyword">if</span> a &lt; <span class="number">0</span>:</div><div class="line">        x0 *= <span class="number">-1</span></div><div class="line">    <span class="keyword">if</span> b &lt; <span class="number">0</span>:</div><div class="line">        y0 *= <span class="number">-1</span></div><div class="line">    <span class="keyword">return</span> (<span class="keyword">True</span>, x0, y0)</div><div class="line"><span class="keyword">import</span> sys</div><div class="line">sys.setrecursionlimit(<span class="number">5000</span>)</div><div class="line">(x, a1, a2) = find_any_solution(e1, e2, <span class="number">1</span>)</div><div class="line"><span class="keyword">if</span> a1 &lt; <span class="number">0</span>:</div><div class="line">    (x, c1, y) = find_any_solution(c1, n, <span class="number">1</span>)</div><div class="line">    a1 = -a1</div><div class="line"><span class="keyword">if</span> a2 &lt; <span class="number">0</span>:</div><div class="line">    (x, c2, y) = find_any_solution(c2, n, <span class="number">1</span>)</div><div class="line">    a2 = -a2</div><div class="line">m = (pow(c1, a1, n) * pow(c2, a2, n)) % n</div><div class="line"><span class="keyword">print</span> m</div><div class="line"><span class="keyword">print</span> n2s(m)</div></pre></td></tr></table></figure>
+<p><img src="http://oksip9gk9.bkt.clouddn.com/20170827150380781231652.png" alt="20170827150380781231652.png"></p>
+<h2 id="0x05-Extremely-hard-RSA"><a href="#0x05-Extremely-hard-RSA" class="headerlink" title="0x05 Extremely hard RSA"></a>0x05 Extremely hard RSA</h2><p>e=3，为低加密指数攻击，e=3时的小明文攻击</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env python</span></div><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"><span class="keyword">from</span> libnum <span class="keyword">import</span> s2n,n2s</div><div class="line"><span class="keyword">from</span> gmpy2 <span class="keyword">import</span> iroot</div><div class="line">n = <span class="number">0xB0BEE5E3E9E5A7E8D00B493355C618FC8C7D7D03B82E409951C182F398DEE3104580E7BA70D383AE5311475656E8A964D380CB157F48C951ADFA65DB0B122CA40E42FA709189B719A4F0D746E2F6069BAF11CEBD650F14B93C977352FD13B1EEA6D6E1DA775502ABFF89D3A8B3615FD0DB49B88A976BC20568489284E181F6F11E270891C8EF80017BAD238E363039A458470F1749101BC29949D3A4F4038D463938851579C7525A69984F15B5667F34209B70EB261136947FA123E549DFFF00601883AFD936FE411E006E4E93D1A00B0FEA541BBFC8C5186CB6220503A94B2413110D640C77EA54BA3220FC8F4CC6CE77151E29B3E06578C478BD1BEBE04589EF9A197F6F806DB8B3ECD826CAD24F5324CCDEC6E8FEAD2C2150068602C8DCDC59402CCAC9424B790048CCDD9327068095EFA010B7F196C74BA8C37B128F9E1411751633F78B7B9E56F71F77A1B4DAAD3FC54B5E7EF935D9A72FB176759765522B4BBC02E314D5C06B64D5054B7B096C601236E6CCF45B5E611C805D335DBAB0C35D226CC208D8CE4736BA39A0354426FAE006C7FE52D5267DCFB9C3884F51FDDFDF4A9794BCFE0E1557113749E6C8EF421DBA263AFF68739CE00ED80FD0022EF92D3488F76DEB62BDEF7BEA6026F22A1D25AA2A92D124414A8021FE0C174B9803E6BB5FAD75E186A946A17280770F1243F4387446CCCEB2222A965CC30B3929</span></div><div class="line">e = <span class="number">3</span></div><div class="line">f = open(<span class="string">'flag.enc'</span>,<span class="string">'rb'</span>)</div><div class="line">c= f.read()</div><div class="line">c = s2n(c)</div><div class="line">f.close()</div><div class="line">i = <span class="number">0</span></div><div class="line"><span class="keyword">while</span> <span class="number">1</span>:</div><div class="line">    res = iroot(c+i*n,<span class="number">3</span>)</div><div class="line">    <span class="keyword">if</span>(res[<span class="number">1</span>] == <span class="keyword">True</span>):</div><div class="line">        <span class="keyword">print</span> res</div><div class="line">        <span class="keyword">break</span></div><div class="line">    <span class="keyword">print</span> <span class="string">"i="</span>+str(i)</div><div class="line">    i = i+<span class="number">1</span></div><div class="line">m = res</div><div class="line"><span class="comment">#i=118719487</span></div><div class="line"><span class="comment">#m = 440721643740967258786371951429849843897639673893942371730874939742481383302887786063966117819631425015196093856646526738786745933078032806737504580146717737115929461581126895844008044713461807791172016433647699394456368658396746134702627548155069403689581548233891848149612485605022294307233116137509171389596747894529765156771462793389236431942344003532140158865426896855377113878133478689191912682550117563858186</span></div><div class="line"><span class="keyword">print</span> n2s(m)</div></pre></td></tr></table></figure>
+<blockquote>
+<p>所有题目链接: <a href="https://pan.baidu.com/s/1jHPnuPC" target="_blank" rel="external">https://pan.baidu.com/s/1jHPnuPC</a> 密码: h17j</p>
+<p>参考文章<a href="http://blog.sina.com.cn/s/blog_64370f500100lhqz.html" target="_blank" rel="external">http://blog.sina.com.cn/s/blog_64370f500100lhqz.html</a></p>
+</blockquote>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/links/">Links</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x01-very-easy-RSA"><span class="toc-number">1.</span> <span class="toc-text">0x01 very easy RSA</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x02-Medium-RSA"><span class="toc-number">2.</span> <span class="toc-text">0x02 Medium RSA</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x03-hard-RSA"><span class="toc-number">3.</span> <span class="toc-text">0x03 hard RSA</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x04-very-hard-RSA"><span class="toc-number">4.</span> <span class="toc-text">0x04 very hard RSA</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x05-Extremely-hard-RSA"><span class="toc-number">5.</span> <span class="toc-text">0x05 Extremely hard RSA</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2017/08/01/rsa-ctf/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2017/08/01/rsa-ctf/&text=RSA相关ctf WriteUp"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2017/08/01/rsa-ctf/&title=RSA相关ctf WriteUp"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2017/08/01/rsa-ctf/&is_video=false&description=RSA相关ctf WriteUp"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=RSA相关ctf WriteUp&body=Check out this article: http://yoursite.com/2017/08/01/rsa-ctf/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2017/08/01/rsa-ctf/&title=RSA相关ctf WriteUp"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2017/08/01/rsa-ctf/&title=RSA相关ctf WriteUp"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2017/08/01/rsa-ctf/&title=RSA相关ctf WriteUp"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2017/08/01/rsa-ctf/&title=RSA相关ctf WriteUp"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2017/08/01/rsa-ctf/&name=RSA相关ctf WriteUp&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick='$("#toc-footer").toggle();return false;'><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick='$("#share-footer").toggle();return false;'><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick='$("#nav-footer").toggle();return false;'><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2015 - 2017 Jack Yang
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/links/">Links</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="/lib/meslo-LG/styles.css">
+<link rel="stylesheet" href="/lib/justified-gallery/justifiedGallery.min.css">
+
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-86660611-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'windysec';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+
+
+    <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+    <script>AV.initialize("gXbogVvt7GkTh0IXllnbL00P-gzGzoHsz", "BUk2vE0XC6Uv6mlT4ToIRbGY");</script>
+    <script>
+      function showTime(Counter) {
+        var query = new AV.Query(Counter);
+        var entries = [];
+        var $visitors = $(".leancloud_visitors");
+  
+        $visitors.each(function () {
+          entries.push( $(this).attr("id").trim() );
+        });
+  
+        query.containedIn('url', entries);
+        query.find()
+          .done(function (results) {
+            var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+  
+            if (results.length === 0) {
+              $visitors.find(COUNT_CONTAINER_REF).text(0);
+              return;
+            }
+  
+            for (var i = 0; i < results.length; i++) {
+              var item = results[i];
+              var url = item.get('url');
+              var time = item.get('time');
+              var element = document.getElementById(url);
+  
+              $(element).find(COUNT_CONTAINER_REF).text(time);
+            }
+            for(var i = 0; i < entries.length; i++) {
+              var url = entries[i];
+              var element = document.getElementById(url);
+              var countSpan = $(element).find(COUNT_CONTAINER_REF);
+              if( countSpan.text() == '') {
+                countSpan.text(0);
+              }
+            }
+          })
+          .fail(function (object, error) {
+            console.log("Error: " + error.code + " " + error.message);
+          });
+      }
+  
+      function addCount(Counter) {
+        var $visitors = $(".leancloud_visitors");
+        var url = $visitors.attr('id').trim();
+        var title = $visitors.attr('data-flag-title').trim();
+        var query = new AV.Query(Counter);
+  
+        query.equalTo("url", url);
+        query.find({
+          success: function(results) {
+            if (results.length > 0) {
+              var counter = results[0];
+              counter.fetchWhenSave(true);
+              counter.increment("time");
+              counter.save(null, {
+                success: function(counter) {
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(counter.get('time'));
+                },
+                error: function(counter, error) {
+                  console.log('Failed to save Visitor num, with error message: ' + error.message);
+                }
+              });
+            } else {
+              var newcounter = new Counter();
+              /* Set ACL */
+              var acl = new AV.ACL();
+              acl.setPublicReadAccess(true);
+              acl.setPublicWriteAccess(true);
+              newcounter.setACL(acl);
+              /* End Set ACL */
+              newcounter.set("title", title);
+              newcounter.set("url", url);
+              newcounter.set("time", 1);
+              newcounter.save(null, {
+                success: function(newcounter) {
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+                },
+                error: function(newcounter, error) {
+                  console.log('Failed to create');
+                }
+              });
+            }
+          },
+          error: function(error) {
+            console.log('Error:' + error.code + " " + error.message);
+          }
+        });
+      }
+  
+      $(function() {
+        var Counter = AV.Object.extend("Counter");
+        if ($('.leancloud_visitors').length == 1) {
+          addCount(Counter);
+        } else if ($('.post-title-link').length > 1) {
+          showTime(Counter);
+        }
+      });
+    </script>
+  

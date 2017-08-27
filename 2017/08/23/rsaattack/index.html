@@ -9,14 +9,14 @@
     <meta name="description" content="针对rsa进行的攻击 练习 https://www.jarvisoj.com/challenges 0x00 rsa算法描述省略 0x01 模数分解n的分解rsa最暴力最简单的方式就是分解n，将n分解成功，得到p、q的值，可求n的欧拉函数的值。  φ(n)=(p−1)(q−1)  e，d与n的欧拉函数满足如下关系：  ed=1 mod φ(n)  即在知道e，p，q的情况下，可以解出d： 1234">
 <meta name="keywords" content="rsa,crypto">
 <meta property="og:type" content="article">
-<meta property="og:title" content="针对rsa的攻击总结">
+<meta property="og:title" content="针对rsa攻击的总结">
 <meta property="og:url" content="http://yoursite.com/2017/08/23/rsaattack/index.html">
 <meta property="og:site_name" content="Windy&#39;s blog">
 <meta property="og:description" content="针对rsa进行的攻击 练习 https://www.jarvisoj.com/challenges 0x00 rsa算法描述省略 0x01 模数分解n的分解rsa最暴力最简单的方式就是分解n，将n分解成功，得到p、q的值，可求n的欧拉函数的值。  φ(n)=(p−1)(q−1)  e，d与n的欧拉函数满足如下关系：  ed=1 mod φ(n)  即在知道e，p，q的情况下，可以解出d： 1234">
 <meta property="og:image" content="http://oksip9gk9.bkt.clouddn.com/20170731150146279631543.png">
-<meta property="og:updated_time" content="2017-08-23T01:21:00.000Z">
+<meta property="og:updated_time" content="2017-08-27T04:51:59.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="针对rsa的攻击总结">
+<meta name="twitter:title" content="针对rsa攻击的总结">
 <meta name="twitter:description" content="针对rsa进行的攻击 练习 https://www.jarvisoj.com/challenges 0x00 rsa算法描述省略 0x01 模数分解n的分解rsa最暴力最简单的方式就是分解n，将n分解成功，得到p、q的值，可求n的欧拉函数的值。  φ(n)=(p−1)(q−1)  e，d与n的欧拉函数满足如下关系：  ed=1 mod φ(n)  即在知道e，p，q的情况下，可以解出d： 1234">
 <meta name="twitter:image" content="http://oksip9gk9.bkt.clouddn.com/20170731150146279631543.png">
     
@@ -38,7 +38,7 @@
         
     
     <!-- title -->
-    <title>针对rsa的攻击总结</title>
+    <title>针对rsa攻击的总结</title>
     <!-- styles -->
     <link rel="stylesheet" href="/css/style.css">
     <!-- rss -->
@@ -73,7 +73,7 @@
       <ul>
         
         
-        <li><a class="icon" href="/2017/04/17/xatuWriteUp/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover='$("#i-next").toggle();' onmouseout='$("#i-next").toggle();'></i></a></li>
+        <li><a class="icon" href="/2017/08/01/rsa-ctf/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover='$("#i-next").toggle();' onmouseout='$("#i-next").toggle();'></i></a></li>
         
         <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover='$("#i-top").toggle();' onmouseout='$("#i-top").toggle();'></i></a></li>
         <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover='$("#i-share").toggle();' onmouseout='$("#i-share").toggle();' onclick='$("#share").toggle();return false;'></i></a></li>
@@ -87,15 +87,15 @@
     <div id="share" style="display: none">
       <ul>
   <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2017/08/23/rsaattack/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2017/08/23/rsaattack/&text=针对rsa的攻击总结"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2017/08/23/rsaattack/&title=针对rsa的攻击总结"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2017/08/23/rsaattack/&is_video=false&description=针对rsa的攻击总结"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=针对rsa的攻击总结&body=Check out this article: http://yoursite.com/2017/08/23/rsaattack/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2017/08/23/rsaattack/&title=针对rsa的攻击总结"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2017/08/23/rsaattack/&title=针对rsa的攻击总结"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2017/08/23/rsaattack/&title=针对rsa的攻击总结"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2017/08/23/rsaattack/&title=针对rsa的攻击总结"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2017/08/23/rsaattack/&name=针对rsa的攻击总结&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2017/08/23/rsaattack/&text=针对rsa攻击的总结"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2017/08/23/rsaattack/&title=针对rsa攻击的总结"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2017/08/23/rsaattack/&is_video=false&description=针对rsa攻击的总结"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=针对rsa攻击的总结&body=Check out this article: http://yoursite.com/2017/08/23/rsaattack/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2017/08/23/rsaattack/&title=针对rsa攻击的总结"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2017/08/23/rsaattack/&title=针对rsa攻击的总结"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2017/08/23/rsaattack/&title=针对rsa攻击的总结"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2017/08/23/rsaattack/&title=针对rsa攻击的总结"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2017/08/23/rsaattack/&name=针对rsa攻击的总结&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -112,7 +112,7 @@
   <header>
     
     <h1 class="posttitle" itemprop="name headline">
-        针对rsa的攻击总结
+        针对rsa攻击的总结
     </h1>
 
 
@@ -130,7 +130,7 @@
 
       
     <div class="article-tag">
-        <span id="/2017/08/23/rsaattack/" class="leancloud_visitors" data-flag-title="针对rsa的攻击总结">                    
+        <span id="/2017/08/23/rsaattack/" class="leancloud_visitors" data-flag-title="针对rsa攻击的总结">                    
             <span class="post-meta-item-icon">
             <i class="fa fa-eye"></i>
             </span>
@@ -189,7 +189,24 @@
 <p>windows下可以使用yafu尝试分解n</p>
 </blockquote>
 <h2 id="0x02-选择密文"><a href="#0x02-选择密文" class="headerlink" title="0x02 选择密文"></a>0x02 选择密文</h2><h2 id="0x03-加密指数"><a href="#0x03-加密指数" class="headerlink" title="0x03 加密指数"></a>0x03 加密指数</h2><h3 id="低加密指数攻击"><a href="#低加密指数攻击" class="headerlink" title="低加密指数攻击"></a>低加密指数攻击</h3><p>在rsa中e也称为加密指数。由于e是可以随意选取的，选取小一点的e可以缩短加密时间，但是选取不当的话，就会造成安全问题。</p>
-<h3 id="低加密指数广播攻击"><a href="#低加密指数广播攻击" class="headerlink" title="低加密指数广播攻击"></a>低加密指数广播攻击</h3><h3 id="Coppersmith定理攻击"><a href="#Coppersmith定理攻击" class="headerlink" title="Coppersmith定理攻击"></a>Coppersmith定理攻击</h3><p>Coppersmith定理指出在一个e阶的mod n多项式f(x)中，如果有一个根小于n^1/e，就可以运用一个O(log n)的算法求出这些根。</p>
+<p><em>e=3时便造成低加密指数攻击</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">while 1:</div><div class="line">    res = iroot(c+i*n,3)</div><div class="line">    if(res[1] == True):</div><div class="line">        print res</div><div class="line">        break</div><div class="line">    print &quot;i=&quot;+str(i)</div><div class="line">    i = i+1</div></pre></td></tr></table></figure>
+<p>例题：<strong>Extremely hard RSA</strong></p>
+<h3 id="低加密指数广播攻击"><a href="#低加密指数广播攻击" class="headerlink" title="低加密指数广播攻击"></a>低加密指数广播攻击</h3><p> 如果选取的加密指数较低，并且使用了相同的加密指数给一个接受者的群发送相同的信息，那么可以进行广播攻击得到明文。</p>
+<p>即，选取了相同的加密指数e（这里取e=3），对相同的明文m进行了加密并进行了消息的传递，那么有：</p>
+<p>c1≡m^e mod n1</p>
+<p>c2≡m^e mod n2</p>
+<p>c3≡m^e mod n3</p>
+<p>对上述等式运用中国剩余定理，在e=3时，可以得到：</p>
+<p>cx≡m^3 mod n1n2n3</p>
+<p>通过对cx进行三次开方可以求得明文。</p>
+<p>识别：</p>
+<p>这个识别起来比较简单，一般来说都是给了三组加密的参数和明密文，其中题目很明确地能告诉你这三组的明文都是一样的，并且e都取了一个较小的数字。</p>
+<p>例题：</p>
+<p>SCTF2016，CODE300</p>
+<p>题目第二轮中通过流量包的方式给了广播攻击的参数。</p>
+<p>例题：<a href="http://codezen.fr/2014/01/16/hackyou-2014-crypto-400-cryptonet" target="_blank" rel="external">http://codezen.fr/2014/01/16/hackyou-2014-crypto-400-cryptonet</a> </p>
+<h3 id="Coppersmith定理攻击"><a href="#Coppersmith定理攻击" class="headerlink" title="Coppersmith定理攻击"></a>Coppersmith定理攻击</h3><p>Coppersmith定理指出在一个e阶的mod n多项式f(x)中，如果有一个根小于n^1/e，就可以运用一个O(log n)的算法求出这些根。</p>
 <p>这个定理可以应用于rsa算法。如果e = 3并且在明文当中只有三分之二的比特是已知的，这种算法可以求出明文中所有的比特。</p>
 <blockquote>
 <p>例题国赛Partial</p>
@@ -199,11 +216,13 @@
 <p><a href="http://sagecell.sagemath.org/" target="_blank" rel="external">http://sagecell.sagemath.org/</a></p>
 <p><a href="https://github.com/mimoo/RSA-and-LLL-attacks/blob/master/coppersmith.sage" target="_blank" rel="external">https://github.com/mimoo/RSA-and-LLL-attacks/blob/master/coppersmith.sage</a></p>
 </blockquote>
+<p>例题：<strong>国赛Partial</strong></p>
 <h3 id="相关信息和短填充"><a href="#相关信息和短填充" class="headerlink" title="相关信息和短填充"></a>相关信息和短填充</h3><h2 id="0x04-解密指数"><a href="#0x04-解密指数" class="headerlink" title="0x04 解密指数"></a>0x04 解密指数</h2><h3 id="泄露"><a href="#泄露" class="headerlink" title="泄露"></a>泄露</h3><h3 id="低解密指数攻击"><a href="#低解密指数攻击" class="headerlink" title="低解密指数攻击"></a>低解密指数攻击</h3><p>非常简单，e看起来很大就行了。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> ContinuedFractions, Arithmetic</div><div class="line"><span class="keyword">import</span> sys</div><div class="line">sys.setrecursionlimit(<span class="number">1000000</span>)</div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">hack_RSA</span><span class="params">(e,n)</span>:</span></div><div class="line">    <span class="string">'''</span></div><div class="line"><span class="string">    Finds d knowing (e,n)</span></div><div class="line"><span class="string">    applying the Wiener continued fraction attack</span></div><div class="line"><span class="string">    '''</span></div><div class="line">    frac = ContinuedFractions.rational_to_contfrac(e, n)</div><div class="line">    convergents = ContinuedFractions.convergents_from_contfrac(frac)</div><div class="line">    </div><div class="line">    <span class="keyword">for</span> (k,d) <span class="keyword">in</span> convergents:</div><div class="line">        </div><div class="line">        <span class="comment">#check if d is actually the key</span></div><div class="line">        <span class="keyword">if</span> k!=<span class="number">0</span> <span class="keyword">and</span> (e*d<span class="number">-1</span>)%k == <span class="number">0</span>:</div><div class="line">            phi = (e*d<span class="number">-1</span>)//k</div><div class="line">            s = n - phi + <span class="number">1</span></div><div class="line">            <span class="comment"># check if the equation x^2 - s*x + n = 0</span></div><div class="line">            <span class="comment"># has integer roots</span></div><div class="line">            discr = s*s - <span class="number">4</span>*n</div><div class="line">            <span class="keyword">if</span>(discr&gt;=<span class="number">0</span>):</div><div class="line">                t = Arithmetic.is_perfect_square(discr)</div><div class="line">                <span class="keyword">if</span> t!=<span class="number">-1</span> <span class="keyword">and</span> (s+t)%<span class="number">2</span>==<span class="number">0</span>:</div><div class="line">                    print(<span class="string">"Hacked!"</span>)</div><div class="line">                    <span class="keyword">return</span> d</div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">     e = <span class="number">0</span>x十六进制数</div><div class="line">     n = <span class="number">0</span>x十六进制数</div><div class="line">     d = hack_RSA(e,n)</div><div class="line">     <span class="keyword">print</span> d</div></pre></td></tr></table></figure>
 <p><a href="https://github.com/pablocelayes/rsa-wiener-attack" target="_blank" rel="external">https://github.com/pablocelayes/rsa-wiener-attack</a></p>
 <h2 id="0x05-模"><a href="#0x05-模" class="headerlink" title="0x05 模"></a>0x05 模</h2><h3 id="共模攻击"><a href="#共模攻击" class="headerlink" title="共模攻击"></a>共模攻击</h3><p>使用相同的模n。<br>当n不变的情况下，知道n,e1,e2,c1,c2 可以在不知道d1,d2情况下，解出m。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line">(e1, n) = (,)</div><div class="line"></div><div class="line">(e2, n) = (,)</div><div class="line"></div><div class="line">c1 = <span class="string">''</span></div><div class="line"></div><div class="line">c2 = <span class="string">''</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">gcd</span><span class="params">(a, b)</span>:</span></div><div class="line">  <span class="keyword">if</span> a == <span class="number">0</span>:</div><div class="line">    x, y = <span class="number">0</span>, <span class="number">1</span>;</div><div class="line">    <span class="keyword">return</span> (b, x, y);</div><div class="line">  tup = gcd(b % a, a)</div><div class="line">  d = tup[<span class="number">0</span>]</div><div class="line">  x1 = tup[<span class="number">1</span>]</div><div class="line">  y1 = tup[<span class="number">2</span>]</div><div class="line">  x = y1 - (b / a) * x1</div><div class="line">  y = x1</div><div class="line">  <span class="keyword">return</span> (d, x, y)</div><div class="line"><span class="comment">#solve the Diophantine equation a*x0 + b*y0 = c</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">find_any_solution</span><span class="params">(a, b, c)</span>:</span></div><div class="line">  tup = gcd(abs(a), abs(b))</div><div class="line">  g = tup[<span class="number">0</span>]</div><div class="line">  x0 = tup[<span class="number">1</span>]</div><div class="line">  y0 = tup[<span class="number">2</span>]</div><div class="line">  <span class="keyword">if</span> c % g != <span class="number">0</span>:</div><div class="line">    <span class="keyword">return</span> (<span class="keyword">False</span>, x0, y0)</div><div class="line">  x0 *= c / g</div><div class="line">  y0 *= c / g</div><div class="line">  <span class="keyword">if</span> a &lt; <span class="number">0</span>:</div><div class="line">    x0 *= <span class="number">-1</span></div><div class="line">  <span class="keyword">if</span> b &lt; <span class="number">0</span>:</div><div class="line">    y0 *= <span class="number">-1</span></div><div class="line">  <span class="keyword">return</span> (<span class="keyword">True</span>, x0, y0)</div><div class="line"><span class="keyword">import</span> sys</div><div class="line">sys.setrecursionlimit(<span class="number">5000</span>)</div><div class="line">(x, a1, a2) = find_any_solution(e1, e2, <span class="number">1</span>)</div><div class="line"><span class="keyword">if</span> a1 &lt; <span class="number">0</span>:</div><div class="line">	(x, c1, y) = find_any_solution(c1, n, <span class="number">1</span>) <span class="comment">#get inverse element</span></div><div class="line">	a1 = -a1</div><div class="line"><span class="keyword">if</span> a2 &lt; <span class="number">0</span>:</div><div class="line">	(x, c2, y) = find_any_solution(c2, n, <span class="number">1</span>)</div><div class="line">	a2 = -a2</div><div class="line">m = (pow(c1, a1, n) * pow(c2, a2, n)) % n</div><div class="line"><span class="keyword">print</span> m</div></pre></td></tr></table></figure>
+<p>例题：<strong>very hard RSA</strong></p>
 <h2 id="0x06-执行"><a href="#0x06-执行" class="headerlink" title="0x06 执行"></a>0x06 执行</h2><p>时序和能力。</p>
 <h2 id="ctf中的数据处理"><a href="#ctf中的数据处理" class="headerlink" title="ctf中的数据处理"></a>ctf中的数据处理</h2><p>rsa问题无非就是围绕c、m、e、d、n、p、q，但是一般题目不会直接给出这些数据。在做题之前，我们需要将给出的题目转换成可以做题的形式。</p>
 <h3 id="openssl"><a href="#openssl" class="headerlink" title="openssl"></a>openssl</h3><p>使用openssl生成密钥</p>
@@ -269,15 +288,15 @@
     <div id="share-footer" style="display: none">
       <ul>
   <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2017/08/23/rsaattack/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2017/08/23/rsaattack/&text=针对rsa的攻击总结"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2017/08/23/rsaattack/&title=针对rsa的攻击总结"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2017/08/23/rsaattack/&is_video=false&description=针对rsa的攻击总结"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=针对rsa的攻击总结&body=Check out this article: http://yoursite.com/2017/08/23/rsaattack/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2017/08/23/rsaattack/&title=针对rsa的攻击总结"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2017/08/23/rsaattack/&title=针对rsa的攻击总结"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2017/08/23/rsaattack/&title=针对rsa的攻击总结"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2017/08/23/rsaattack/&title=针对rsa的攻击总结"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2017/08/23/rsaattack/&name=针对rsa的攻击总结&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2017/08/23/rsaattack/&text=针对rsa攻击的总结"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2017/08/23/rsaattack/&title=针对rsa攻击的总结"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2017/08/23/rsaattack/&is_video=false&description=针对rsa攻击的总结"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=针对rsa攻击的总结&body=Check out this article: http://yoursite.com/2017/08/23/rsaattack/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2017/08/23/rsaattack/&title=针对rsa攻击的总结"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2017/08/23/rsaattack/&title=针对rsa攻击的总结"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2017/08/23/rsaattack/&title=针对rsa攻击的总结"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2017/08/23/rsaattack/&title=针对rsa攻击的总结"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2017/08/23/rsaattack/&name=针对rsa攻击的总结&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
