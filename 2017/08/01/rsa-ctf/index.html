@@ -6,13 +6,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="0x01 very easy RSA题目：  p = 3487583947589437589237958723892346254777 q = 8767867843568934765983476584376578389 e = 65537  题目直接给出了p、q、e，可直接解除d 12345678910111213141516171819#coding:utf-8def egcd(a, b):">
+    <meta name="description" content="0x01 very easy RSA题目： p = 3487583947589437589237958723892346254777 q = 8767867843568934765983476584376578389 e = 65537 题目直接给出了p、q、e，可直接解除d 12345678910111213141516171819#coding:utf-8def egcd(a, b):">
 <meta name="keywords" content="rsa,ctf">
 <meta property="og:type" content="article">
 <meta property="og:title" content="RSA相关ctf WriteUp">
 <meta property="og:url" content="http://yoursite.com/2017/08/01/rsa-ctf/index.html">
 <meta property="og:site_name" content="Windy&#39;s blog">
-<meta property="og:description" content="0x01 very easy RSA题目：  p = 3487583947589437589237958723892346254777 q = 8767867843568934765983476584376578389 e = 65537  题目直接给出了p、q、e，可直接解除d 12345678910111213141516171819#coding:utf-8def egcd(a, b):">
+<meta property="og:description" content="0x01 very easy RSA题目： p = 3487583947589437589237958723892346254777 q = 8767867843568934765983476584376578389 e = 65537 题目直接给出了p、q、e，可直接解除d 12345678910111213141516171819#coding:utf-8def egcd(a, b):">
 <meta property="og:image" content="http://oksip9gk9.bkt.clouddn.com/20170827150380407780491.png">
 <meta property="og:image" content="http://oksip9gk9.bkt.clouddn.com/2017082715038046284767.png">
 <meta property="og:image" content="http://oksip9gk9.bkt.clouddn.com/20170827150380467733791.png">
@@ -21,10 +21,10 @@
 <meta property="og:image" content="http://oksip9gk9.bkt.clouddn.com/201708271503805191334.png">
 <meta property="og:image" content="http://oksip9gk9.bkt.clouddn.com/20170827150380621010848.png">
 <meta property="og:image" content="http://oksip9gk9.bkt.clouddn.com/20170827150380781231652.png">
-<meta property="og:updated_time" content="2017-08-27T04:55:42.000Z">
+<meta property="og:updated_time" content="2017-08-27T12:57:19.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="RSA相关ctf WriteUp">
-<meta name="twitter:description" content="0x01 very easy RSA题目：  p = 3487583947589437589237958723892346254777 q = 8767867843568934765983476584376578389 e = 65537  题目直接给出了p、q、e，可直接解除d 12345678910111213141516171819#coding:utf-8def egcd(a, b):">
+<meta name="twitter:description" content="0x01 very easy RSA题目： p = 3487583947589437589237958723892346254777 q = 8767867843568934765983476584376578389 e = 65537 题目直接给出了p、q、e，可直接解除d 12345678910111213141516171819#coding:utf-8def egcd(a, b):">
 <meta name="twitter:image" content="http://oksip9gk9.bkt.clouddn.com/20170827150380407780491.png">
     
     
@@ -162,19 +162,17 @@
 
   <div class="content" itemprop="articleBody">
     <h2 id="0x01-very-easy-RSA"><a href="#0x01-very-easy-RSA" class="headerlink" title="0x01 very easy RSA"></a>0x01 very easy RSA</h2><p>题目：</p>
-<ul>
-<li>p = 3487583947589437589237958723892346254777</li>
-<li>q = 8767867843568934765983476584376578389</li>
-<li>e = 65537</li>
-</ul>
+<p><code>p = 3487583947589437589237958723892346254777</code></p>
+<p><code>q = 8767867843568934765983476584376578389</code></p>
+<p><code>e = 65537</code></p>
 <p>题目直接给出了p、q、e，可直接解除d</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#coding:utf-8</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">egcd</span><span class="params">(a, b)</span>:</span></div><div class="line">    <span class="keyword">if</span> a == <span class="number">0</span>:</div><div class="line">        <span class="keyword">return</span> (b, <span class="number">0</span>, <span class="number">1</span>)</div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        g, y, x = egcd(b % a, a)</div><div class="line">        <span class="keyword">return</span> (g, x - (b // a) * y, y)</div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">modinv</span><span class="params">(a, m)</span>:</span></div><div class="line">    g, x, y = egcd(a, m)</div><div class="line">    <span class="keyword">if</span> g != <span class="number">1</span>:</div><div class="line">        <span class="keyword">raise</span> Exception(<span class="string">'modular inverse does not exist'</span>)</div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        <span class="keyword">return</span> x % m</div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    p = <span class="number">3487583947589437589237958723892346254777</span></div><div class="line">    q = <span class="number">8767867843568934765983476584376578389</span></div><div class="line">    e = <span class="number">65537</span></div><div class="line">    d = modinv(e, (p - <span class="number">1</span>) * (q - <span class="number">1</span>))</div><div class="line">    <span class="keyword">print</span> d</div></pre></td></tr></table></figure>
 <h2 id="0x02-Medium-RSA"><a href="#0x02-Medium-RSA" class="headerlink" title="0x02 Medium RSA"></a>0x02 Medium RSA</h2><p>其中有两个文件<br><img src="http://oksip9gk9.bkt.clouddn.com/20170827150380407780491.png" alt="20170827150380407780491.png"></p>
 <p>首先使用openssl在pybkey.pem中提取n、e</p>
 <p><img src="http://oksip9gk9.bkt.clouddn.com/2017082715038046284767.png" alt="2017082715038046284767.png"></p>
-<p>得到的是十六进制00c2636ae5c3d8e43ffb97ab09028f1aac6c0bf6cd3d70ebca281bffe97fbe30dd</p>
+<p>得到的是十六进制<code>00c2636ae5c3d8e43ffb97ab09028f1aac6c0bf6cd3d70ebca281bffe97fbe30dd</code></p>
 <p><img src="http://oksip9gk9.bkt.clouddn.com/20170827150380467733791.png" alt="20170827150380467733791.png"></p>
-<p>所以n=87924348264132406875276140514499937145050893665602592992418171647042491658461</p>
+<p>所以<code>n=87924348264132406875276140514499937145050893665602592992418171647042491658461</code></p>
 <p><img src="http://oksip9gk9.bkt.clouddn.com/2017082715038047349988.png" alt="2017082715038047349988.png"></p>
 <p>大数分解得到q、p。使用rsatools生成私钥.</p>
 <p><code>python rsatool.py -p 275127860351348928173285174381581152299 -q 319576316814478949870590164193048041239 -o priv.key</code></p>
