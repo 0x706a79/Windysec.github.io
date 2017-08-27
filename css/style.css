@@ -462,6 +462,7 @@ body {
   -ms-hyphens: auto;
   -webkit-hyphens: auto;
   hyphens: auto;
+  word-wrap: break-word;
 }
 .content pre,
 .content code {
