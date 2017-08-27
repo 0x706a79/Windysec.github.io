@@ -7,7 +7,7 @@
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta name="description" content="mysql暴错注入方法整理，通过floor，UpdateXml，ExtractValue，NAME_CONST，Error based Double Query Injection等方法 1、通过floor暴错 数据库版本  1http://www.yangjiye.top/sql.php?id=1+and(select 1 from(select count(),concat((select (">
-<meta name="keywords" content="sql注入,Mysql">
+<meta name="keywords" content="Mysql,sql注入">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Mysql暴错注入方法整理">
 <meta property="og:url" content="http://yoursite.com/2016/05/18/mysqlburstinjection/index.html">
@@ -199,10 +199,9 @@
 
     <div class="blog-post-comments">
         <div id="changyan_thread">
-            <div id="SOHUCS" ></div>
+            <div id="SOHUCS"></div>
         </div>
     </div>
-
 
     </div>
     
@@ -300,17 +299,15 @@
         ga('send', 'pageview');
     </script>
 
-
 <!-- Changyan Comments -->
 
     <script type="text/javascript"> 
     (function(){ 
-    var appid = '{{theme.plugins.changyan_appid}}'; 
-    var conf = '{{theme.plugins.changyan_appkey}}'; 
+    var appid = 'cytbxr5F5'; 
+    var conf = '1b1213b19a954482c87045388c9c7954'; 
     var width = window.innerWidth || document.documentElement.clientWidth; 
     if (width < 960) { 
     window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="http://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("http://changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); } })(); </script>
-
 
 
     <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
