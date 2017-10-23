@@ -14,7 +14,7 @@
 <meta property="og:site_name" content="Windy&#39;s blog">
 <meta property="og:description" content="针对rsa进行的攻击 练习 https://www.jarvisoj.com/challenges 0x00 rsa算法描述省略 0x01 模数分解n的分解rsa最暴力最简单的方式就是分解n，将n分解成功，得到p、q的值，可求n的欧拉函数的值。  φ(n)=(p−1)(q−1)  e，d与n的欧拉函数满足如下关系：  ed=1 mod φ(n)  即在知道e，p，q的情况下，可以解出d： 1234">
 <meta property="og:image" content="http://oksip9gk9.bkt.clouddn.com/20170731150146279631543.png">
-<meta property="og:updated_time" content="2017-10-10T02:42:00.000Z">
+<meta property="og:updated_time" content="2017-10-19T04:55:18.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="针对rsa攻击的总结">
 <meta name="twitter:description" content="针对rsa进行的攻击 练习 https://www.jarvisoj.com/challenges 0x00 rsa算法描述省略 0x01 模数分解n的分解rsa最暴力最简单的方式就是分解n，将n分解成功，得到p、q的值，可求n的欧拉函数的值。  φ(n)=(p−1)(q−1)  e，d与n的欧拉函数满足如下关系：  ed=1 mod φ(n)  即在知道e，p，q的情况下，可以解出d： 1234">
@@ -254,7 +254,9 @@
 </ul>
 <p>以下为填充方式</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">-ssl            use SSL v2 padding</div><div class="line">-raw            use no padding</div><div class="line">-pkcs           use PKCS#1 v1.5 padding (default)</div><div class="line">-oaep           use PKCS#1 OAEP</div></pre></td></tr></table></figure>
-<p>对于现成的.pub公钥文件,用openssl来进行分析<br>openssl asn1parse -in publickey.pub 分析格式<br>openssl asn1parse -in publickey.pub -i -strparse xxx 得到信息<br>或者已知是rsa的情况下,直接用<br>openssl rsa -in publickey.pub -pubin -modulus -text 来得到n<br>expoent也是同理的</p>
+<p>对于现成的.pub公钥文件,用openssl来进行分析<br>openssl asn1parse -in publickey.pub 分析格式<br>openssl asn1parse -in publickey.pub -i -strparse xxx 得到信息<br>或者已知是rsa的情况下,直接用<br>openssl rsa -in publickey.pub -pubin -modulus -text 来得到n</p>
+<p>openssl rsa -in partial.privkey -text 查看私钥信息</p>
+<p>expoent也是同理的</p>
 <h3 id="pcap文件"><a href="#pcap文件" class="headerlink" title="pcap文件"></a>pcap文件</h3><p>针对此类文件可以使用wireshark follow一下。这种问题一般都是写了一个交互的crypto系统，所以可能产生多轮交互。</p>
 <h3 id="PPC模式"><a href="#PPC模式" class="headerlink" title="PPC模式"></a>PPC模式</h3><p>这种模式是上述pcap文件的交互版，会给一个端口进行一些crypto的交互，参数会在交互中给出。</p>
 <blockquote>
